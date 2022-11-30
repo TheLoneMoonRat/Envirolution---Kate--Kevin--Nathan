@@ -40,4 +40,21 @@ class Animal{
       
     }
   }
+
+void calculateBirths() {
+    if (this.gender && this.age > 5 && this.hunger < 5 && timePassed >= this.breedingRate) {
+      for (Animal a : animals) {
+        float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
+        
+        if (a.timePassed >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
+          for (int x = 0; x < this.babyAmount; x++) 
+            this.giveBirth(a);
+          
+          this.timePassed = 0;
+          a.timePassed = 0;
+        }
+      }
+    }
+  }
 }
+          
