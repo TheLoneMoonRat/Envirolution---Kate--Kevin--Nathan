@@ -10,4 +10,9 @@ void setup() {
   jane = new Animal (6, 3, 5, true, 4);
 }
 
-jane.giveBirth(jeffrey);
+void draw() {
+  background(0, 0, 255);
+  fill(0, 255, 0);
+  circle(350, 350, 500);
+  jeffrey.drawAnimal();
+}

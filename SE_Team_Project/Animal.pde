@@ -1,12 +1,12 @@
 class Animal{
   //fields
   int age;
+  float xPosition;
+  float yPosition;
   float breedingRate;
   float babyAmt;
   float speed;
   float hunger;
-  float xPosition;
-  float yPosition;
   float size;
   float aggression;
   boolean gender;
@@ -22,16 +22,13 @@ class Animal{
     this.size = si;
     this.gender = ge;
     this.aggression = ag;
+    this.xPosition = 350 + random(-250, 250);
+    this.yPosition = 350 + random(-250, 250);
   }
 
   //methods
-  
-  void drawAnimal() {
-    rect(this.xPosition, this.yPosition, this.size, this.size);
-  }
-  
   void giveBirth(Animal partner) {
-    if (gender == true && partner.gender == false) {
+    if (this.gender == true && partner.gender == false) {
       boolean tempGender;
       float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
       float tempAggression = ((this.aggression + partner.aggression) / 2) * random(0.8, 1.2);
@@ -46,21 +43,7 @@ class Animal{
       
     }
   }
-
-void calculateBirths() {
-    if (this.gender && this.age > 5 && this.hunger < 5 && timePassed >= this.breedingRate) {
-      for (Animal a : animals) {
-        float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
-        
-        if (a.timePassed >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
-          for (int x = 0; x < this.babyAmount; x++) 
-            this.giveBirth(a);
-          
-          this.timePassed = 0;
-          a.timePassed = 0;
-        }
-      }
-    }
+  void drawAnimal() {
+    rect(this.xPosition, this.yPosition, this.size, this.size);
   }
 }
-          
