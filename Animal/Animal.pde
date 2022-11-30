@@ -9,6 +9,8 @@ class Animal{
   float hunger;
   float xPos;
   float yPos;
+  float xMove;
+  float yMove;
   float size;
   float aggression;
   boolean gender;
@@ -53,7 +55,7 @@ class Animal{
     }
   }
 
-void calculateBirths() {
+  void calculateBirths() {
     if (this.gender && this.age > 5 && this.hunger < 5 && timePassed >= this.breedingRate) {
       boolean gaveBirth = false;
       while (! gaveBirth) {
@@ -71,6 +73,33 @@ void calculateBirths() {
         }
       }
     }
+  }
+  
+  void eat() {
+    for (Food f : foodAmt) {
+      float dist = sqrt(pow((this.xPos - f.xPos * -1), 2) + pow((this.yPos - f.yPos * -1), 2));
+      
+      if (dist < 5) {
+        this.hunger += f.nutrition;
+        foodAmt.remove(f);
+      }
+      
+      else if (dist < this.vision && hunger > 5) {
+        this.xMove = (this.xPos - f.xPos) / this.speed;
+        this.yMove = (this.yPos - f.yPos) / this.speed;
+      }
+    }
+  } 
+  
+  void updateStats() {
+    this.hunger += 0.5 * size;
+    this.age += 1;
+    this.timePassed += 1;
+  }
+  
+  void calculateDeaths() {
+    if (this.hunger > 10 || this.age > 30) 
+      animals.remove(this);
   }
 }
           
