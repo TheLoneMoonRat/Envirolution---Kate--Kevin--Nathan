@@ -1,6 +1,7 @@
 class Animal{
   //fields
   int age;
+  int giraffe;
   float breedingRate;
   float babyAmt;
   float speed;
