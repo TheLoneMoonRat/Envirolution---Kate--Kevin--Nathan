@@ -63,7 +63,11 @@ class Animal{
           float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
         
           if (a.timePassed >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
+<<<<<<< Updated upstream
             for (int x = 0; x < this.babyAmt; x++) 
+=======
+            for (int x = 0; x < this.babyAmount; x++) 
+>>>>>>> Stashed changes
               this.giveBirth(a);
           
             this.timePassed = 0;
