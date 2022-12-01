@@ -9,8 +9,8 @@ void setup() {
   size(700, 700);
   animals = new ArrayList<Animal>();
   foods = new ArrayList<Food>();
-  animals.add(new Animal(5, 5, 8, false, 10, 20, color(92, 64, 51), random(250, 350), random(250, 350)));
-  animals.add(new Animal (6, 3, 5, true, 4, 15, color(210, 180, 140), random (250, 350), random(250, 350)));
+  animals.add(new Animal(5, 5, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(250, 350)));
+  animals.add(new Animal (6, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(250, 350)));
 }
 
 void draw() {
@@ -19,11 +19,13 @@ void draw() {
   circle(350, 350, 500);
   //update animals
   for (Animal a : animals) {
+    a.updateStats();
     a.drawAnimal();
-    if (a.hunger < 20)
+    if (a.hunger > 20) {
       a.eat();
-    a.calculateBirths();
-    a.calculateDeaths();
+    }
+    //a.calculateBirths();
+    //a.calculateDeaths();
   }
   for (Food f: foods) {
     f.drawFood();

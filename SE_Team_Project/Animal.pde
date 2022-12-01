@@ -84,24 +84,24 @@ class Animal{
   
   void eat() {
     for (Food f : foods) {
-      float dist = sqrt(pow((this.xPos - f.xPos * -1), 2) + pow((this.yPos - f.yPos * -1), 2));
-      
+      float dist = sqrt(pow((this.xPos - f.xPos), 2) + pow((this.yPos - f.yPos), 2));
+      println(dist);
       if (dist < 5) {
         this.hunger += f.nutrition;
         foods.remove(f);
       }
       
-      else if (dist < this.vision && hunger > 5) {
-        this.xMove = (this.xPos - f.xPos) / this.speed;
-        this.yMove = (this.yPos - f.yPos) / this.speed;
+      else if (dist < this.vision) {
+        this.xPos += (this.xPos - f.xPos) / this.speed;
+        this.yPos += (this.yPos - f.yPos) / this.speed;
       }
     }
   } 
   
   void updateStats() {
-    this.hunger += 0.5 * size;
+    this.hunger += 0.005 * size;
+    if (gender)
     this.age += 1;
-    this.timePassed += 1;
   }
   
   void calculateDeaths() {
