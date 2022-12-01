@@ -13,12 +13,15 @@ class Animal{
   float yMove;
   float size;
   float aggression;
+  float highTemp;
+  float lowTemp;
   color animalColour;
   boolean gender;
-  String foodSource;
+  String diet;
+  Habitat habitat;
   
   //constructor
-  Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co) {
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float ht, float lt, color co) {
     this.age = 0;
     this.breedingRate = br;
     this.babyAmt = 0;
@@ -29,6 +32,8 @@ class Animal{
     this.aggression = ag;
     this.timePassed = 0;
     this.vision = vs;
+    this.highTemp = ht;
+    this.lowTemp = lt;
     this.animalColour = co;
   }
 
@@ -46,9 +51,12 @@ class Animal{
     float tempAggression = ((this.aggression + partner.aggression) / 2) * random(0.8, 1.2);
     float tempSize = ((this.size + partner.size) / 2) * random(0.8, 1.2);
     float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
+    float tempHighTemp = ((this.highTemp + partner.highTemp) / 2) * random(0.8, 1.2);
+    float tempLowTemp = ((this.lowTemp + partner.lowTemp) / 2) * random(0.8, 1.2);
     float tempRed = (red(this.animalColour) + red(partner.animalColour)) / 2;
     float tempGreen = (green(this.animalColour) + green(partner.animalColour)) / 2;
     float tempBlue = (blue(this.animalColour) + blue(partner.animalColour)) / 2;
+    
     if (int(random(0,2)) == 0 ) {
       tempGender = true;
     } else {
@@ -62,7 +70,7 @@ class Animal{
     println(tempRed);
     println(tempGreen);
     println(tempBlue);
-    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue)));
+    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize, tempGender, tempAggression, tempVision, tempHighTemp, tempLowTemp, color(tempRed, tempGreen, tempBlue)));
   }
 
   void calculateBirths() {
@@ -73,12 +81,8 @@ class Animal{
           float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
         
           if (a.timePassed >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
-<<<<<<< Updated upstream
             for (int x = 0; x < this.babyAmt; x++) 
-=======
-            for (int x = 0; x < this.babyAmount; x++) 
->>>>>>> Stashed changes
-              this.giveBirth(a);
+              this.createChild(a);
           
             this.timePassed = 0;
             a.timePassed = 0;
@@ -99,8 +103,8 @@ class Animal{
       }
       
       else if (dist < this.vision && hunger > 5) {
-        this.xMove = (this.xPos - f.xPos) / this.speed;
-        this.yMove = (this.yPos - f.yPos) / this.speed;
+        this.xMove = (this.xPos - f.xPos) / (this.yPos - f.yPos) * this.speed;
+        this.yMove = (this.xPos - f.xPos) / (this.yPos - f.yPos) * this.speed;
       }
     }
   } 
@@ -112,7 +116,7 @@ class Animal{
   }
   
   void calculateDeaths() {
-    if (this.hunger > 10 || this.age > 30) 
+    if (this.hunger > 10 || this.age > 30 || this.habitat.temp > this.highTemp || this.habitat.temp < this.lowTemp) 
       animals.remove(this);
   }
 }
