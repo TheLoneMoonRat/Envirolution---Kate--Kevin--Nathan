@@ -14,10 +14,6 @@ class Food {
   
   //methods
   void drawFood() {
-    rect(xPos, yPos, 2, 2);
-  }
-  
-  void createFood() {
-    foods.add(new Food(random(0.1, 5), color(random(255), random(255), random(255)), random(250, 350), random(250, 350)));
+    rect(xPos, yPos, 5, 5);
   }
 }
