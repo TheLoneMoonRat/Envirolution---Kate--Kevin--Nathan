@@ -38,7 +38,10 @@ class Animal{
   
   void drawAnimal() {
     fill(animalColour);
+    //draw head
     rect(this.xPos, this.yPos, this.size, this.size);
+    //draw body
+    rect(this.xPos + this.size, this.yPos - (this.size/2), this.size * 3, this.size * 2);
   }
   
   void createChild(Animal partner) {
