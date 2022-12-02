@@ -9,8 +9,8 @@ void setup() {
   size(700, 700);
   animals = new ArrayList<Animal>();
   foods = new ArrayList<Food>();
-  animals.add(new Animal(5, 5, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(250, 350)));
-  animals.add(new Animal (6, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(250, 350)));
+  animals.add(new Animal(5, 18, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(250, 350)));
+  animals.add(new Animal (6, 24, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(250, 350)));
 }
 
 void draw() {
@@ -26,7 +26,11 @@ void draw() {
     }
     //a.calculateBirths();
     //a.calculateDeaths();
+    if (a.gender == false) {
+      println(a.hunger);
+    }
   }
+  
   for (Food f: foods) {
     f.drawFood();
   }
@@ -38,5 +42,5 @@ void draw() {
 }
 
 void createFood() {
-    foods.add(new Food(random(0.1, 5), color(random(0, 255), random(0, 255), random(0, 255)), random(250, 350), random(250, 350)));
+    foods.add(new Food(random(25, 40), color(random(0, 255), random(0, 255), random(0, 255)), random(150, 500), random(150, 500)));
   }

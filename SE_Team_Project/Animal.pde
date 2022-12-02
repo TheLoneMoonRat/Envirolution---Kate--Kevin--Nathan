@@ -14,6 +14,7 @@ class Animal{
   float size;
   float aggression;
   color animalColour;
+  Food target;
   boolean gender;
   String foodSource;
   
@@ -32,6 +33,7 @@ class Animal{
     this.animalColour = co;
     this.xPos = x;
     this.yPos = y;
+    target = new Food(700, 700);
   }
 
   //methods
@@ -83,20 +85,25 @@ class Animal{
   }
   
   void eat() {
-    for (Food f : foods) {
-      float dist = sqrt(pow((this.xPos - f.xPos), 2) + pow((this.yPos - f.yPos), 2));
-      println(dist);
-      if (dist < 5) {
-        this.hunger += f.nutrition;
-        foods.remove(f);
-      }
-      
-      else if (dist < this.vision) {
-        this.xPos += (this.xPos - f.xPos) / this.speed;
-        this.yPos += (this.yPos - f.yPos) / this.speed;
-      }
+    this.chooseFood();
+    if (target.getDist(this) < 10) {
+      this.hunger -= target.nutrition;
+      foods.remove(target);
+    }
+    
+    else {
+      this.xPos -= (this.xPos - target.xPos) / this.speed;
+      this.yPos -= (this.yPos - target.yPos) / this.speed;
     }
   } 
+  
+  void chooseFood () {
+    for (Food f: foods) {
+      if (f.getDist(this) < this.vision && f.getDist(this) < target.getDist(this)) {
+        target = f;  
+      }
+    }
+  }
   
   void updateStats() {
     this.hunger += 0.005 * size;
