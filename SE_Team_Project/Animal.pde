@@ -37,6 +37,16 @@ class Animal{
   }
 
   //methods
+  void guiUpdate() {
+    if (setting.equals("Aggression")) {
+      this.aggression = variable_slide.getValueF();
+    } else if (setting.equals("Size")) {
+      this.size = variable_slide.getValueF();
+    } else if (setting.equals("Speed")) {
+      this.speed = variable_slide.getValueF();
+    }
+  }
+  
   
   void drawAnimal() {
     fill(animalColour);
@@ -89,6 +99,7 @@ class Animal{
     if (target.getDist(this) < 10) {
       this.hunger -= target.nutrition;
       foods.remove(target);
+      target = new Food (700, 700);
     }
     
     else {
