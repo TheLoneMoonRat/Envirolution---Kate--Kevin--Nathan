@@ -21,6 +21,7 @@ class Food {
   
   //methods
   void drawFood() {
+    fill(this.foodColour);
     rect(xPos, yPos, 5, 5);
   }
   

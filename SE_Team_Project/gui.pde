@@ -19,17 +19,20 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:window1:599795:
 
 public void custom_slider1_change1(GCustomSlider source, GEvent event) { //_CODE_:variable_slide:698200:
-  if (setting.equals("Aggression")) {
-    variable_slide.setLimits(1,5);
-  } else if (setting.equals("Size")) {
-    variable_slide.setLimits(1, 7);
-  } else if (setting.equals("Speed")) {
-    variable_slide.setLimits(15,5);
-  }
+
 } //_CODE_:variable_slide:698200:
 
 public void dropList1_click(GDropList source, GEvent event) { //_CODE_:variable_adjuster:515417:
-  setting = variable_adjuster.getSelectedText();
+  setting = variable_adjuster.getSelectedText();  
+  for (Animal a : animals) {
+    if (setting.equals("Aggression")) {
+      variable_slide.setLimits(a.aggression, 1, 10);
+    } else if (setting.equals("Size")) {
+      variable_slide.setLimits(a.size, 3, 12);
+    } else if (setting.equals("Speed")) {
+      variable_slide.setLimits(a.speed, 15, 5);
+    }
+  }
 } //_CODE_:variable_adjuster:515417:
 
 
