@@ -1,7 +1,7 @@
 class Animal{
   //fields
   int age;
-  int timePassed;
+  int timePassedSinceBred;
   float vision;
   float breedingRate;
   float babyAmt;
@@ -9,8 +9,6 @@ class Animal{
   float hunger;
   float xPos;
   float yPos;
-  float xMove;
-  float yMove;
   float size;
   float aggression;
   color animalColour;
@@ -28,7 +26,7 @@ class Animal{
     this.size = si;
     this.gender = ge;
     this.aggression = ag;
-    this.timePassed = 0;
+    this.timePassedSinceBred = 0;
     this.vision = vs;
     this.animalColour = co;
     this.xPos = x;
@@ -81,12 +79,12 @@ class Animal{
         for (Animal a : animals) {
           float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
         
-          if (a.timePassed >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
+          if (a.timePassedSinceBred >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
             for (int x = 0; x < this.babyAmt; x++) 
               this.createChild(a);
           
-            this.timePassed = 0;
-            a.timePassed = 0;
+            this.timePassedSinceBred = 0;
+            a.timePassedSinceBred = 0;
             gaveBirth = true;
           }
         }
@@ -99,7 +97,7 @@ class Animal{
     if (target.getDist(this) < 10) {
       this.hunger -= target.nutrition;
       foods.remove(target);
-      target = new Food (700, 700);
+      //target = new Food (700, 700);
     }
     
     else {
@@ -118,8 +116,16 @@ class Animal{
   
   void updateStats() {
     this.hunger += 0.005 * size;
-    if (gender)
     this.age += 1;
+  }
+  
+  void updatePosition() {
+    float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
+    if (dist >= 250)
+      speed *= -1;
+      
+    this.xPos += speed;
+    this.yPos += speed;
   }
   
   void calculateDeaths() {
