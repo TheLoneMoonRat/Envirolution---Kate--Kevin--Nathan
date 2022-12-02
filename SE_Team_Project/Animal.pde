@@ -14,6 +14,7 @@ class Animal{
   float size;
   float aggression;
   color animalColour;
+  Food target;
   boolean gender;
   String foodSource;
   
@@ -32,9 +33,20 @@ class Animal{
     this.animalColour = co;
     this.xPos = x;
     this.yPos = y;
+    target = new Food(700, 700);
   }
 
   //methods
+  void guiUpdate() {
+    if (setting.equals("Aggression")) {
+      this.aggression = variable_slide.getValueF();
+    } else if (setting.equals("Size")) {
+      this.size = variable_slide.getValueF();
+    } else if (setting.equals("Speed")) {
+      this.speed = variable_slide.getValueF();
+    }
+  }
+  
   
   void drawAnimal() {
     fill(animalColour);
@@ -83,25 +95,31 @@ class Animal{
   }
   
   void eat() {
-    for (Food f : foods) {
-      float dist = sqrt(pow((this.xPos - f.xPos * -1), 2) + pow((this.yPos - f.yPos * -1), 2));
-      
-      if (dist < 5) {
-        this.hunger += f.nutrition;
-        foods.remove(f);
-      }
-      
-      else if (dist < this.vision && hunger > 5) {
-        this.xMove = (this.xPos - f.xPos) / this.speed;
-        this.yMove = (this.yPos - f.yPos) / this.speed;
-      }
+    this.chooseFood();
+    if (target.getDist(this) < 10) {
+      this.hunger -= target.nutrition;
+      foods.remove(target);
+      target = new Food (700, 700);
+    }
+    
+    else {
+      this.xPos -= (this.xPos - target.xPos) / this.speed;
+      this.yPos -= (this.yPos - target.yPos) / this.speed;
     }
   } 
   
+  void chooseFood () {
+    for (Food f: foods) {
+      if (f.getDist(this) < this.vision && f.getDist(this) < target.getDist(this)) {
+        target = f;  
+      }
+    }
+  }
+  
   void updateStats() {
-    this.hunger += 0.5 * size;
+    this.hunger += 0.005 * size;
+    if (gender)
     this.age += 1;
-    this.timePassed += 1;
   }
   
   void calculateDeaths() {
