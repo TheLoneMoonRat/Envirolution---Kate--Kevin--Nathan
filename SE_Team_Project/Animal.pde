@@ -16,6 +16,8 @@ class Animal{
   Food target;
   boolean gender;
   String foodSource;
+  Animal partner;
+  float finalSize;
   
   //constructor
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y) {
@@ -34,6 +36,27 @@ class Animal{
     this.yPos = y;
     this.currentSpeed = new PVector(0, 0);
     this.target = new Food(700, 700);
+    this.partner = null;
+    this.finalSize = this.size;
+  }
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y, float fs) {
+    this.age = 0;
+    this.breedingRate = br;
+    this.babyAmt = 0;
+    this.speed = sp;
+    this.hunger = 0;
+    this.size = si;
+    this.gender = ge;
+    this.aggression = ag;
+    this.timePassedSinceBred = 0;
+    this.vision = vs;
+    this.animalColour = co;
+    this.xPos = x;
+    this.yPos = y;
+    this.currentSpeed = new PVector(0, 0);
+    this.target = new Food(700, 700);
+    this.partner = null;
+    this.finalSize = fs;
   }
 
   //methods
@@ -71,19 +94,20 @@ class Animal{
     } else {
       tempGender = false;
     }
-    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos, this.yPos));
+    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
 
   void calculateBirths() {
-    if (this.gender && this.age > 300 && this.hunger < 5 && timePassed >= this.breedingRate) {
+    if (this.gender && this.age > 1500 && this.hunger < 5 && timePassed >= this.breedingRate) {
       //boolean gaveBirth = false;
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
-        if (a.timePassedSinceBred >= a.breedingRate && this.vision > dist && !a.gender &&a.age > 300) {
+        if (a.timePassedSinceBred >= a.breedingRate && this.vision > dist && !a.gender &&a.age > 1500) {
           //for (int x = 0; x < this.babyAmt; x++) 
+          this.partner = a;
           this.timePassedSinceBred = 0;
-          a.timePassedSinceBred = 0;
-          this.createChild(a);
+          partner.timePassedSinceBred = 0;
+          inLabour.add(this);
           break;
           //gaveBirth = true;
         }          
@@ -120,7 +144,13 @@ class Animal{
   }
   
   void updateStats() {
-    this.hunger += 0.01 * size;
+    if (this.size < this.finalSize) {
+      this.hunger += 0.02 * this.finalSize;
+      if (this.age % 150 == 0)
+        this.size += this.finalSize / 10; 
+    } else {
+      this.hunger += 0.01 * this.size;
+    }
     this.age += 1;
     this.timePassedSinceBred++;
   }

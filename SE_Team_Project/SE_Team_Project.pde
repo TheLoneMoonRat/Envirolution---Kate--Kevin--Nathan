@@ -4,6 +4,7 @@ int population;
 int timePassed;
 float foodRate;
 ArrayList<Animal> animals;
+ArrayList<Animal> inLabour;
 ArrayList<Food> foods;
 Habitat field;
 ArrayList<Animal> selected;
@@ -17,9 +18,10 @@ void setup() {
   animals = new ArrayList<Animal>();
   foods = new ArrayList<Food>();
   selected = new ArrayList<Animal>();
+  inLabour = new ArrayList<Animal>();
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
-  animals.add(new Animal(200, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (600, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(500, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (500, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
@@ -45,6 +47,10 @@ void draw() {
     a.calculateBirths();
     //a.calculateDeaths();
   }
+  for (Animal a: inLabour) {
+    a.createChild(a.partner);
+  }
+  inLabour.clear();
   
   for (Food f: foods) {
     f.drawFood();
