@@ -75,18 +75,16 @@ class Animal{
   }
 
   void calculateBirths() {
-    if (this.gender && this.age > 5 && this.hunger < 5 && timePassed >= this.breedingRate) {
+    if (this.gender && this.age > 300 && this.hunger < 5 && timePassed >= this.breedingRate) {
       //boolean gaveBirth = false;
       for (Animal a : animals) {
-        float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
-      
-        if (a.timePassedSinceBred >= breedingRate && this.vision > dist && !a.gender &&a.age > 300) {
+        float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
+        if (a.timePassedSinceBred >= a.breedingRate && this.vision > dist && !a.gender &&a.age > 300) {
           //for (int x = 0; x < this.babyAmt; x++) 
-          this.createChild(a);
-          println("I can't see");
-        
           this.timePassedSinceBred = 0;
           a.timePassedSinceBred = 0;
+          this.createChild(a);
+          break;
           //gaveBirth = true;
         }          
       }
@@ -124,6 +122,7 @@ class Animal{
   void updateStats() {
     this.hunger += 0.01 * size;
     this.age += 1;
+    this.timePassedSinceBred++;
   }
   
   void updatePosition() {

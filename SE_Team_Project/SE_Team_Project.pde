@@ -18,8 +18,8 @@ void setup() {
   foods = new ArrayList<Food>();
   selected = new ArrayList<Animal>();
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
-  animals.add(new Animal(5, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (6, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(200, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (600, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
