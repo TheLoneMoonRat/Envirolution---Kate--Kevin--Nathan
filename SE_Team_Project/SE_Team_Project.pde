@@ -9,6 +9,7 @@ Habitat field;
 ArrayList<Animal> selected;
 String setting;
 boolean hungerTag;
+boolean ageTag;
 float nutritionAdjuster;
 
 void setup() {
@@ -24,6 +25,7 @@ void setup() {
   field = new Habitat(5, -5, 5);
   foodRate = food_growth.getValueF();
   hungerTag = false;
+  ageTag = false;
 }
 
 void draw() {
@@ -104,6 +106,13 @@ void updateLabel() {
       fill(a.animalColour);
       textSize(a.size * 3);
       text(int(a.hunger), a.xPos, a.yPos - a.size * 3);
+    }
+  }
+  if (ageTag) {
+    for (Animal a: animals) {
+      fill(a.animalColour);
+      textSize(a.size * 3);
+      text(int(a.age), a.xPos, a.yPos - a.size * 3);
     }
   }
 }

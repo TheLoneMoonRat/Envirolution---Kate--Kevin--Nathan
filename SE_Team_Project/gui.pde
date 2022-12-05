@@ -86,14 +86,23 @@ public void button5_click1(GButton source, GEvent event) { //_CODE_:lizard:86319
 } //_CODE_:lizard:863191:
 
 public void showVariables_change(GDropList source, GEvent event) { //_CODE_:showVariables:365506:
-  println("showVariables - GDropList >> GEvent." + event + " @ " + millis());
+  hungerTag = false;
+  ageTag = false;
 } //_CODE_:showVariables:365506:
 
 public void changeVisibility(GButton source, GEvent event) { //_CODE_:shouldShow:579965:
-  if (!hungerTag) 
-    hungerTag = true;
-  else 
-    hungerTag = false;
+  if (showVariables.getSelectedText().equals("Hunger") || showVariables.getSelectedText().equals("")) {
+    if (!hungerTag) {
+      hungerTag = true;
+    } else {
+      hungerTag = false;
+    }
+  } else if (showVariables.getSelectedText().equals("Age")) {
+    if (!ageTag) 
+      ageTag = true;
+    else 
+      ageTag = false;
+  }
 } //_CODE_:shouldShow:579965:
 
 
