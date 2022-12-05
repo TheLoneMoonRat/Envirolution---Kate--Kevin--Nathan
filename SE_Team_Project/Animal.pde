@@ -12,6 +12,7 @@ class Animal{
   float size;
   float aggression;
   color animalColour;
+  PVector currentSpeed;
   Food target;
   boolean gender;
   String foodSource;
@@ -31,7 +32,8 @@ class Animal{
     this.animalColour = co;
     this.xPos = x;
     this.yPos = y;
-    target = new Food(700, 700);
+    this.currentSpeed = new PVector(0, 0);
+    this.target = new Food(700, 700);
   }
 
   //methods
@@ -74,20 +76,19 @@ class Animal{
 
   void calculateBirths() {
     if (this.gender && this.age > 5 && this.hunger < 5 && timePassed >= this.breedingRate) {
-      boolean gaveBirth = false;
-      while (! gaveBirth) {
-        for (Animal a : animals) {
-          float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
+      //boolean gaveBirth = false;
+      for (Animal a : animals) {
+        float dist = sqrt(pow((this.xPos - a.xPos * -1), 2) + pow((this.yPos - a.yPos * -1), 2));
+      
+        if (a.timePassedSinceBred >= breedingRate && this.vision > dist && !a.gender &&a.age > 300) {
+          //for (int x = 0; x < this.babyAmt; x++) 
+          this.createChild(a);
+          println("I can't see");
         
-          if (a.timePassedSinceBred >= breedingRate && this.vision > dist && ! a.gender && a.age > 5) {
-            for (int x = 0; x < this.babyAmt; x++) 
-              this.createChild(a);
-          
-            this.timePassedSinceBred = 0;
-            a.timePassedSinceBred = 0;
-            gaveBirth = true;
-          }
-        }
+          this.timePassedSinceBred = 0;
+          a.timePassedSinceBred = 0;
+          //gaveBirth = true;
+        }          
       }
     }
   }
@@ -97,12 +98,18 @@ class Animal{
     if (target.getDist(this) < 10) {
       this.hunger -= target.nutrition;
       foods.remove(target);
-      //target = new Food (700, 700);
+      target = new Food (700, 700);
+      this.currentSpeed = new PVector(0, 0);
     }
     
-    else {
-      this.xPos -= (this.xPos - target.xPos) / this.speed;
-      this.yPos -= (this.yPos - target.yPos) / this.speed;
+    else if (target.xPos < 700){
+      if (currentSpeed.x == 0 && currentSpeed.y == 0) {
+        this.currentSpeed.x = (this.xPos - target.xPos) / this.speed;
+        this.currentSpeed.y = (this.yPos - target.yPos) / this.speed;
+      } else {
+        this.xPos -= currentSpeed.x;
+        this.yPos -= currentSpeed.y;
+      }
     }
   } 
   
@@ -115,7 +122,7 @@ class Animal{
   }
   
   void updateStats() {
-    this.hunger += 0.005 * size;
+    this.hunger += 0.01 * size;
     this.age += 1;
   }
   

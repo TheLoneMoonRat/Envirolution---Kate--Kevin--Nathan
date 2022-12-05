@@ -2,25 +2,32 @@ import g4p_controls.*;
 
 int population;
 int timePassed;
+float foodRate;
 ArrayList<Animal> animals;
 ArrayList<Food> foods;
 Habitat field;
 ArrayList<Animal> selected;
 String setting;
+boolean hungerTag;
+float nutritionAdjuster;
 
 void setup() {
   size(700, 700);
   animals = new ArrayList<Animal>();
   foods = new ArrayList<Food>();
   selected = new ArrayList<Animal>();
-  animals.add(new Animal(5, 5, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500)));
-  animals.add(new Animal (6, 7, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500)));
+  //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
+  animals.add(new Animal(5, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (6, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
+  foodRate = food_growth.getValueF();
+  hungerTag = false;
 }
 
 void draw() {
+  noStroke();
   guiUpdate();
   background(0, 0, 255);
   fill(field.getColour());
@@ -33,17 +40,18 @@ void draw() {
     if (a.hunger > 20) {
       a.eat();
     }
-    //a.calculateBirths();
+    a.calculateBirths();
     //a.calculateDeaths();
   }
   
   for (Food f: foods) {
     f.drawFood();
   }
-  if (timePassed % 300 == 0) 
+  if (timePassed % int(foodRate) == 0) 
     createFood();
     
   timePassed++;
+  updateLabel();
   
   //mouse hovering over animal
   for (Animal a: animals) {
@@ -78,11 +86,26 @@ void guiUpdate() {
     } else if (setting.equals("Size")) {
       a.size = variable_slide.getValueF();
     } else if (setting.equals("Speed")) {
-      a.speed = variable_slide.getValueF();
+      a.speed = 85 - variable_slide.getValueF();
+    } else if (setting.equals("Vision")) {
+      a.vision = variable_slide.getValueF();
     }
   }
 }
 
 void createFood() {
-    foods.add(new Food(random(25, 40), 10, color(random(0, 255), random(0, 255), random(0, 255)), random(150, 500), random(150, 500)));
+  float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);
+  foods.add(new Food(nutritionValue, 10, color((nutritionValue / (80 + nutritionAdjuster)) * 255, 252, 3), random(150, 500), random(150, 500)));
+}
+
+void updateLabel() {
+  if (hungerTag) {
+    for (Animal a: animals) {
+      fill(a.animalColour);
+      textSize(a.size * 3);
+      text(int(a.hunger), a.xPos, a.yPos - a.size * 3);
+    }
   }
+}
+  
+  
