@@ -165,8 +165,10 @@ class Animal{
   }
   
   void calculateDeaths() {
-    if (this.hunger > 10 || this.age > 30) 
-      animals.remove(this);
+    if (this.hunger > 100 || this.age > 3500) {
+      this.animalColour = color(0);
+      dying.add(this);
+    }
   }
 }
           
