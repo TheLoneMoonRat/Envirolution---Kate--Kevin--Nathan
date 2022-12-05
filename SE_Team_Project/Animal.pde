@@ -70,7 +70,6 @@ class Animal{
     }
   }
   
-  
   void drawAnimal() {
     fill(animalColour);
     //draw head
@@ -97,23 +96,45 @@ class Animal{
     animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
 
-  void calculateBirths() {
-    if (this.gender && this.age > 1500 && this.hunger < 5 && timePassed >= this.breedingRate) {
+  void choosePartner() {
+    if (this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
       //boolean gaveBirth = false;
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
-        if (a.timePassedSinceBred >= a.breedingRate && this.vision > dist && !a.gender &&a.age > 1500) {
+        if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && !a.gender && a.age > 1500) {
           //for (int x = 0; x < this.babyAmt; x++) 
           this.partner = a;
           this.timePassedSinceBred = 0;
-          partner.timePassedSinceBred = 0;
-          inLabour.add(this);
+          this.partner.timePassedSinceBred = 0;
           break;
-          //gaveBirth = true;
-        }          
+        }
       }
     }
   }
+  
+  void calculateBirths() {
+    try {
+      float dist = sqrt(pow((this.xPos - this.partner.xPos), 2) + pow((this.yPos - this.partner.yPos), 2));
+      if (dist < 10) {
+          inLabour.add(this);
+          this.currentSpeed = new PVector(0, 0);
+        }
+      else if (partner.xPos < 700) {
+        if (currentSpeed.x == 0 && currentSpeed.y == 0) { 
+            this.currentSpeed.x = (this.xPos - this.partner.xPos) / this.speed;
+            this.currentSpeed.y = (this.yPos - this.partner.yPos) / this.speed;
+          }
+        else {
+          this.xPos -= currentSpeed.x;
+          this.yPos -= currentSpeed.y;
+      }
+    }
+  }
+  
+  catch (Exception e) {
+    choosePartner();
+  }
+}
   
   void eat() {
     this.chooseFood();

@@ -22,7 +22,7 @@ class Food {
   //methods
   void drawFood() {
     fill(this.foodColour);
-    rect(xPos, yPos, 5, 5);
+    circle(xPos, yPos, this.nutrition / 10);
   }
   
   float getDist(Animal a) {

@@ -1,6 +1,12 @@
 import g4p_controls.*;
 
 int population;
+float breedingRate;
+int speed;
+int size;
+boolean gender;
+float agression;
+float vision;
 int timePassed;
 float foodRate;
 ArrayList<Animal> animals;
@@ -12,15 +18,17 @@ ArrayList<Animal> selected;
 String setting;
 boolean hungerTag;
 boolean ageTag;
+boolean play;
 float nutritionAdjuster;
 
 void setup() {
   size(700, 700);
   animals = new ArrayList<Animal>();
-  foods = new ArrayList<Food>();
+  foods = new ArrayList<Food>();  
   selected = new ArrayList<Animal>();
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
+   
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
   animals.add(new Animal(1000, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal (1000, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
@@ -30,54 +38,59 @@ void setup() {
   foodRate = food_growth.getValueF();
   hungerTag = false;
   ageTag = false;
+  play = true;
 }
 
 void draw() {
   noStroke();
   guiUpdate();
-  background(0, 0, 255);
-  fill(field.getColour());
-  circle(350, 350, 500);
   
-  //update animals
-  for (Animal a : animals) {
-    a.updateStats();
-    a.drawAnimal();
-    if (a.hunger > 20) {
-      a.eat();
+  if (play == true) {
+    background(0, 0, 255);
+    fill(field.getColour());
+    circle(350, 350, 500);
+  
+    //update animals
+    for (Animal a : animals) {
+      a.updateStats();
+      a.drawAnimal();
+      if (a.hunger > 20) {
+        a.eat();
+      }
+      a.calculateBirths();
+      a.calculateDeaths();
     }
-    a.calculateBirths();
-    a.calculateDeaths();
-  }
   
-  //birth and death
-  for (Animal a: inLabour) 
-    a.createChild(a.partner);  
-  for (Animal a: dying) {
+    //birth and death
+    for (Animal a: inLabour) {
+      a.createChild(a.partner); 
+      a.partner = null; }
+    for (Animal a: dying) {
       animals.remove(animals.indexOf(a));
-  }
-  dying.clear();
-  inLabour.clear();
+    }
+    dying.clear();
+    inLabour.clear();
   
-  for (Food f: foods) {
-    f.drawFood();
-  }
-  if (timePassed % int(foodRate) == 0) 
-    createFood();
+    for (Food f: foods) {
+      f.drawFood();
+    }
+    if (timePassed % int(foodRate) == 0) 
+      createFood();
     
-  timePassed++;
-  updateLabel();
+    timePassed++;
+    updateLabel();
   
-  //mouse hovering over animal
-  for (Animal a: animals) {
-    if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
-      if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
-        noFill();
-        strokeWeight(2.5);
-        stroke(255, 215, 0);
-        circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
-        stroke(0);
-        strokeWeight(1);
+    //mouse hovering over animal
+    for (Animal a: animals) {
+      if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
+        if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
+          noFill();
+          strokeWeight(2.5);
+          stroke(255, 215, 0);
+          circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+          stroke(0);
+          strokeWeight(1);
+        }
       }
     }
   }

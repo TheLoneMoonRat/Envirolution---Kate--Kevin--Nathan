@@ -37,13 +37,22 @@ public void dropList1_click(GDropList source, GEvent event) { //_CODE_:variable_
   }
 } //_CODE_:variable_adjuster:515417:
 
-public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:225846:
-  println("button1 - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:button1:225846:
+public void pauseButtonClick(GButton source, GEvent event) { //_CODE_:pauseButton:225846:
+  if (play == true) {
+    play = false;
+    pauseButton.setLocalColorScheme(1);
+    pauseButton.setText("Play");
+  }
+  else {
+    play = true;
+    pauseButton.setLocalColorScheme(0);
+    pauseButton.setText("Pause");
+  }
+} //_CODE_:pauseButton:225846:
 
-public void button2_click1(GButton source, GEvent event) { //_CODE_:button2:744844:
+public void resetButtonClick(GButton source, GEvent event) { //_CODE_:resetButton:744844:
   println("button2 - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:button2:744844:
+} //_CODE_:resetButton:744844:
 
 public void change_food_growth(GSlider source, GEvent event) { //_CODE_:food_growth:542565:
   foodRate = food_growth.getValueF();
@@ -53,17 +62,13 @@ public void slider2_change1(GSlider source, GEvent event) { //_CODE_:nutrition:4
   nutritionAdjuster = nutrition.getValueF();
 } //_CODE_:nutrition:448061:
 
-public void slider3_change1(GSlider source, GEvent event) { //_CODE_:temperature:397728:
-  println("slider3 - GSlider >> GEvent." + event + " @ " + millis());
+public void temperatureChange(GSlider source, GEvent event) { //_CODE_:temperature:397728:
+  field.temp = temperature.getValueF();
 } //_CODE_:temperature:397728:
 
 public void slider4_change1(GSlider source, GEvent event) { //_CODE_:humidity:572888:
   println("slider4 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:humidity:572888:
-
-public void slider5_change1(GSlider source, GEvent event) { //_CODE_:pack_size:227894:
-  println("slider5 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:pack_size:227894:
 
 public void slider6_change1(GSlider source, GEvent event) { //_CODE_:breeding_rate:257243:
   println("slider6 - GSlider >> GEvent." + event + " @ " + millis());
@@ -94,14 +99,24 @@ public void changeVisibility(GButton source, GEvent event) { //_CODE_:shouldShow
   if (showVariables.getSelectedText().equals("Hunger") || showVariables.getSelectedText().equals("")) {
     if (!hungerTag) {
       hungerTag = true;
+      shouldShow.setText("Hide Variables");
+      shouldShow.setLocalColorScheme(0);
     } else {
       hungerTag = false;
+      shouldShow.setText("Show Variables");
+      shouldShow.setLocalColorScheme(1);
     }
   } else if (showVariables.getSelectedText().equals("Age")) {
-    if (!ageTag) 
+    if (!ageTag) {
       ageTag = true;
-    else 
+      shouldShow.setText("Hide Variables");
+      shouldShow.setLocalColorScheme(0);
+    }
+    else {
       ageTag = false;
+      shouldShow.setText("Show Variables");
+      shouldShow.setLocalColorScheme(1);
+    }
   }
 } //_CODE_:shouldShow:579965:
 
@@ -118,20 +133,22 @@ public void createGUI(){
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
-  variable_slide = new GCustomSlider(window1, 365, 191, 127, 40, "grey_blue");
+  variable_slide = new GCustomSlider(window1, 364, 183, 127, 40, "grey_blue");
   variable_slide.setLimits(0.5, 0.0, 1.0);
   variable_slide.setNumberFormat(G4P.DECIMAL, 2);
   variable_slide.setOpaque(false);
   variable_slide.addEventHandler(this, "custom_slider1_change1");
-  variable_adjuster = new GDropList(window1, 365, 167, 90, 80, 3, 10);
+  variable_adjuster = new GDropList(window1, 234, 196, 90, 80, 3, 10);
   variable_adjuster.setItems(loadStrings("list_515417"), 0);
   variable_adjuster.addEventHandler(this, "dropList1_click");
-  button1 = new GButton(window1, 12, 12, 80, 30);
-  button1.setText("Pause");
-  button1.addEventHandler(this, "button1_click1");
-  button2 = new GButton(window1, 102, 12, 80, 30);
-  button2.setText("Reset");
-  button2.addEventHandler(this, "button2_click1");
+  pauseButton = new GButton(window1, 12, 12, 80, 30);
+  pauseButton.setText("Pause");
+  pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
+  pauseButton.addEventHandler(this, "pauseButtonClick");
+  resetButton = new GButton(window1, 102, 12, 80, 30);
+  resetButton.setText("Reset");
+  resetButton.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+  resetButton.addEventHandler(this, "resetButtonClick");
   label1 = new GLabel(window1, 11, 66, 80, 20);
   label1.setText("Enviroment");
   label1.setOpaque(false);
@@ -147,68 +164,75 @@ public void createGUI(){
   label3.setText("Nutrition");
   label3.setOpaque(false);
   nutrition = new GSlider(window1, 10, 190, 168, 40, 10.0);
-  nutrition.setLimits(0.0, -35.0, 35.0);
+  nutrition.setLimits(35.0, 0.0, 70.0);
+  nutrition.setNbrTicks(7);
+  nutrition.setShowTicks(true);
   nutrition.setNumberFormat(G4P.DECIMAL, 2);
   nutrition.setOpaque(false);
   nutrition.addEventHandler(this, "slider2_change1");
   label4 = new GLabel(window1, 10, 240, 150, 20);
-  label4.setText("Average Temperature");
+  label4.setText("Temperature");
   label4.setOpaque(false);
   temperature = new GSlider(window1, 10, 262, 167, 40, 10.0);
-  temperature.setLimits(0.5, 0.0, 1.0);
+  temperature.setLimits(20.0, -40.0, 60.0);
+  temperature.setNbrTicks(10);
+  temperature.setShowTicks(true);
   temperature.setNumberFormat(G4P.DECIMAL, 2);
   temperature.setOpaque(false);
-  temperature.addEventHandler(this, "slider3_change1");
+  temperature.addEventHandler(this, "temperatureChange");
   label5 = new GLabel(window1, 9, 313, 120, 21);
   label5.setText("Humidity");
   label5.setOpaque(false);
   humidity = new GSlider(window1, 9, 336, 168, 40, 10.0);
-  humidity.setLimits(0.5, 0.0, 1.0);
+  humidity.setLimits(5.0, 0.0, 10.0);
+  humidity.setNbrTicks(5);
+  humidity.setShowTicks(true);
   humidity.setNumberFormat(G4P.DECIMAL, 2);
   humidity.setOpaque(false);
   humidity.addEventHandler(this, "slider4_change1");
   label6 = new GLabel(window1, 226, 64, 80, 20);
   label6.setText("Animal");
   label6.setOpaque(false);
-  label7 = new GLabel(window1, 225, 96, 80, 20);
-  label7.setText("Pack Size");
-  label7.setOpaque(false);
-  pack_size = new GSlider(window1, 224, 117, 125, 40, 10.0);
-  pack_size.setLimits(0.5, 0.0, 1.0);
-  pack_size.setNumberFormat(G4P.DECIMAL, 2);
-  pack_size.setOpaque(false);
-  pack_size.addEventHandler(this, "slider5_change1");
   label8 = new GLabel(window1, 367, 95, 95, 20);
   label8.setText("Breeding Rate");
   label8.setOpaque(false);
   breeding_rate = new GSlider(window1, 367, 116, 124, 40, 10.0);
   breeding_rate.setLimits(0.5, 0.0, 1.0);
+  breeding_rate.setNbrTicks(5);
+  breeding_rate.setShowTicks(true);
   breeding_rate.setNumberFormat(G4P.DECIMAL, 2);
   breeding_rate.setOpaque(false);
   breeding_rate.addEventHandler(this, "slider6_change1");
-  label9 = new GLabel(window1, 222, 170, 95, 20);
+  label9 = new GLabel(window1, 226, 95, 95, 20);
   label9.setText("Litter Size");
   label9.setOpaque(false);
-  litter_size = new GSlider(window1, 222, 190, 125, 40, 10.0);
-  litter_size.setLimits(0.5, 0.0, 1.0);
+  litter_size = new GSlider(window1, 225, 116, 125, 40, 10.0);
+  litter_size.setLimits(2.0, 0.0, 25.0);
+  litter_size.setNbrTicks(5);
+  litter_size.setStickToTicks(true);
+  litter_size.setShowTicks(true);
   litter_size.setNumberFormat(G4P.DECIMAL, 2);
   litter_size.setOpaque(false);
   litter_size.addEventHandler(this, "slider7_change1");
   togGroup1 = new GToggleGroup();
   rabbit = new GButton(window1, 225, 344, 80, 30);
   rabbit.setText("Rabbit");
+  rabbit.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   rabbit.addEventHandler(this, "button3_click1");
   frog = new GButton(window1, 317, 343, 80, 30);
   frog.setText("Frog");
+  frog.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   frog.addEventHandler(this, "button4_click1");
   lizard = new GButton(window1, 411, 343, 80, 30);
   lizard.setText("Lizard");
+  lizard.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   lizard.addEventHandler(this, "button5_click1");
-  showVariables = new GDropList(window1, 365, 246, 90, 80, 3, 10);
+  showVariables = new GDropList(window1, 235, 271, 90, 80, 3, 10);
   showVariables.setItems(loadStrings("list_365506"), 0);
   showVariables.addEventHandler(this, "showVariables_change");
-  shouldShow = new GButton(window1, 370, 276, 80, 30);
-  shouldShow.setText("Show variable?");
+  shouldShow = new GButton(window1, 384, 266, 80, 30);
+  shouldShow.setText("Show Variables");
+  shouldShow.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   shouldShow.addEventHandler(this, "changeVisibility");
   window1.loop();
 }
@@ -218,8 +242,8 @@ public void createGUI(){
 GWindow window1;
 GCustomSlider variable_slide; 
 GDropList variable_adjuster; 
-GButton button1; 
-GButton button2; 
+GButton pauseButton; 
+GButton resetButton; 
 GLabel label1; 
 GLabel label2; 
 GSlider food_growth; 
@@ -230,8 +254,6 @@ GSlider temperature;
 GLabel label5; 
 GSlider humidity; 
 GLabel label6; 
-GLabel label7; 
-GSlider pack_size; 
 GLabel label8; 
 GSlider breeding_rate; 
 GLabel label9; 
