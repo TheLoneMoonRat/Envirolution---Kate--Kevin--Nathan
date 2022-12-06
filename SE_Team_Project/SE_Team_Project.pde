@@ -2,6 +2,7 @@ import g4p_controls.*;
 
 int population;
 float breedingRate;
+int litterSize;
 int speed;
 int size;
 boolean gender;
@@ -65,7 +66,8 @@ void draw() {
   
     //birth and death
     for (Animal a: inLabour) {
-      a.createChild(a.partner); 
+      for (int i = litterSize; i > 0; i--)
+        a.createChild(a.partner); 
       a.partner = null; }
     for (Animal a: dying) {
       animals.remove(animals.indexOf(a));

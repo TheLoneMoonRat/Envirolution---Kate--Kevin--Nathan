@@ -77,7 +77,7 @@ public void slider6_change1(GSlider source, GEvent event) { //_CODE_:breeding_ra
 } //_CODE_:breeding_rate:257243:
 
 public void slider7_change1(GSlider source, GEvent event) { //_CODE_:litter_size:934872:
-  println("slider7 - GSlider >> GEvent." + event + " @ " + millis());
+  litterSize = litter_size.getValueI();
 } //_CODE_:litter_size:934872:
 
 public void button3_click1(GButton source, GEvent event) { //_CODE_:rabbit:278587:
