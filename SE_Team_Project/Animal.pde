@@ -99,7 +99,7 @@ class Animal{
     } else {
       tempGender = false;
     }
-    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
+    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-30, 30), this.yPos - random(-30, 30), tempSize));
   }
 
   void choosePartner() {
