@@ -39,8 +39,8 @@ class Animal{
     this.partner = null;
     this.finalSize = this.size;
     
-    //this.currentSpeed.x = random(0, 4);
-    //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    this.currentSpeed.x = random(0, 4);
+    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y, float fs) {
     this.age = 0;
@@ -61,8 +61,8 @@ class Animal{
     this.partner = null;
     this.finalSize = fs;
     
-    //this.currentSpeed.x = random(0, 4);
-    //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    this.currentSpeed.x = random(0, 4);
+    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
 
   //methods
@@ -123,9 +123,8 @@ class Animal{
       float dist = sqrt(pow((this.xPos - this.partner.xPos), 2) + pow((this.yPos - this.partner.yPos), 2));
       if (dist < 10) {
           inLabour.add(this);
-          //this.currentSpeed.x = random(0, 4);
-          //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-          this.currentSpeed = new PVector(0, 0);
+          this.currentSpeed.x = random(0, 4);
+          this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
         }
       else if (this.vision > dist) {
           this.currentSpeed.x = (this.xPos - this.partner.xPos) / this.speed * -1;
@@ -146,14 +145,13 @@ class Animal{
       this.hunger -= target.nutrition;
       foods.remove(target);
       target = new Food (700, 700);
-      //this.currentSpeed.x = random(0, 4);
-      //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      this.currentSpeed = new PVector(0, 0);
+      this.currentSpeed.x = random(0, 4);
+      this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
     }
     
     else if (this.vision > target.getDist(this)){
-      this.currentSpeed.x = (this.xPos - target.xPos) / this.speed * -1;
-      this.currentSpeed.y = (this.yPos - target.yPos) / this.speed * -1;
+      this.currentSpeed.x = (this.xPos - target.xPos) / 20 * -1;
+      this.currentSpeed.y = (this.yPos - target.yPos) / 20 * -1;
       this.xPos += this.currentSpeed.x;
       this.yPos += this.currentSpeed.y;
     }
