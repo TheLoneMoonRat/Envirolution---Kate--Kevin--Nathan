@@ -28,15 +28,17 @@ void setup() {
   selected = new ArrayList<Animal>();
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
-   
+  breedingRate = 0;
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
-  animals.add(new Animal(1000, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (1000, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(1000 + breedingRate, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (1000 + breedingRate, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
   foodRate = food_growth.getValueF();
-  hungerTag = false;
+  shouldShow.setText("Hide Variables");
+  shouldShow.setLocalColorScheme(0);
+  hungerTag = true;
   ageTag = false;
   play = true;
 }
@@ -119,6 +121,7 @@ void guiUpdate() {
       a.vision = variable_slide.getValueF();
     }
   }
+  
 }
 
 void createFood() {
@@ -141,6 +144,13 @@ void updateLabel() {
       text(int(a.age), a.xPos, a.yPos - a.size * 3);
     }
   }
+}
+
+void reset() {
+  animals.clear();
+  foods.clear();
+  animals.add(new Animal(1000 + breedingRate, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (1000 + breedingRate, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
 }
   
   

@@ -40,18 +40,20 @@ public void dropList1_click(GDropList source, GEvent event) { //_CODE_:variable_
 public void pauseButtonClick(GButton source, GEvent event) { //_CODE_:pauseButton:225846:
   if (play == true) {
     play = false;
+    noLoop();
     pauseButton.setLocalColorScheme(1);
     pauseButton.setText("Play");
   }
   else {
     play = true;
+    loop();
     pauseButton.setLocalColorScheme(0);
     pauseButton.setText("Pause");
   }
 } //_CODE_:pauseButton:225846:
 
 public void resetButtonClick(GButton source, GEvent event) { //_CODE_:resetButton:744844:
-  println("button2 - GButton >> GEvent." + event + " @ " + millis());
+  reset();
 } //_CODE_:resetButton:744844:
 
 public void change_food_growth(GSlider source, GEvent event) { //_CODE_:food_growth:542565:
@@ -71,7 +73,7 @@ public void slider4_change1(GSlider source, GEvent event) { //_CODE_:humidity:57
 } //_CODE_:humidity:572888:
 
 public void slider6_change1(GSlider source, GEvent event) { //_CODE_:breeding_rate:257243:
-  println("slider6 - GSlider >> GEvent." + event + " @ " + millis());
+  breedingRate = -breeding_rate.getValueF();
 } //_CODE_:breeding_rate:257243:
 
 public void slider7_change1(GSlider source, GEvent event) { //_CODE_:litter_size:934872:
@@ -196,8 +198,8 @@ public void createGUI(){
   label8 = new GLabel(window1, 367, 95, 95, 20);
   label8.setText("Breeding Rate");
   label8.setOpaque(false);
-  breeding_rate = new GSlider(window1, 367, 116, 124, 40, 10.0);
-  breeding_rate.setLimits(0.5, 0.0, 1.0);
+  breeding_rate = new GSlider(window1, 364, 116, 124, 40, 10.0);
+  breeding_rate.setLimits(0.0, -800.0, 1000.0);
   breeding_rate.setNbrTicks(5);
   breeding_rate.setShowTicks(true);
   breeding_rate.setNumberFormat(G4P.DECIMAL, 2);
