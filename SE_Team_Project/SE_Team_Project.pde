@@ -30,8 +30,8 @@ void setup() {
   dying = new ArrayList<Animal>();
   breedingRate = 0;
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
-  animals.add(new Animal(1000 + breedingRate, 40, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (1000 + breedingRate, 35, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(1000 + breedingRate, 4, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(1000 + breedingRate, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
@@ -56,6 +56,7 @@ void draw() {
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();
+      //a.updatePosition();
       if (a.hunger > 20) {
         a.eat();
       }
@@ -126,7 +127,17 @@ void guiUpdate() {
 
 void createFood() {
   float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);
-  foods.add(new Food(nutritionValue, 10, color((nutritionValue / (80 + nutritionAdjuster)) * 255, 252, 3), random(150, 500), random(150, 500)));
+  float dist = 500;
+  float x = 0;
+  float y = 0;
+  
+  while (dist >= 230) {
+    x = random(150, 500);
+    y = random(150, 500);
+    dist = sqrt(pow(x - width/2, 2) + pow(y - height/2, 2));
+  }
+    
+  foods.add(new Food(nutritionValue, 10, color((nutritionValue / (80 + nutritionAdjuster)) * 255, 252, 3), x, y));
 }
 
 void updateLabel() {
