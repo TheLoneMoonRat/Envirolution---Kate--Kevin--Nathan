@@ -47,7 +47,7 @@ class Animal{
     this.breedingRate = br;
     this.babyAmt = 0;
     this.speed = sp;
-    this.hunger = 80;
+    this.hunger = 50;
     this.size = si;
     this.gender = ge;
     this.aggression = ag;
@@ -86,25 +86,28 @@ class Animal{
   
   void createChild(Animal partner) {
     boolean tempGender;
+    float tempSize;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
     float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
     float tempAggression = ((this.aggression + partner.aggression) / 2) * random(0.8, 1.2);
-    float tempSize = ((this.size + partner.size) / 2) * random(0.8, 1.2);
-    float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
+      float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
     float tempRed = (red(this.animalColour) + red(partner.animalColour)) / 2;
     float tempGreen = (green(this.animalColour) + green(partner.animalColour)) / 2;
     float tempBlue = (blue(this.animalColour) + blue(partner.animalColour)) / 2;
     if (int(random(0,2)) == 0 ) {
       tempGender = true;
+      tempSize = ((this.size + partner.size) / 2) * random(0.6, 1);
+    
     } else {
       tempGender = false;
+      tempSize = ((this.size + partner.size) / 2) * random(1, 1.6);
+
     }
     animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-30, 30), this.yPos - random(-30, 30), tempSize));
   }
 
   void choosePartner() {
     if (this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
-      //boolean gaveBirth = false;
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
         if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && !a.gender && a.age > 1500) {
@@ -145,8 +148,7 @@ class Animal{
       if (targetInFoods()) {
         if (this.target.getDist(this) < this.aggression) {
           this.hunger -= this.target.nutrition;
-          
-            foods.remove(foods.indexOf(this.target));
+          foods.remove(foods.indexOf(this.target));
           this.target = new Food (700, 700);
           //this.currentSpeed.x = random(0, 4);
           //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));

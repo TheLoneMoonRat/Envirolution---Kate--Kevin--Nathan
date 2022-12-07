@@ -30,7 +30,7 @@ void setup() {
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
   breedingRate = 0;
-  litterSize = 1;
+  litterSize = 2;
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
   animals.add(new Animal(1000 + breedingRate, 40, 8, false, 20, 400, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal(1000 + breedingRate, 30, 5, true, 4, 400, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
@@ -81,7 +81,7 @@ void draw() {
     for (Food f: foods) {
       f.drawFood();
     }
-    if (timePassed % int(foodRate) == 0) 
+    if (timePassed % int(400 - foodRate) == 0) 
       createFood();
     
     timePassed++;

@@ -158,7 +158,7 @@ public void createGUI(){
   label2.setText("Food Growth Rate");
   label2.setOpaque(false);
   food_growth = new GSlider(window1, 9, 119, 170, 40, 10.0);
-  food_growth.setLimits(300.0, 50.0, 900.0);
+  food_growth.setLimits(200.0, 0.0, 390.0);
   food_growth.setNumberFormat(G4P.DECIMAL, 2);
   food_growth.setOpaque(false);
   food_growth.addEventHandler(this, "change_food_growth");
@@ -209,7 +209,7 @@ public void createGUI(){
   label9.setText("Litter Size");
   label9.setOpaque(false);
   litter_size = new GSlider(window1, 225, 116, 125, 40, 10.0);
-  litter_size.setLimits(2.0, 0.0, 25.0);
+  litter_size.setLimits(2.0, 0.0, 10.0);
   litter_size.setNbrTicks(5);
   litter_size.setStickToTicks(true);
   litter_size.setShowTicks(true);
