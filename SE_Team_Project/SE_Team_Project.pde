@@ -161,6 +161,8 @@ void draw() {
     litterSize.setVisible(true);
     animalTrait.setVisible(true);
     animalTraits.setVisible(true);
+    breedingRateText.setVisible(true);
+    litterSizeText.setVisible(true);
   }
   
   if (play && simulation) {
