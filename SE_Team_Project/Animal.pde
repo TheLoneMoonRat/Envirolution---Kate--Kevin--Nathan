@@ -1,4 +1,4 @@
-class Animal{
+class Animal {
   //fields
   int age;
   int timePassedSinceBred;
@@ -18,7 +18,7 @@ class Animal{
   String foodSource;
   Animal partner;
   float finalSize;
-  
+
   //constructor
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y) {
     this.age = 0;
@@ -38,7 +38,7 @@ class Animal{
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = this.size;
-    
+
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
@@ -60,7 +60,7 @@ class Animal{
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = fs;
-    
+
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
@@ -75,7 +75,7 @@ class Animal{
       this.speed = animal1Traits.getValueF();
     }
   }
-  
+
   void drawAnimal() {
     fill(animalColour);
     //draw head
@@ -83,7 +83,7 @@ class Animal{
     //draw body
     rect(this.xPos + this.size, this.yPos - (this.size/2), this.size * 3, this.size * 2);
   }
-  
+
   void createChild(Animal partner) {
     boolean tempGender;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
@@ -94,7 +94,7 @@ class Animal{
     float tempRed = (red(this.animalColour) + red(partner.animalColour)) / 2;
     float tempGreen = (green(this.animalColour) + green(partner.animalColour)) / 2;
     float tempBlue = (blue(this.animalColour) + blue(partner.animalColour)) / 2;
-    if (int(random(0,2)) == 0 ) {
+    if (int(random(0, 2)) == 0 ) {
       tempGender = true;
     } else {
       tempGender = false;
@@ -117,92 +117,101 @@ class Animal{
       }
     }
   }
-  
+
   void calculateBirths() {
     try {
       float dist = sqrt(pow((this.xPos - this.partner.xPos), 2) + pow((this.yPos - this.partner.yPos), 2));
       if (dist < 10) {
-          inLabour.add(this);
+        inLabour.add(this);
+        this.currentSpeed.x = random(-2, 2);
+        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+      } else if (this.vision > dist) {
+        this.currentSpeed.x = (this.xPos - this.partner.xPos) / this.speed * -1;
+        this.currentSpeed.y = (this.yPos - this.partner.yPos) / this.speed * -1;
+        this.xPos += this.currentSpeed.x;
+        this.yPos += this.currentSpeed.y;
+      }
+    }
+
+    catch (Exception e) {
+      choosePartner();
+    }
+  }
+
+  void eat() {
+    if (foods.size() > 0) {
+      this.chooseFood();
+      if (foods.contains(target)) {
+        if (target.getDist(this) < this.aggression) {
+          for (Animal a: animals) {
+            if (a.target == this.target && a.aggression *a.size > this.aggression * this.size && target.getDist(a) < a.aggression * 1.5) {
+              target = new Food(700, 700);
+              break;
+            }
+          }
+          if (target.xPos < 700) {
+            this.hunger -= target.nutrition;
+            foods.remove(target);
+            target = new Food (700, 700);
+          }
           this.currentSpeed.x = random(-2, 2);
           this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-        }
-      else if (this.vision > dist) {
-          this.currentSpeed.x = (this.xPos - this.partner.xPos) / this.speed * -1;
-          this.currentSpeed.y = (this.yPos - this.partner.yPos) / this.speed * -1;
-          this.xPos += this.currentSpeed.x;
-          this.yPos += this.currentSpeed.y;
+        } else if (this.vision > target.getDist(this)) {
+          this.currentSpeed.x = (this.xPos - target.xPos) / 20 * -1;
+          this.currentSpeed.y = (this.yPos - target.yPos) / 20 * -1;
+          moveAnimal();
         }
       }
-  
-  catch (Exception e) {
-    choosePartner();
-  }
-}
-  
-  void eat() {
-    this.chooseFood();
-    if (target.getDist(this) < 10) {
-      this.hunger -= target.nutrition;
-      foods.remove(target);
-      target = new Food (700, 700);
-      this.currentSpeed.x = random(-2, 2);
-      this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-    }
-    
-    else if (this.vision > target.getDist(this)){
-      this.currentSpeed.x = (this.xPos - target.xPos) / 20 * -1;
-      this.currentSpeed.y = (this.yPos - target.yPos) / 20 * -1;
-      this.xPos += this.currentSpeed.x;
-      this.yPos += this.currentSpeed.y;
     }
   }
   
-  
+  void moveAnimal() {
+    this.xPos += currentSpeed.x;
+    this.yPos += currentSpeed.y;
+  }
+
+
   void chooseFood () {
-    for (Food f: foods) {
+    for (Food f : foods) {
       if (f.getDist(this) < this.vision && f.getDist(this) < target.getDist(this)) {
-        target = f;  
+        target = f;
       }
     }
   }
-  
+
   void updateStats() {
     if (this.size < this.finalSize) {
       this.hunger += 0.02 * this.finalSize;
       if (this.age % 150 == 0)
-        this.size += this.finalSize / 10; 
+        this.size += this.finalSize / 10;
     } else {
       this.hunger += 0.01 * this.size;
     }
     this.age += 1;
     this.timePassedSinceBred++;
   }
-  
+
   void updatePosition() {
     float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
     if (dist >= 245) {
       if (this.xPos < width/2 && this.yPos < height/2) {
         this.currentSpeed.x = random(0, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      }
-      else if (this.xPos > width/2 && this.yPos < height/2) {
+      } else if (this.xPos > width/2 && this.yPos < height/2) {
         this.currentSpeed.x = random(-2, 0);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      }
-      else if (this.xPos > width/2 && this.yPos > height/2) {
+      } else if (this.xPos > width/2 && this.yPos > height/2) {
         this.currentSpeed.x = random(-2, 0);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-      }
-      else if (this.xPos < width/2 && this.yPos > height/2) {
+      } else if (this.xPos < width/2 && this.yPos > height/2) {
         this.currentSpeed.x = random(0, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
       }
     }
-      
-    this.xPos += currentSpeed.x;
-    this.yPos += currentSpeed.y;
+
+    moveAnimal();
   }
-  
+
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > 3500) {
       this.animalColour = color(0);
