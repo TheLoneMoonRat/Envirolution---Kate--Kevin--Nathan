@@ -39,7 +39,7 @@ class Animal{
     this.partner = null;
     this.finalSize = this.size;
     
-    this.currentSpeed.x = random(0, 4);
+    this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y, float fs) {
@@ -61,18 +61,18 @@ class Animal{
     this.partner = null;
     this.finalSize = fs;
     
-    this.currentSpeed.x = random(0, 4);
+    this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
 
   //methods
   void guiUpdate() {
     if (setting.equals("Aggression")) {
-      this.aggression = variable_slide.getValueF();
+      this.aggression = animal1Traits.getValueF();
     } else if (setting.equals("Size")) {
-      this.size = variable_slide.getValueF();
+      this.size = animal1Traits.getValueF();
     } else if (setting.equals("Speed")) {
-      this.speed = variable_slide.getValueF();
+      this.speed = animal1Traits.getValueF();
     }
   }
   
@@ -123,7 +123,7 @@ class Animal{
       float dist = sqrt(pow((this.xPos - this.partner.xPos), 2) + pow((this.yPos - this.partner.yPos), 2));
       if (dist < 10) {
           inLabour.add(this);
-          this.currentSpeed.x = random(0, 4);
+          this.currentSpeed.x = random(-2, 2);
           this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
         }
       else if (this.vision > dist) {
@@ -145,7 +145,7 @@ class Animal{
       this.hunger -= target.nutrition;
       foods.remove(target);
       target = new Food (700, 700);
-      this.currentSpeed.x = random(0, 4);
+      this.currentSpeed.x = random(-2, 2);
       this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
     }
     
@@ -182,19 +182,19 @@ class Animal{
     float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
     if (dist >= 245) {
       if (this.xPos < width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(0, 4);
+        this.currentSpeed.x = random(0, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
       }
       else if (this.xPos > width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(-4, 0);
+        this.currentSpeed.x = random(-2, 0);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
       }
       else if (this.xPos > width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(-4, 0);
+        this.currentSpeed.x = random(-2, 0);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
       }
       else if (this.xPos < width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(0, 4);
+        this.currentSpeed.x = random(0, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
       }
     }
