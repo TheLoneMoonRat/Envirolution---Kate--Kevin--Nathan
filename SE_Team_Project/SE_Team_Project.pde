@@ -184,8 +184,11 @@ void draw() {
   
     //birth and death
     for (Animal a: inLabour) {
-      a.createChild(a.partner); 
-      a.partner = null; }
+      for (int i = 0; i < size; i++) {
+        a.createChild(a.partner);  
+      }
+      a.partner = null; 
+    }
     for (Animal a: dying) {
       animals.remove(animals.indexOf(a));
     }
