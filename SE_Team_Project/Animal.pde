@@ -47,7 +47,7 @@ class Animal{
     this.breedingRate = br;
     this.babyAmt = 0;
     this.speed = sp;
-    this.hunger = 0;
+    this.hunger = 80;
     this.size = si;
     this.gender = ge;
     this.aggression = ag;
@@ -85,7 +85,6 @@ class Animal{
   }
   
   void createChild(Animal partner) {
-    println("hello");
     boolean tempGender;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
     float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
@@ -141,31 +140,46 @@ class Animal{
 }
   
   void eat() {
-    this.chooseFood();
-    if (target.getDist(this) < 10) {
-      this.hunger -= target.nutrition;
-      foods.remove(target);
-      target = new Food (700, 700);
-      //this.currentSpeed.x = random(0, 4);
-      //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      this.currentSpeed = new PVector(0, 0);
-    }
-    
-    else if (this.vision > target.getDist(this)){
-      this.currentSpeed.x = (this.xPos - target.xPos) / this.speed * -1;
-      this.currentSpeed.y = (this.yPos - target.yPos) / this.speed * -1;
-      this.xPos += this.currentSpeed.x;
-      this.yPos += this.currentSpeed.y;
+    if (foods.size() > 0) {
+      this.chooseFood();
+      if (targetInFoods()) {
+        if (this.target.getDist(this) < this.aggression) {
+          this.hunger -= this.target.nutrition;
+          
+            foods.remove(foods.indexOf(this.target));
+          this.target = new Food (700, 700);
+          //this.currentSpeed.x = random(0, 4);
+          //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+          this.currentSpeed = new PVector(0, 0);
+        }
+        
+        else if (this.vision > this.target.getDist(this)){
+          this.currentSpeed.x = (this.xPos - this.target.xPos) / this.speed * -1;
+          this.currentSpeed.y = (this.yPos - this.target.yPos) / this.speed * -1;
+          this.xPos += this.currentSpeed.x;
+          this.yPos += this.currentSpeed.y;
+        }
+      }
     }
   }
   
   
   void chooseFood () {
+    if (!targetInFoods()) 
+      target = new Food (700, 700);
     for (Food f: foods) {
-      if (f.getDist(this) < this.vision && f.getDist(this) < target.getDist(this)) {
+      if (f.getDist(this) < this.vision && f.getDist(this) < this.target.getDist(this)) {
         target = f;  
       }
     }
+  }
+  
+  boolean targetInFoods() {
+    for (int i = 0; i < foods.size() -1; i++) {
+      if (foods.get(i) == this.target)
+        return(true);
+    }
+    return(false);
   }
   
   void updateStats() {
@@ -207,7 +221,6 @@ class Animal{
   
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > 3500) {
-      this.animalColour = color(0);
       dying.add(this);
     }
   }
