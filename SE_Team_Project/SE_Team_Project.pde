@@ -32,8 +32,8 @@ void setup() {
   breedingRate = 0;
   litterSize = 2;
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
-  animals.add(new Animal(1000 + breedingRate, 40, 8, false, 20, 400, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(1000 + breedingRate, 30, 5, true, 4, 400, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(1000 + breedingRate, 40, 8, false, 20, 200, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(1000 + breedingRate, 30, 5, true, 4, 200, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   createGUI();
   setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
@@ -58,12 +58,12 @@ void draw() {
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();
-      //a.updatePosition();
       if (a.hunger > 20) {
         a.eat();
       }
       a.calculateBirths();
       a.calculateDeaths();
+      a.updatePosition();
     }
   
     //birth and death

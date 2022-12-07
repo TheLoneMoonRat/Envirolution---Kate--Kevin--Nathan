@@ -13,6 +13,7 @@ class Animal{
   float aggression;
   color animalColour;
   PVector currentSpeed;
+  PVector newLocation;
   Food target;
   boolean gender;
   String foodSource;
@@ -38,6 +39,7 @@ class Animal{
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = this.size;
+    this.newLocation = null;
     
     //this.currentSpeed.x = random(0, 4);
     //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
@@ -60,6 +62,7 @@ class Animal{
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = fs;
+    this.newLocation = null; 
     
     //this.currentSpeed.x = random(0, 4);
     //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
@@ -145,21 +148,28 @@ class Animal{
   void eat() {
     if (foods.size() > 0) {
       this.chooseFood();
-      if (targetInFoods()) {
+      if (foods.contains(target)) {
         if (this.target.getDist(this) < this.aggression) {
-          this.hunger -= this.target.nutrition;
-          foods.remove(foods.indexOf(this.target));
-          this.target = new Food (700, 700);
-          //this.currentSpeed.x = random(0, 4);
-          //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-          this.currentSpeed = new PVector(0, 0);
+          for (Animal a: animals) {
+            if (a.target == this.target && a.aggression * a.size > this.aggression * this.size && target.getDist(a) < a.aggression * 1.5) {
+              target = new Food (700, 700);
+              break;
+            }
+          }
+          if (target.xPos < 700) {
+            this.hunger -= this.target.nutrition;
+            foods.remove(foods.indexOf(this.target));
+            this.target = new Food (700, 700);
+            //this.currentSpeed.x = random(0, 4);
+            //this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+            this.currentSpeed = new PVector(0, 0);
+          }
         }
         
         else if (this.vision > this.target.getDist(this)){
           this.currentSpeed.x = (this.xPos - this.target.xPos) / this.speed * -1;
           this.currentSpeed.y = (this.yPos - this.target.yPos) / this.speed * -1;
-          this.xPos += this.currentSpeed.x;
-          this.yPos += this.currentSpeed.y;
+          moveAnimal();
         }
       }
     }
@@ -167,7 +177,7 @@ class Animal{
   
   
   void chooseFood () {
-    if (!targetInFoods()) 
+    if (!foods.contains(target)) 
       target = new Food (700, 700);
     for (Food f: foods) {
       if (f.getDist(this) < this.vision && f.getDist(this) < this.target.getDist(this)) {
@@ -175,15 +185,6 @@ class Animal{
       }
     }
   }
-  
-  boolean targetInFoods() {
-    for (int i = 0; i < foods.size() -1; i++) {
-      if (foods.get(i) == this.target)
-        return(true);
-    }
-    return(false);
-  }
-  
   void updateStats() {
     if (this.size < this.finalSize) {
       this.hunger += 0.02 * this.finalSize;
@@ -197,26 +198,9 @@ class Animal{
   }
   
   void updatePosition() {
-    float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
-    if (dist >= 245) {
-      if (this.xPos < width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(0, 4);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      }
-      else if (this.xPos > width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(-4, 0);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      }
-      else if (this.xPos > width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(-4, 0);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-      }
-      else if (this.xPos < width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(0, 4);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-      }
-    }
-      
+  }
+  
+  void moveAnimal () {
     this.xPos += currentSpeed.x;
     this.yPos += currentSpeed.y;
   }

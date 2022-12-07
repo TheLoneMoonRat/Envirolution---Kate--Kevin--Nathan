@@ -24,7 +24,7 @@ public void custom_slider1_change1(GCustomSlider source, GEvent event) { //_CODE
 
 public void dropList1_click(GDropList source, GEvent event) { //_CODE_:variable_adjuster:515417:
   setting = variable_adjuster.getSelectedText();  
-  for (Animal a : animals) {
+  for (Animal a : selected) {
     if (setting.equals("Aggression")) {
       variable_slide.setLimits(a.aggression, 1, 10);
     } else if (setting.equals("Size")) {
