@@ -1,6 +1,5 @@
 import g4p_controls.*;
 
-//Global Variables (Don't Change These!)
 int simSpeed = 60;
 int population;
 int timePassed;
@@ -17,6 +16,9 @@ ArrayList<Animal> dying;
 ArrayList<Food> foods;
 ArrayList<Animal> selected;
 String setting;
+boolean hungerTag;
+boolean ageTag;
+boolean play;
 boolean gender;
 Habitat field;
 
@@ -27,52 +29,79 @@ boolean instructionScreen = false;
 boolean setupScreenEnvironment = false;
 boolean setupScreenAnimals = false;
 boolean simulation = false;
-boolean hungerTag = true;
-boolean ageTag = false;
-boolean play = true;
 
-//Setup Program
 void setup() {
-  //Visuals
   size(700, 700);
   frameRate(simSpeed);
   background1 = loadImage("tree.jpg");
   background2 = loadImage("leaves.jpg");
-  createGUI();
-  clearForStart();
 
-  //Create Array Lists
   animals = new ArrayList<Animal>();
   foods = new ArrayList<Food>();  
   selected = new ArrayList<Animal>();
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
   breedingRate = 0;
-  
-  //Create First Animals
+  //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
   animals.add(new Animal(1000 + breedingRate, 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal(1000 + breedingRate, 2, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
-  //Breeding Rate, Speed, Size, Gender (false == male), Aggression, Vision, Colour, X Coordinate, Y Coordinate
   
-  //Create Environment
+  createGUI();
+  //setting = variable_adjuster.getSelectedText();
   field = new Habitat(5, -5, 5);
   foodRate = growthRate.getValueF();
+  hungerTag = true;
+  ageTag = false;
+  play = true;
+  
+  instructions.setVisible(false);
+  returnButton.setVisible(false);
+  growthRate.setVisible(false);
+  nutrition_.setVisible(false);
+  averageTemp.setVisible(false);
+  tempRange.setVisible(false);
+  humidity_.setVisible(false);
+  medow.setVisible(false);
+  artic.setVisible(false);
+  breedingRate1.setVisible(false);
+  litterSize1.setVisible(false);
+  breedingRate2.setVisible(false);
+  litterSize2.setVisible(false);
+  animal1Traits.setVisible(false);
+  animal1Trait.setVisible(false);
+  animal2Traits.setVisible(false);
+  animal2Trait.setVisible(false);
+  pauseButton1.setVisible(false);
+  resetButton1.setVisible(false);
+  showVariables1.setVisible(false);
+  shouldVariables.setVisible(false);
+  breedingRates.setVisible(false);
+  litterSize.setVisible(false);
+  animalTrait.setVisible(false);
+  animalTraits.setVisible(false);
+  beginButton.setVisible(false);
+  backButton.setVisible(false);
+  
+  breedingRateText.setVisible(false);
+  litterSizeText.setVisible(false);
+  growthRateText.setVisible(false);
+  nutritionText.setVisible(false);
+  humidityText.setVisible(false);
+  avgTempText.setVisible(false);
+  tempRangeText.setVisible(false);
+  breedingRate1Text.setVisible(false);
+  breedingRate2Text.setVisible(false);
+  litterSize1Text.setVisible(false);
+  litterSize2Text.setVisible(false);
 }
 
-//Draw
 void draw() {
-  //General Setup
   noStroke();
   guiUpdate();
   
-  //Background for Title and Instruction Screen
   if (titleScreen || instructionScreen) 
     image(background1, 0, 0);
-    
-  if (setupScreenEnvironment || setupScreenAnimals) 
-    image(background2, 0, 0);
   
-  //Visuals for Title
   if (titleScreen) {
     PFont myFont = createFont("Impact", 80);
     textFont(myFont);
@@ -82,14 +111,13 @@ void draw() {
     startButton.setVisible(true);
   }
   
-  //Visuals for Instruction Screen
   else if (instructionScreen) {
     instructions.setVisible(true);
     returnButton.setVisible(true);
   }
   
-  //Visuals for Environment Setup
   else if (setupScreenEnvironment) {
+    image(background2, 0, 0);
     growthRate.setVisible(true);
     nutrition_.setVisible(true);
     averageTemp.setVisible(true);
@@ -112,8 +140,8 @@ void draw() {
     text("Environment", 100, 165);
   }
   
-  //Visuals for Animals Setup
   else if (setupScreenAnimals) {
+    image(background2, 0, 0);
     breedingRate1.setVisible(true);
     litterSize1.setVisible(true);
     breedingRate2.setVisible(true);
@@ -140,7 +168,6 @@ void draw() {
     text("2)", 75, 350);
   }
     
-  //Visuals for Simulation
   if (simulation) {
     pauseButton1.setVisible(true);
     resetButton1.setVisible(true);
@@ -158,7 +185,6 @@ void draw() {
     rect(50, 94, 600, 512);
   }
   
-  //Animation
   if (play && simulation) {
     fill(field.getColour());
     circle(350, 350, 500);
@@ -188,14 +214,12 @@ void draw() {
     dying.clear();
     inLabour.clear();
   
-    //create food
     for (Food f: foods) {
       f.drawFood();
     }
     if (timePassed % foodRate == 0) 
       createFood();
     
-    //update simulation
     timePassed++;
     updateLabel();
   
@@ -306,48 +330,6 @@ void clearAnimalsSetupScreen () {
   animal2Trait.setVisible(false);
   beginButton.setVisible(false);
   backButton.setVisible(false);
-  breedingRate1Text.setVisible(false);
-  breedingRate2Text.setVisible(false);
-  litterSize1Text.setVisible(false);
-  litterSize2Text.setVisible(false);
-}
-
-void clearForStart() {
-  instructions.setVisible(false);
-  returnButton.setVisible(false);
-  growthRate.setVisible(false);
-  nutrition_.setVisible(false);
-  averageTemp.setVisible(false);
-  tempRange.setVisible(false);
-  humidity_.setVisible(false);
-  medow.setVisible(false);
-  artic.setVisible(false);
-  breedingRate1.setVisible(false);
-  litterSize1.setVisible(false);
-  breedingRate2.setVisible(false);
-  litterSize2.setVisible(false);
-  animal1Traits.setVisible(false);
-  animal1Trait.setVisible(false);
-  animal2Traits.setVisible(false);
-  animal2Trait.setVisible(false);
-  pauseButton1.setVisible(false);
-  resetButton1.setVisible(false);
-  showVariables1.setVisible(false);
-  shouldVariables.setVisible(false);
-  breedingRates.setVisible(false);
-  litterSize.setVisible(false);
-  animalTrait.setVisible(false);
-  animalTraits.setVisible(false);
-  beginButton.setVisible(false);
-  backButton.setVisible(false);
-  
-  breedingRateText.setVisible(false);
-  litterSizeText.setVisible(false);
-  growthRateText.setVisible(false);
-  nutritionText.setVisible(false);
-  humidityText.setVisible(false);
-  avgTempText.setVisible(false);
-  tempRangeText.setVisible(false);
   breedingRate1Text.setVisible(false);
   breedingRate2Text.setVisible(false);
   litterSize1Text.setVisible(false);
