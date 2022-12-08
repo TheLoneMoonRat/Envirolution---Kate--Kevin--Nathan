@@ -26,7 +26,8 @@ PImage background1;
 PImage background2;
 boolean titleScreen = true;
 boolean instructionScreen = false;
-boolean setupScreen = false;
+boolean setupScreenEnvironment = false;
+boolean setupScreenAnimals = false;
 boolean simulation = false;
 
 void setup() {
@@ -70,9 +71,6 @@ void setup() {
   animal1Trait.setVisible(false);
   animal2Traits.setVisible(false);
   animal2Trait.setVisible(false);
-  sheepButton.setVisible(false);
-  polarBearButton.setVisible(false);
-  frogButton.setVisible(false);
   pauseButton1.setVisible(false);
   resetButton1.setVisible(false);
   showVariables1.setVisible(false);
@@ -101,7 +99,7 @@ void draw() {
   noStroke();
   guiUpdate();
   
-  if (!simulation && !setupScreen) 
+  if (titleScreen || instructionScreen) 
     image(background1, 0, 0);
   
   if (titleScreen) {
@@ -118,7 +116,7 @@ void draw() {
     returnButton.setVisible(true);
   }
   
-  else if (setupScreen) {
+  else if (setupScreenEnvironment) {
     image(background2, 0, 0);
     growthRate.setVisible(true);
     nutrition_.setVisible(true);
@@ -127,17 +125,6 @@ void draw() {
     humidity_.setVisible(true);
     medow.setVisible(true);
     artic.setVisible(true);
-    breedingRate1.setVisible(true);
-    litterSize1.setVisible(true);
-    breedingRate2.setVisible(true);
-    litterSize2.setVisible(true);
-    animal1Traits.setVisible(true);
-    animal1Trait.setVisible(true);
-    animal2Traits.setVisible(true);
-    animal2Trait.setVisible(true);
-    sheepButton.setVisible(true);
-    polarBearButton.setVisible(true);
-    frogButton.setVisible(true);
     beginButton.setVisible(true);
     backButton.setVisible(true);
   
@@ -146,12 +133,41 @@ void draw() {
     humidityText.setVisible(true);
     avgTempText.setVisible(true);
     tempRangeText.setVisible(true);
+    
+    fill(255);
+    PFont myFont1 = createFont("Impact", 40);
+    textFont(myFont1);
+    text("Environment", 100, 165);
+  }
+  
+  else if (setupScreenAnimals) {
+    image(background2, 0, 0);
+    breedingRate1.setVisible(true);
+    litterSize1.setVisible(true);
+    breedingRate2.setVisible(true);
+    litterSize2.setVisible(true);
+    animal1Traits.setVisible(true);
+    animal1Trait.setVisible(true);
+    animal2Traits.setVisible(true);
+    animal2Trait.setVisible(true);
+    beginButton.setText("Start");
+    
     breedingRate1Text.setVisible(true);
     breedingRate2Text.setVisible(true);
     litterSize1Text.setVisible(true);
     litterSize2Text.setVisible(true);
+    
+    fill(255);
+    PFont myFont1 = createFont("Impact", 40);
+    textFont(myFont1);
+    text("Animals", 120, 165);
+    
+    PFont myFont2 = createFont("Impact", 30);
+    textFont(myFont2);
+    text("1)", 75, 220);
+    text("2)", 75, 350);
   }
-  
+    
   if (simulation) {
     pauseButton1.setVisible(true);
     resetButton1.setVisible(true);
@@ -163,10 +179,13 @@ void draw() {
     animalTraits.setVisible(true);
     breedingRateText.setVisible(true);
     litterSizeText.setVisible(true);
+    
+    background(150, 150, 255);
+    fill(0, 0, 250);
+    rect(50, 94, 600, 512);
   }
   
   if (play && simulation) {
-    background(0, 0, 255);
     fill(field.getColour());
     circle(350, 350, 500);
   
@@ -285,4 +304,34 @@ void reset() {
   animals.add(new Animal (1000 + breedingRate, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
 }
   
-  
+void clearEnvironmentSetupScreen () {
+  growthRate.setVisible(false);
+  nutrition_.setVisible(false);
+  averageTemp.setVisible(false);
+  tempRange.setVisible(false);
+  humidity_.setVisible(false);
+  medow.setVisible(false);
+  artic.setVisible(false);
+  growthRateText.setVisible(false);
+  nutritionText.setVisible(false);
+  humidityText.setVisible(false);
+  avgTempText.setVisible(false);
+  tempRangeText.setVisible(false);
+}
+
+void clearAnimalsSetupScreen () {
+  breedingRate1.setVisible(false);
+  litterSize1.setVisible(false);
+  breedingRate2.setVisible(false);
+  litterSize2.setVisible(false);
+  animal1Traits.setVisible(false);
+  animal1Trait.setVisible(false);
+  animal2Traits.setVisible(false);
+  animal2Trait.setVisible(false);
+  beginButton.setVisible(false);
+  backButton.setVisible(false);
+  breedingRate1Text.setVisible(false);
+  breedingRate2Text.setVisible(false);
+  litterSize1Text.setVisible(false);
+  litterSize2Text.setVisible(false);
+}
