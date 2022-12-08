@@ -1,5 +1,7 @@
 import g4p_controls.*;
 
+String season;
+int bounty;
 int simSpeed = 60;
 int population;
 int timePassed;
