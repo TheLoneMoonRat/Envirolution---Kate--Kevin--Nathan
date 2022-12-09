@@ -15,7 +15,6 @@
  */
 
 public void startButtonClick(GButton source, GEvent event) { //_CODE_:startButton:798525:
-  timePassed = 0;
   instructionsButton.setVisible(false);
   startButton.setVisible(false);
   setupScreenEnvironment = true;
@@ -203,7 +202,7 @@ public void breedingRateChange(GSlider source, GEvent event) { //_CODE_:breeding
 } //_CODE_:breedingRates:281233:
 
 public void litterSizeChange(GSlider source, GEvent event) { //_CODE_:litterSize:321692:
-  size = litterSize.getValueI();
+  println("litterSize - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:litterSize:321692:
 
 public void animalTraitChange(GDropList source, GEvent event) { //_CODE_:animalTrait:969114:

@@ -1,3 +1,4 @@
+//Create Environment Setup GUI Screen
 void environmentSetup() {
    growthRate.setVisible(true);
     nutrition_.setVisible(true);
@@ -13,8 +14,11 @@ void environmentSetup() {
     humidityText.setVisible(true);
     avgTempText.setVisible(true);
     tempRangeText.setVisible(true);
+    beginButton.moveTo(230, 400);
+    backButton.moveTo(380, 414);
 }
 
+//Create Animals Setup GUI Screen
 void animalsSetup() {
   breedingRate1.setVisible(true);
     litterSize1.setVisible(true);
@@ -30,6 +34,8 @@ void animalsSetup() {
     avgInnerTemp1.setVisible(true);
     avgInnerTemp2.setVisible(true);
     beginButton.setText("Start");
+    beginButton.moveTo(230, 510);
+    backButton.moveTo(380, 524);
     breedingRate1Text.setVisible(true);
     breedingRate2Text.setVisible(true);
     litterSize1Text.setVisible(true);
@@ -38,6 +44,7 @@ void animalsSetup() {
     temp2Text.setVisible(true);
 }
 
+//Create Simulation GUI Screen
 void simulationSetup() {
    pauseButton1.setVisible(true);
     resetButton1.setVisible(true);
