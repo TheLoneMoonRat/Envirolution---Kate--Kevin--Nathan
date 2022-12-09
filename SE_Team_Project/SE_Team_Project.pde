@@ -55,6 +55,7 @@ void setup() {
   lastSeason = new ArrayList<Food>();
   breedingRate = 0;
   setting = "Aggression";
+  size = 1;
   
   //Create Animals
   animals.add(new Animal(1000 + breedingRate, 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
