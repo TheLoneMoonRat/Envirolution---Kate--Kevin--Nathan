@@ -1,44 +1,32 @@
 void getSeason () {
+  if (timePassed % 500 == 0 && timePassed % 2000 > 500) 
+    for (Food f: foods) 
+      lastSeason.add(f);
+  for (Food f: lastSeason) {
+    if (int(random(0, 1000)) == 0)
+      decay.add(f);
+  }
   if (timePassed % 2000 < 500) {
     season = "Spring";
-    println(season);
     bounty = 6;
   } else if (timePassed % 2000 < 1000) {
-    for (Food f: foods) {
-      if (f.xPos < 350 && f.yPos > 350) {
-        if (int(random(0, 100)) < 15) {
-          decay.add(f);
-        }
-      }
-    }
     season = "Summer";
-    println(season);
-    bounty = 2;
+    bounty = 3;
   } else if (timePassed % 2000 < 1500) {
-    for (Food f: foods) {
-      if (f.yPos > 350) {
-        if (int(random(0, 100)) < 5) {
-          decay.add(f);
-        }
-      }
-    }
     season = "Fall";
-    println(season);
     bounty = 4;
   } else {
-    for (Food f: foods) {
-      if (f.xPos < 500 && f.yPos > 350) {
-        if (int(random(0, 100)) < 25) {
-          decay.add(f);;
-        }
-      }
-    }
     season = "Winter";
-    println(season);
-    bounty = 2;
+    bounty = 1;
   }
   for (Food f: decay) {
-    foods.remove(foods.indexOf(f));
+    
+    try {
+      foods.remove(foods.indexOf(f));
+    } catch (Exception e) {
+    
+    }
+    lastSeason.remove(lastSeason.indexOf(f));
   }
   decay.clear();
 }
@@ -53,26 +41,26 @@ void createFood() {
   switch (season) {
     case "Spring":
       borange = color(random(125, 255), 255, 125);
-      x = random(150, 450);
-      y = random(150, 450);
+      x = random(225, 475);
+      y = random(225, 475);
       break;
     case "Summer":
-      x = random(350, 450);
+      x = random(350, 475);
       borange = color(random(45, 133), 133, 45); 
       if (x > 350) 
-        y = random(150, 450);
+        y = random(225, 475);
       else
-        y = random(350, 450);
+        y = random(350, 475);
       break;
     case "Fall":
-      x = random(150, 450);
+      x = random(225, 475);
       borange = color(189, random(57, 189), 80);
-      y = random(350, 450);
+      y = random(350, 475);
       break;
     default:
-      x = random(350, 450);
+      x = random(350, 475);
       borange = color(133, random(45, 133), 45);
-      y = random(350, 450);
+      y = random(350, 475);
       break;
   }
   foods.add(new Food(nutritionValue, 10, borange, x, y));
