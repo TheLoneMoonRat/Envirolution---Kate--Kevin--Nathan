@@ -59,11 +59,11 @@ public void humidity_Change(GSlider source, GEvent event) { //_CODE_:humidity_:8
 } //_CODE_:humidity_:856470:
 
 public void medowClick(GButton source, GEvent event) { //_CODE_:medow:484108:
-  println("medow - GButton >> GEvent." + event + " @ " + millis());
+  medow.setLocalColorScheme(0);
 } //_CODE_:medow:484108:
 
 public void articClick(GButton source, GEvent event) { //_CODE_:artic:557486:
-  println("artic - GButton >> GEvent." + event + " @ " + millis());
+  artic.setLocalColorScheme(0);
 } //_CODE_:artic:557486:
 
 public void breedingRate1Change(GSlider source, GEvent event) { //_CODE_:breedingRate1:600015:
@@ -329,7 +329,7 @@ public void createGUI(){
   litterSize2.setNumberFormat(G4P.DECIMAL, 2);
   litterSize2.setOpaque(false);
   litterSize2.addEventHandler(this, "litterSize2Change");
-  animal2Traits = new GCustomSlider(this, 390, 391, 156, 40, "grey_blue");
+  animal2Traits = new GCustomSlider(this, 388, 395, 156, 40, "grey_blue");
   animal2Traits.setLimits(0.5, 0.0, 1.0);
   animal2Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal2Traits.setOpaque(false);
@@ -423,7 +423,7 @@ public void createGUI(){
   frogButton = new GButton(this, 200, 450, 80, 30);
   frogButton.setText("Frog");
   frogButton.addEventHandler(this, "frogButtonClick");
-  polarBearButton = new GButton(this, 290, 448, 80, 30);
+  polarBearButton = new GButton(this, 290, 449, 80, 30);
   polarBearButton.setText("Polar Bear");
   polarBearButton.addEventHandler(this, "polarBearButtonClick");
   temp1Text = new GLabel(this, 113, 251, 202, 20);
@@ -434,7 +434,7 @@ public void createGUI(){
   avgInnerTemp1.setNumberFormat(G4P.DECIMAL, 2);
   avgInnerTemp1.setOpaque(false);
   avgInnerTemp1.addEventHandler(this, "avgInnerTemp1Change");
-  avgInnerTemp2 = new GSlider(this, 112, 391, 255, 40, 10.0);
+  avgInnerTemp2 = new GSlider(this, 112, 396, 255, 40, 10.0);
   avgInnerTemp2.setLimits(0.5, 0.0, 1.0);
   avgInnerTemp2.setNumberFormat(G4P.DECIMAL, 2);
   avgInnerTemp2.setOpaque(false);
