@@ -125,21 +125,28 @@ void draw() {
     animal1Trait.setVisible(true);
     animal2Traits.setVisible(true);
     animal2Trait.setVisible(true);
+    sheepButton.setVisible(true);
+    frogButton.setVisible(true);
+    polarBearButton.setVisible(true);
+    avgInnerTemp1.setVisible(true);
+    avgInnerTemp2.setVisible(true);
     beginButton.setText("Start");
     breedingRate1Text.setVisible(true);
     breedingRate2Text.setVisible(true);
     litterSize1Text.setVisible(true);
     litterSize2Text.setVisible(true);
+    temp1Text.setVisible(true);
+    temp2Text.setVisible(true);
     
     fill(255);
     PFont myFont1 = createFont("Impact", 40);
     textFont(myFont1);
-    text("Animals", 120, 165);
+    text("Animals", 115, 165);
     
     PFont myFont2 = createFont("Impact", 30);
     textFont(myFont2);
-    text("1)", 75, 220);
-    text("2)", 75, 350);
+    text("1)", 80, 222);
+    text("2)", 80, 352);
   }
   
   //While Simulation is Running
@@ -152,8 +159,10 @@ void draw() {
     litterSize.setVisible(true);
     animalTrait.setVisible(true);
     animalTraits.setVisible(true);
+    animationSpeed.setVisible(true);
     breedingRateText.setVisible(true);
     litterSizeText.setVisible(true);
+    animationSpeedText.setVisible(true);
     
     background(150, 150, 255);
     fill(0, 0, 250);
@@ -308,12 +317,19 @@ void clearAnimalsSetupScreen () {
   animal1Trait.setVisible(false);
   animal2Traits.setVisible(false);
   animal2Trait.setVisible(false);
+  sheepButton.setVisible(false);
+  frogButton.setVisible(false);
+  polarBearButton.setVisible(false);
+  avgInnerTemp1.setVisible(false);
+  avgInnerTemp2.setVisible(false);
   beginButton.setVisible(false);
   backButton.setVisible(false);
   breedingRate1Text.setVisible(false);
   breedingRate2Text.setVisible(false);
   litterSize1Text.setVisible(false);
   litterSize2Text.setVisible(false);
+  temp1Text.setVisible(false);
+  temp2Text.setVisible(false);
 }
 
 //Clear GUI Screen
@@ -343,8 +359,15 @@ void clearForStart() {
   litterSize.setVisible(false);
   animalTrait.setVisible(false);
   animalTraits.setVisible(false);
+  sheepButton.setVisible(false);
+  frogButton.setVisible(false);
+  polarBearButton.setVisible(false);
+  avgInnerTemp1.setVisible(false);
+  avgInnerTemp2.setVisible(false);
+  animationSpeed.setVisible(false);
   beginButton.setVisible(false);
   backButton.setVisible(false);
+  
   
   breedingRateText.setVisible(false);
   litterSizeText.setVisible(false);
@@ -357,4 +380,7 @@ void clearForStart() {
   breedingRate2Text.setVisible(false);
   litterSize1Text.setVisible(false);
   litterSize2Text.setVisible(false);
+  temp1Text.setVisible(false);
+  temp2Text.setVisible(false);
+  animationSpeedText.setVisible(false);
 }

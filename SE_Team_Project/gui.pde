@@ -224,6 +224,30 @@ public void animalTraitsChange(GCustomSlider source, GEvent event) { //_CODE_:an
   println("animalTraits - GCustomSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:animalTraits:417672:
 
+public void sheepButtonClick(GButton source, GEvent event) { //_CODE_:sheepButton:766178:
+  println("sheepButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:sheepButton:766178:
+
+public void frogButtonClick(GButton source, GEvent event) { //_CODE_:frogButton:466873:
+  println("frogButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:frogButton:466873:
+
+public void polarBearButtonClick(GButton source, GEvent event) { //_CODE_:polarBearButton:624729:
+  println("polarBearButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:polarBearButton:624729:
+
+public void avgInnerTemp1Change(GSlider source, GEvent event) { //_CODE_:avgInnerTemp1:545051:
+  println("avgInnerTemp1 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:avgInnerTemp1:545051:
+
+public void avgInnerTemp2Change(GSlider source, GEvent event) { //_CODE_:avgInnerTemp2:922919:
+  println("avgInnerTemp2 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:avgInnerTemp2:922919:
+
+public void animationSpeedChange(GSlider source, GEvent event) { //_CODE_:animationSpeed:981070:
+  println("animationSpeed - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:animationSpeed:981070:
+
 
 
 // Create all the GUI controls. 
@@ -277,91 +301,92 @@ public void createGUI(){
   artic = new GButton(this, 498, 324, 80, 30);
   artic.setText("Artic");
   artic.addEventHandler(this, "articClick");
-  breedingRate1 = new GSlider(this, 111, 200, 255, 35, 10.0);
+  breedingRate1 = new GSlider(this, 112, 210, 255, 35, 10.0);
   breedingRate1.setLimits(0.5, 0.0, 1.0);
   breedingRate1.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate1.setOpaque(false);
   breedingRate1.addEventHandler(this, "breedingRate1Change");
-  litterSize1 = new GSlider(this, 392, 196, 195, 40, 10.0);
+  litterSize1 = new GSlider(this, 392, 206, 195, 40, 10.0);
   litterSize1.setLimits(0.5, 0.0, 30.0);
   litterSize1.setNumberFormat(G4P.DECIMAL, 2);
   litterSize1.setOpaque(false);
   litterSize1.addEventHandler(this, "litterSize1Change");
-  animal1Traits = new GCustomSlider(this, 218, 238, 148, 40, "grey_blue");
+  animal1Traits = new GCustomSlider(this, 393, 265, 148, 40, "grey_blue");
   animal1Traits.setLimits(0.5, 0.0, 1.0);
   animal1Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal1Traits.setOpaque(false);
   animal1Traits.addEventHandler(this, "animal1TraitsChange");
-  animal1Trait = new GDropList(this, 117, 247, 85, 80, 3, 10);
+  animal1Trait = new GDropList(this, 393, 244, 85, 80, 3, 10);
   animal1Trait.setItems(loadStrings("list_702361"), 0);
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
-  breedingRate2 = new GSlider(this, 112, 324, 256, 40, 10.0);
+  breedingRate2 = new GSlider(this, 111, 337, 256, 40, 10.0);
   breedingRate2.setLimits(0.5, 0.0, 1.0);
   breedingRate2.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate2.setOpaque(false);
   breedingRate2.addEventHandler(this, "breedingRate2Change");
-  litterSize2 = new GSlider(this, 390, 322, 192, 40, 10.0);
+  litterSize2 = new GSlider(this, 390, 337, 192, 40, 10.0);
   litterSize2.setLimits(5.0, 0.0, 30.0);
   litterSize2.setNumberFormat(G4P.DECIMAL, 2);
   litterSize2.setOpaque(false);
   litterSize2.addEventHandler(this, "litterSize2Change");
-  animal2Traits = new GCustomSlider(this, 213, 369, 156, 40, "grey_blue");
+  animal2Traits = new GCustomSlider(this, 390, 391, 156, 40, "grey_blue");
   animal2Traits.setLimits(0.5, 0.0, 1.0);
   animal2Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal2Traits.setOpaque(false);
   animal2Traits.addEventHandler(this, "animal2TraitsChange");
-  animal2Trait = new GDropList(this, 112, 378, 89, 84, 3, 10);
+  animal2Trait = new GDropList(this, 389, 376, 89, 84, 3, 10);
   animal2Trait.setItems(loadStrings("list_223443"), 0);
   animal2Trait.addEventHandler(this, "animal2TraitChange");
-  beginButton = new GButton(this, 231, 443, 141, 59);
+  beginButton = new GButton(this, 230, 510, 141, 59);
   beginButton.setText("NEXT");
   beginButton.addEventHandler(this, "beginButtonClick");
-  backButton = new GButton(this, 376, 457, 80, 30);
+  backButton = new GButton(this, 380, 524, 80, 30);
   backButton.setText("RETURN");
+  backButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   backButton.addEventHandler(this, "backButtonClick");
-  pauseButton1 = new GButton(this, 89, 611, 89, 36);
+  pauseButton1 = new GButton(this, 22, 616, 89, 36);
   pauseButton1.setText("Pause");
   pauseButton1.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton1.addEventHandler(this, "pauseButton1Click");
-  resetButton1 = new GButton(this, 90, 654, 87, 34);
+  resetButton1 = new GButton(this, 122, 617, 87, 34);
   resetButton1.setText("Reset");
   resetButton1.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   resetButton1.addEventHandler(this, "resetButton1Click");
-  showVariables1 = new GDropList(this, 188, 620, 90, 80, 3, 10);
+  showVariables1 = new GDropList(this, 226, 630, 90, 80, 3, 10);
   showVariables1.setItems(loadStrings("list_630746"), 0);
   showVariables1.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   showVariables1.addEventHandler(this, "showVariables1Change");
-  shouldVariables = new GButton(this, 187, 655, 87, 34);
+  shouldVariables = new GButton(this, 229, 656, 82, 31);
   shouldVariables.setText("Hide Variables");
   shouldVariables.setLocalColorScheme(GCScheme.RED_SCHEME);
   shouldVariables.addEventHandler(this, "showVariablesButtonClick");
-  breedingRates = new GSlider(this, 347, 621, 116, 40, 10.0);
+  breedingRates = new GSlider(this, 404, 623, 116, 40, 10.0);
   breedingRates.setLimits(0.5, 0.0, 1.0);
   breedingRates.setNumberFormat(G4P.DECIMAL, 2);
   breedingRates.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRates.setOpaque(false);
   breedingRates.addEventHandler(this, "breedingRateChange");
-  litterSize = new GSlider(this, 347, 663, 115, 40, 10.0);
+  litterSize = new GSlider(this, 404, 661, 115, 40, 10.0);
   litterSize.setLimits(5.0, 0.0, 30.0);
   litterSize.setNumberFormat(G4P.DECIMAL, 2);
   litterSize.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSize.setOpaque(false);
   litterSize.addEventHandler(this, "litterSizeChange");
-  animalTrait = new GDropList(this, 471, 624, 93, 80, 3, 10);
+  animalTrait = new GDropList(this, 539, 630, 95, 80, 3, 10);
   animalTrait.setItems(loadStrings("list_969114"), 0);
   animalTrait.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animalTrait.addEventHandler(this, "animalTraitChange");
-  animalTraits = new GCustomSlider(this, 470, 637, 167, 40, "grey_blue");
+  animalTraits = new GCustomSlider(this, 539, 640, 143, 40, "grey_blue");
   animalTraits.setLimits(0.5, 0.0, 1.0);
   animalTraits.setNumberFormat(G4P.DECIMAL, 2);
   animalTraits.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animalTraits.setOpaque(false);
   animalTraits.addEventHandler(this, "animalTraitsChange");
-  breedingRateText = new GLabel(this, 345, 613, 118, 20);
+  breedingRateText = new GLabel(this, 406, 614, 118, 20);
   breedingRateText.setText("Breeding Rate");
   breedingRateText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRateText.setOpaque(false);
-  litterSizeText = new GLabel(this, 346, 652, 80, 20);
+  litterSizeText = new GLabel(this, 403, 653, 80, 20);
   litterSizeText.setText("Litter Size");
   litterSizeText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSizeText.setOpaque(false);
@@ -374,24 +399,60 @@ public void createGUI(){
   humidityText = new GLabel(this, 95, 309, 80, 20);
   humidityText.setText("Humidity");
   humidityText.setOpaque(false);
-  avgTempText = new GLabel(this, 96, 247, 187, 20);
+  avgTempText = new GLabel(this, 95, 249, 206, 20);
   avgTempText.setText("Average Temperature");
   avgTempText.setOpaque(false);
   tempRangeText = new GLabel(this, 394, 246, 180, 20);
   tempRangeText.setText("Temperature Range");
   tempRangeText.setOpaque(false);
-  breedingRate1Text = new GLabel(this, 112, 183, 118, 20);
+  breedingRate1Text = new GLabel(this, 112, 190, 118, 20);
   breedingRate1Text.setText("Breeding Rate");
   breedingRate1Text.setOpaque(false);
-  litterSize1Text = new GLabel(this, 394, 183, 80, 20);
+  litterSize1Text = new GLabel(this, 394, 192, 80, 20);
   litterSize1Text.setText("Litter Size");
   litterSize1Text.setOpaque(false);
-  breedingRate2Text = new GLabel(this, 109, 309, 112, 20);
+  breedingRate2Text = new GLabel(this, 111, 324, 112, 20);
   breedingRate2Text.setText("Breeding Rate");
   breedingRate2Text.setOpaque(false);
-  litterSize2Text = new GLabel(this, 389, 309, 80, 20);
+  litterSize2Text = new GLabel(this, 389, 330, 80, 20);
   litterSize2Text.setText("Litter Size");
   litterSize2Text.setOpaque(false);
+  sheepButton = new GButton(this, 113, 451, 80, 30);
+  sheepButton.setText("Sheep");
+  sheepButton.addEventHandler(this, "sheepButtonClick");
+  frogButton = new GButton(this, 200, 450, 80, 30);
+  frogButton.setText("Frog");
+  frogButton.addEventHandler(this, "frogButtonClick");
+  polarBearButton = new GButton(this, 290, 448, 80, 30);
+  polarBearButton.setText("Polar Bear");
+  polarBearButton.addEventHandler(this, "polarBearButtonClick");
+  temp1Text = new GLabel(this, 113, 251, 202, 20);
+  temp1Text.setText("Average Inner Temperature");
+  temp1Text.setOpaque(false);
+  avgInnerTemp1 = new GSlider(this, 114, 267, 254, 40, 10.0);
+  avgInnerTemp1.setLimits(0.5, 0.0, 1.0);
+  avgInnerTemp1.setNumberFormat(G4P.DECIMAL, 2);
+  avgInnerTemp1.setOpaque(false);
+  avgInnerTemp1.addEventHandler(this, "avgInnerTemp1Change");
+  avgInnerTemp2 = new GSlider(this, 112, 391, 255, 40, 10.0);
+  avgInnerTemp2.setLimits(0.5, 0.0, 1.0);
+  avgInnerTemp2.setNumberFormat(G4P.DECIMAL, 2);
+  avgInnerTemp2.setOpaque(false);
+  avgInnerTemp2.addEventHandler(this, "avgInnerTemp2Change");
+  temp2Text = new GLabel(this, 112, 381, 191, 20);
+  temp2Text.setText("Average Inner Temperature");
+  temp2Text.setOpaque(false);
+  animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
+  animationSpeed.setShowLimits(true);
+  animationSpeed.setLimits(60.0, 30.0, 240.0);
+  animationSpeed.setNumberFormat(G4P.DECIMAL, 2);
+  animationSpeed.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  animationSpeed.setOpaque(false);
+  animationSpeed.addEventHandler(this, "animationSpeedChange");
+  animationSpeedText = new GLabel(this, 25, 657, 128, 20);
+  animationSpeedText.setText("Animation Speed");
+  animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  animationSpeedText.setOpaque(false);
 }
 
 // Variable declarations 
@@ -436,3 +497,12 @@ GLabel breedingRate1Text;
 GLabel litterSize1Text; 
 GLabel breedingRate2Text; 
 GLabel litterSize2Text; 
+GButton sheepButton; 
+GButton frogButton; 
+GButton polarBearButton; 
+GLabel temp1Text; 
+GSlider avgInnerTemp1; 
+GSlider avgInnerTemp2; 
+GLabel temp2Text; 
+GSlider animationSpeed; 
+GLabel animationSpeedText; 
