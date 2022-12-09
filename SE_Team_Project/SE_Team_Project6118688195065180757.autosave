@@ -17,7 +17,6 @@ ArrayList<Animal> animals;
 ArrayList<Animal> inLabour;
 ArrayList<Animal> dying;
 ArrayList<Food> foods;
-ArrayList<Food> lastSeason;
 ArrayList<Animal> selected;
 ArrayList<Food> decay;
 String setting;
@@ -52,9 +51,7 @@ void setup() {
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
   decay = new ArrayList<Food>();
-  lastSeason = new ArrayList<Food>();
   breedingRate = 0;
-  setting = "Aggression";
   
   //Create Animals
   animals.add(new Animal(1000 + breedingRate, 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
@@ -97,7 +94,22 @@ void draw() {
   
   //While on Environment Setup Screen
   else if (setupScreenEnvironment) {
-    environmentSetup();
+    growthRate.setVisible(true);
+    nutrition_.setVisible(true);
+    averageTemp.setVisible(true);
+    tempRange.setVisible(true);
+    humidity_.setVisible(true);
+    medow.setVisible(true);
+    artic.setVisible(true);
+    beginButton.setVisible(true);
+    backButton.setVisible(true);
+    growthRateText.setVisible(true);
+    nutritionText.setVisible(true);
+    humidityText.setVisible(true);
+    avgTempText.setVisible(true);
+    tempRangeText.setVisible(true);
+    beginButton.moveTo(230, 400);
+    backButton.moveTo(380, 414);
     
     fill(255);
     PFont myFont1 = createFont("Impact", 40);
@@ -107,7 +119,28 @@ void draw() {
   
   //While on Animal Setup Screen
   else if (setupScreenAnimals) {
-    animalsSetup();
+    breedingRate1.setVisible(true);
+    litterSize1.setVisible(true);
+    breedingRate2.setVisible(true);
+    litterSize2.setVisible(true);
+    animal1Traits.setVisible(true);
+    animal1Trait.setVisible(true);
+    animal2Traits.setVisible(true);
+    animal2Trait.setVisible(true);
+    sheepButton.setVisible(true);
+    frogButton.setVisible(true);
+    polarBearButton.setVisible(true);
+    avgInnerTemp1.setVisible(true);
+    avgInnerTemp2.setVisible(true);
+    beginButton.setText("Start");
+    beginButton.moveTo(230, 510);
+    backButton.moveTo(380, 524);
+    breedingRate1Text.setVisible(true);
+    breedingRate2Text.setVisible(true);
+    litterSize1Text.setVisible(true);
+    litterSize2Text.setVisible(true);
+    temp1Text.setVisible(true);
+    temp2Text.setVisible(true);
     
     fill(255);
     PFont myFont1 = createFont("Impact", 40);
@@ -122,7 +155,18 @@ void draw() {
   
   //While Simulation is Running
   if (simulation) {
-   simulationSetup();
+    pauseButton1.setVisible(true);
+    resetButton1.setVisible(true);
+    showVariables1.setVisible(true);
+    shouldVariables.setVisible(true);
+    breedingRates.setVisible(true);
+    litterSize.setVisible(true);
+    animalTrait.setVisible(true);
+    animalTraits.setVisible(true);
+    animationSpeed.setVisible(true);
+    breedingRateText.setVisible(true);
+    litterSizeText.setVisible(true);
+    animationSpeedText.setVisible(true);
     
     background(150, 150, 255);
     fill(0, 0, 250);
@@ -162,12 +206,9 @@ void draw() {
     for (Food f: foods) {
       f.drawFood();
     }
+    if (timePassed % foodRate == 0) 
+      createFood();
     
-    getSeason();
-    if (timePassed % foodRate == 0) {
-      for (int i = bounty; i > 0; i--) 
-        createFood();
-    }
     timePassed++;
     updateLabel();
   
@@ -213,6 +254,20 @@ void guiUpdate() {
   
 }
 
+void createFood2() {
+  float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);
+  float dist = 500;
+  float x = 0;
+  float y = 0;
+  
+  while (dist >= 230) {
+    x = random(150, 500);
+    y = random(150, 500);
+    dist = sqrt(pow(x - width/2, 2) + pow(y - height/2, 2));
+  }
+    
+  foods.add(new Food(nutritionValue, 10, color((nutritionValue / (80 + nutritionAdjuster)) * 255, 252, 3), x, y));
+}
 
 //Update Labels Above Animals
 void updateLabel() {
@@ -240,3 +295,96 @@ void reset() {
   animals.add(new Animal (1000 + breedingRate, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
 }
   
+//Clear GUI Screen
+void clearEnvironmentSetupScreen () {
+  growthRate.setVisible(false);
+  nutrition_.setVisible(false);
+  averageTemp.setVisible(false);
+  tempRange.setVisible(false);
+  humidity_.setVisible(false);
+  medow.setVisible(false);
+  artic.setVisible(false);
+  growthRateText.setVisible(false);
+  nutritionText.setVisible(false);
+  humidityText.setVisible(false);
+  avgTempText.setVisible(false);
+  tempRangeText.setVisible(false);
+}
+
+//Clear GUI Screen
+void clearAnimalsSetupScreen () {
+  breedingRate1.setVisible(false);
+  litterSize1.setVisible(false);
+  breedingRate2.setVisible(false);
+  litterSize2.setVisible(false);
+  animal1Traits.setVisible(false);
+  animal1Trait.setVisible(false);
+  animal2Traits.setVisible(false);
+  animal2Trait.setVisible(false);
+  sheepButton.setVisible(false);
+  frogButton.setVisible(false);
+  polarBearButton.setVisible(false);
+  avgInnerTemp1.setVisible(false);
+  avgInnerTemp2.setVisible(false);
+  beginButton.setVisible(false);
+  backButton.setVisible(false);
+  breedingRate1Text.setVisible(false);
+  breedingRate2Text.setVisible(false);
+  litterSize1Text.setVisible(false);
+  litterSize2Text.setVisible(false);
+  temp1Text.setVisible(false);
+  temp2Text.setVisible(false);
+}
+
+//Clear GUI Screen
+void clearForStart() {
+  instructions.setVisible(false);
+  returnButton.setVisible(false);
+  growthRate.setVisible(false);
+  nutrition_.setVisible(false);
+  averageTemp.setVisible(false);
+  tempRange.setVisible(false);
+  humidity_.setVisible(false);
+  medow.setVisible(false);
+  artic.setVisible(false);
+  breedingRate1.setVisible(false);
+  litterSize1.setVisible(false);
+  breedingRate2.setVisible(false);
+  litterSize2.setVisible(false);
+  animal1Traits.setVisible(false);
+  animal1Trait.setVisible(false);
+  animal2Traits.setVisible(false);
+  animal2Trait.setVisible(false);
+  pauseButton1.setVisible(false);
+  resetButton1.setVisible(false);
+  showVariables1.setVisible(false);
+  shouldVariables.setVisible(false);
+  breedingRates.setVisible(false);
+  litterSize.setVisible(false);
+  animalTrait.setVisible(false);
+  animalTraits.setVisible(false);
+  sheepButton.setVisible(false);
+  frogButton.setVisible(false);
+  polarBearButton.setVisible(false);
+  avgInnerTemp1.setVisible(false);
+  avgInnerTemp2.setVisible(false);
+  animationSpeed.setVisible(false);
+  beginButton.setVisible(false);
+  backButton.setVisible(false);
+  
+  
+  breedingRateText.setVisible(false);
+  litterSizeText.setVisible(false);
+  growthRateText.setVisible(false);
+  nutritionText.setVisible(false);
+  humidityText.setVisible(false);
+  avgTempText.setVisible(false);
+  tempRangeText.setVisible(false);
+  breedingRate1Text.setVisible(false);
+  breedingRate2Text.setVisible(false);
+  litterSize1Text.setVisible(false);
+  litterSize2Text.setVisible(false);
+  temp1Text.setVisible(false);
+  temp2Text.setVisible(false);
+  animationSpeedText.setVisible(false);
+}

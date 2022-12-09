@@ -59,11 +59,11 @@ public void humidity_Change(GSlider source, GEvent event) { //_CODE_:humidity_:8
 } //_CODE_:humidity_:856470:
 
 public void medowClick(GButton source, GEvent event) { //_CODE_:medow:484108:
-  medow.setLocalColorScheme(0);
+  medow.setLocalColorScheme(7);
 } //_CODE_:medow:484108:
 
 public void articClick(GButton source, GEvent event) { //_CODE_:artic:557486:
-  artic.setLocalColorScheme(0);
+  artic.setLocalColorScheme(7);
 } //_CODE_:artic:557486:
 
 public void breedingRate1Change(GSlider source, GEvent event) { //_CODE_:breedingRate1:600015:
