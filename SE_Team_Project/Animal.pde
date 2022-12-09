@@ -85,6 +85,7 @@ class Animal {
   }
 
   void createChild(Animal partner) {
+    println("hi");
     boolean tempGender;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
     float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
@@ -152,6 +153,8 @@ class Animal {
           if (target.xPos < 700) {
             this.hunger -= target.nutrition;
             foods.remove(target);
+            if (lastSeason.contains(target))
+              lastSeason.remove(target);
             target = new Food (700, 700);
           }
           this.currentSpeed.x = random(-2, 2);
