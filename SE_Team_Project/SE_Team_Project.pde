@@ -17,6 +17,7 @@ ArrayList<Animal> animals;
 ArrayList<Animal> inLabour;
 ArrayList<Animal> dying;
 ArrayList<Food> foods;
+ArrayList<Food> lastSeason;
 ArrayList<Animal> selected;
 ArrayList<Food> decay;
 String setting;
@@ -51,7 +52,9 @@ void setup() {
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
   decay = new ArrayList<Food>();
+  lastSeason = new ArrayList<Food>();
   breedingRate = 0;
+  setting = "Aggression";
   
   //Create Animals
   animals.add(new Animal(1000 + breedingRate, 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
@@ -202,9 +205,12 @@ void draw() {
     for (Food f: foods) {
       f.drawFood();
     }
-    if (timePassed % foodRate == 0) 
-      createFood();
     
+    getSeason();
+    if (timePassed % foodRate == 0) {
+      for (int i = bounty; i > 0; i--) 
+        createFood();
+    }
     timePassed++;
     updateLabel();
   
