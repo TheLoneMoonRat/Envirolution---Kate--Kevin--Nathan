@@ -98,7 +98,7 @@ public void breedingRate2Change(GSlider source, GEvent event) { //_CODE_:breedin
 } //_CODE_:breedingRate2:762987:
 
 public void litterSize2Change(GSlider source, GEvent event) { //_CODE_:litterSize2:317562:
-  println("slider2 - GSlider >> GEvent." + event + " @ " + millis());
+  size = litterSize2.getValueI();
 } //_CODE_:litterSize2:317562:
 
 public void animal2TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animal2Traits:534204:
