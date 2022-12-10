@@ -171,6 +171,9 @@ public void resetButton1Click(GButton source, GEvent event) { //_CODE_:resetButt
 public void showVariables1Change(GDropList source, GEvent event) { //_CODE_:showVariables1:630746:
   hungerTag = false;
   ageTag = false;
+  genderTag = false;
+  shouldVariables.setText("Show Variables");
+  shouldVariables.setLocalColorScheme(1);
 } //_CODE_:showVariables1:630746:
 
 public void showVariablesButtonClick(GButton source, GEvent event) { //_CODE_:shouldVariables:999019:
@@ -192,6 +195,17 @@ public void showVariablesButtonClick(GButton source, GEvent event) { //_CODE_:sh
     }
     else {
       ageTag = false;
+      shouldVariables.setText("Show Variables");
+      shouldVariables.setLocalColorScheme(1);
+    }
+  } else if (showVariables1.getSelectedText().equals("Gender")) {
+    if (!genderTag) {
+      genderTag = true;
+      shouldVariables.setText("Hide Variables");
+      shouldVariables.setLocalColorScheme(0);
+    }
+    else {
+      genderTag = false;
       shouldVariables.setText("Show Variables");
       shouldVariables.setLocalColorScheme(1);
     }
@@ -246,7 +260,7 @@ public void avgInnerTemp2Change(GSlider source, GEvent event) { //_CODE_:avgInne
 } //_CODE_:avgInnerTemp2:922919:
 
 public void animationSpeedChange(GSlider source, GEvent event) { //_CODE_:animationSpeed:981070:
-  println("animationSpeed - GSlider >> GEvent." + event + " @ " + millis());
+  simSpeed = animationSpeed.getValueI(); 
 } //_CODE_:animationSpeed:981070:
 
 
@@ -379,7 +393,7 @@ public void createGUI(){
   breedingRates.addEventHandler(this, "breedingRateChange");
   litterSize = new GSlider(this, 404, 661, 115, 40, 10.0);
   litterSize.setShowLimits(true);
-  litterSize.setLimits(5.0, 0.0, 30.0);
+  litterSize.setLimits(1.0, 0.0, 10.0);
   litterSize.setNumberFormat(G4P.DECIMAL, 2);
   litterSize.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSize.setOpaque(false);

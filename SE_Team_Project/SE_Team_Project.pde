@@ -33,6 +33,7 @@ boolean setupScreenAnimals = false;
 boolean simulation = false;
 boolean hungerTag = true;
 boolean ageTag = false;
+boolean genderTag = false;
 boolean play = true;
 
 
@@ -70,6 +71,7 @@ void setup() {
 
 void draw() {
   //Genral Setup
+  frameRate(simSpeed);
   noStroke();
   guiUpdate();
   
@@ -217,6 +219,42 @@ void guiUpdate() {
 
 //Update Labels Above Animals
 void updateLabel() {
+  float averageSize = 0;
+  float averageVision = 0;
+  float averageSpeed = 0;
+  float averageAggression = 0;
+  float averageRed = 0;
+  float averageGreen = 0;
+  float averageBlue = 0;
+  float animalCount = 0;
+  for (Animal a: animals) {
+    averageSize += a.finalSize;
+    averageVision += a.vision;
+    averageSpeed += a.speed;
+    averageAggression += a.aggression;
+    averageRed += red(a.animalColour);
+    averageGreen += green(a.animalColour);
+    averageBlue += blue(a.animalColour);
+    animalCount ++;
+  }
+  averageSize /= animalCount;
+  averageVision /= animalCount;
+  averageSpeed /= animalCount;
+  averageAggression /= animalCount;
+  averageRed /= animalCount;
+  averageGreen /= animalCount;
+  averageBlue /= animalCount;
+  
+  fill(0);
+  textSize(15);
+  textAlign(CENTER);
+  text("Average Size:" + digitRound(averageSize, 2), 60, 30);
+  text("Average vision:" + digitRound(averageVision, 2), 190, 30);
+  text("Average speed:" + digitRound(averageSpeed, 2), 320, 30);
+  text("Average aggression:" + digitRound(averageAggression, 2), 464, 30);
+  fill(averageRed, averageGreen, averageBlue);
+  text("Average colour", 640, 30);
+  text("Population size" + animalCount, 350, 60);
   if (hungerTag) {
     for (Animal a: animals) {
       fill(a.animalColour);
@@ -231,6 +269,22 @@ void updateLabel() {
       text(int(a.age), a.xPos, a.yPos - a.size * 3);
     }
   }
+  if (genderTag) {
+    for (Animal a: animals) {
+      textSize(a.size * 3);
+      if (a.gender) {
+        fill(255, 177, 203);
+        text("♀", a.xPos, a.yPos - a.size * 3);
+      } else {
+        fill(1, 166, 234);
+        text("♂", a.xPos, a.yPos - a.size * 3);
+      }
+    }
+  }
+}
+
+float digitRound(float number, int digits) {
+  return(int(number * pow(10, digits)) / pow(10.0, digits));
 }
 
 //Reset the Simulation

@@ -186,8 +186,8 @@ class Animal {
       if (this.age % 150 == 0)
         if (this.age < 50 || this.hunger < 20) 
           this.size += this.finalSize / 10;
-      else
-        this.finalSize *= 0.9;
+        else if (this.hunger > 20 && this.age > 50)
+          this.finalSize *= 0.9;
     } else {
       this.hunger += 0.01 * this.size;
     }
@@ -218,7 +218,6 @@ class Animal {
 
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > 3500) {
-      this.animalColour = color(0);
       dying.add(this);
     }
   }
