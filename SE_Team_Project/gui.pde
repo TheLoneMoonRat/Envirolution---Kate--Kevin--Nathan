@@ -394,6 +394,9 @@ public void createGUI(){
   litterSize = new GSlider(this, 404, 661, 115, 40, 10.0);
   litterSize.setShowLimits(true);
   litterSize.setLimits(1.0, 0.0, 10.0);
+  litterSize.setNbrTicks(5);
+  litterSize.setStickToTicks(true);
+  litterSize.setShowTicks(true);
   litterSize.setNumberFormat(G4P.DECIMAL, 2);
   litterSize.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSize.setOpaque(false);

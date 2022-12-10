@@ -1,25 +1,18 @@
 import g4p_controls.*;
 
 //Global Variables (Don't Change These!)
-String season;
-int bounty;
 int simSpeed = 60;
-int population;
 int timePassed;
-int speed;
 int size;
+Season season;
 float breedingRate;
-float agression;
-float vision;
 float nutritionAdjuster;
 float foodRate;
 ArrayList<Animal> animals;
 ArrayList<Animal> inLabour;
 ArrayList<Animal> dying;
 ArrayList<Food> foods;
-ArrayList<Food> lastSeason;
 ArrayList<Animal> selected;
-ArrayList<Food> decay;
 String setting;
 boolean gender;
 Habitat field;
@@ -52,8 +45,7 @@ void setup() {
   selected = new ArrayList<Animal>();
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
-  decay = new ArrayList<Food>();
-  lastSeason = new ArrayList<Food>();
+  season = new Season();
   breedingRate = 0;
   setting = "Aggression";
   size = 1;
@@ -141,7 +133,7 @@ void draw() {
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();
-      a.updatePosition();
+      a.setPosition();
       if (a.hunger > 20) {
         a.eat();
       }
@@ -166,10 +158,10 @@ void draw() {
       f.drawFood();
     }
     
-    getSeason();
+    season.getSeason();
     if (timePassed % foodRate == 0) {
-      for (int i = bounty; i > 0; i--) 
-        createFood();
+      for (int i = season.bounty; i > 0; i--) 
+        season.createFood();
     }
     timePassed++;
     updateLabel();
@@ -248,13 +240,14 @@ void updateLabel() {
   fill(0);
   textSize(15);
   textAlign(CENTER);
-  text("Average Size:" + digitRound(averageSize, 2), 60, 30);
-  text("Average vision:" + digitRound(averageVision, 2), 190, 30);
-  text("Average speed:" + digitRound(averageSpeed, 2), 320, 30);
-  text("Average aggression:" + digitRound(averageAggression, 2), 464, 30);
+  text("Average Size: " + digitRound(averageSize, 2), 80, 30);
+  text("Average vision: " + digitRound(averageVision, 2), 210, 30);
+  text("Average speed: " + digitRound(averageSpeed, 2), 340, 30);
+  text("Average aggression: " + digitRound(averageAggression, 2), 484, 30);
   fill(averageRed, averageGreen, averageBlue);
-  text("Average colour", 640, 30);
-  text("Population size" + animalCount, 350, 60);
+  text("Average colour", 620, 30);
+  fill(0);
+  text("Population size: " + int(animalCount), 350, 75);
   if (hungerTag) {
     for (Animal a: animals) {
       fill(a.animalColour);

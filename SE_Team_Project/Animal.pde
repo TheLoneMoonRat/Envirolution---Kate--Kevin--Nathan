@@ -151,8 +151,8 @@ class Animal {
           if (target.xPos < 700) {
             this.hunger -= target.nutrition;
             foods.remove(target);
-            if (lastSeason.contains(target))
-              lastSeason.remove(target);
+            if (season.lastSeason.contains(target))
+              season.lastSeason.remove(target);
             target = new Food (700, 700);
           }
           this.currentSpeed.x = random(-2, 2);
@@ -195,7 +195,8 @@ class Animal {
     this.timePassedSinceBred++;
   }
 
-  void updatePosition() {
+
+  void setPosition() {
     float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
     if (dist >= 245) {
       if (this.xPos < width/2 && this.yPos < height/2) {
@@ -212,6 +213,24 @@ class Animal {
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
       }
     }
+    
+    
+    //float dist =  sqrt(pow((this.xPos - ), 2) + pow((this.yPos - height/2), 2));
+    //if (dist >= 245) {
+    //  if (this.xPos < width/2 && this.yPos < height/2) {
+    //    this.currentSpeed.x = random(0, 2);
+    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    //  } else if (this.xPos > width/2 && this.yPos < height/2) {
+    //    this.currentSpeed.x = random(-2, 0);
+    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    //  } else if (this.xPos > width/2 && this.yPos > height/2) {
+    //    this.currentSpeed.x = random(-2, 0);
+    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
+    //  } else if (this.xPos < width/2 && this.yPos > height/2) {
+    //    this.currentSpeed.x = random(0, 2);
+    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
+    //  }
+    //}
 
     moveAnimal();
   }
