@@ -85,7 +85,6 @@ class Animal {
   }
 
   void createChild(Animal partner) {
-    println("hi");
     boolean tempGender;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
     float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
@@ -104,11 +103,11 @@ class Animal {
   }
 
   void choosePartner() {
-    if (this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
+    if (!this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
       //boolean gaveBirth = false;
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
-        if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && !a.gender && a.age > 1500) {
+        if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && a.gender && a.age > 1500) {
           //for (int x = 0; x < this.babyAmt; x++) 
           this.partner = a;
           this.timePassedSinceBred = 0;
@@ -127,10 +126,9 @@ class Animal {
         this.currentSpeed.x = random(-2, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
       } else if (this.vision > dist) {
-        this.currentSpeed.x = (this.xPos - this.partner.xPos) / this.speed * -1;
-        this.currentSpeed.y = (this.yPos - this.partner.yPos) / this.speed * -1;
-        this.xPos += this.currentSpeed.x;
-        this.yPos += this.currentSpeed.y;
+        this.currentSpeed.x = (this.xPos - this.partner.xPos) / (this.speed * -15);
+        this.currentSpeed.y = (this.yPos - this.partner.yPos) / (this.speed * -15);
+        moveAnimal();
       }
     }
 
@@ -160,8 +158,8 @@ class Animal {
           this.currentSpeed.x = random(-2, 2);
           this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
         } else if (this.vision > target.getDist(this)) {
-          this.currentSpeed.x = (this.xPos - target.xPos) / 20 * -1;
-          this.currentSpeed.y = (this.yPos - target.yPos) / 20 * -1;
+          this.currentSpeed.x = (this.xPos - target.xPos) / (this.speed * -10);
+          this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed * -10);
           moveAnimal();
         }
       }
@@ -184,9 +182,12 @@ class Animal {
 
   void updateStats() {
     if (this.size < this.finalSize) {
-      this.hunger += 0.02 * this.finalSize;
+      this.hunger += 0.05 * this.finalSize;
       if (this.age % 150 == 0)
-        this.size += this.finalSize / 10;
+        if (this.age < 50 || this.hunger < 20) 
+          this.size += this.finalSize / 10;
+      else
+        this.finalSize *= 0.9;
     } else {
       this.hunger += 0.01 * this.size;
     }

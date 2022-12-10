@@ -235,6 +235,7 @@ void updateLabel() {
 
 //Reset the Simulation
 void reset() {
+  timePassed = 0;
   animals.clear();
   foods.clear();
   animals.add(new Animal(1000 + breedingRate, 5, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
