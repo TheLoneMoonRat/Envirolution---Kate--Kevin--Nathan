@@ -13,6 +13,7 @@ class Animal {
   float aggression;
   color animalColour;
   PVector currentSpeed;
+  PVector currentLocation; 
   Food target;
   boolean gender;
   String foodSource;
@@ -35,6 +36,7 @@ class Animal {
     this.xPos = x;
     this.yPos = y;
     this.currentSpeed = new PVector(0, 0);
+    this.currentLocation = new PVector(0, 0);
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = this.size;
@@ -60,7 +62,7 @@ class Animal {
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = fs;
-
+   this.currentLocation = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
@@ -196,45 +198,43 @@ class Animal {
   }
 
 
-  void setPosition() {
-    float dist =  sqrt(pow((this.xPos - width/2), 2) + pow((this.yPos - height/2), 2));
-    if (dist >= 245) {
-      if (this.xPos < width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(0, 2);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      } else if (this.xPos > width/2 && this.yPos < height/2) {
-        this.currentSpeed.x = random(-2, 0);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-      } else if (this.xPos > width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(-2, 0);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-      } else if (this.xPos < width/2 && this.yPos > height/2) {
-        this.currentSpeed.x = random(0, 2);
-        this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
+  void updatePosition() {
+    if (this.target.xPos == 700 && this.partner == null) {
+      float dist = calcDist(this.xPos, this.currentLocation.x, this.yPos, this.currentLocation.y);
+      println(dist);
+      if (dist > 30) {
+        if (timePassed % int(random(20, 25)) == 0) {
+          if (this.xPos < this.currentLocation.x) {
+            this.currentSpeed.x = this.speed / 1.5;
+          } else if (this.xPos > this.currentLocation.x) {
+            this.currentSpeed.x = -this.speed / 1.5;
+          }
+          if (this.yPos < this.currentLocation.y) 
+            this.currentSpeed.y = this.speed / 1.5;
+          else if (this.yPos > this.currentLocation.y)
+            this.currentSpeed.y = -this.speed / 1.5;
+        }
+        moveAnimal();
+      } else { 
+        this.setPosition();
       }
     }
-    
-    
-    //float dist =  sqrt(pow((this.xPos - ), 2) + pow((this.yPos - height/2), 2));
-    //if (dist >= 245) {
-    //  if (this.xPos < width/2 && this.yPos < height/2) {
-    //    this.currentSpeed.x = random(0, 2);
-    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-    //  } else if (this.xPos > width/2 && this.yPos < height/2) {
-    //    this.currentSpeed.x = random(-2, 0);
-    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
-    //  } else if (this.xPos > width/2 && this.yPos > height/2) {
-    //    this.currentSpeed.x = random(-2, 0);
-    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-    //  } else if (this.xPos < width/2 && this.yPos > height/2) {
-    //    this.currentSpeed.x = random(0, 2);
-    //    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)) * -1;
-    //  }
-    //}
-
-    moveAnimal();
   }
-
+  
+  float calcDist(float x1, float x2, float y1, float y2) {
+    return(sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2)));
+  }
+  
+  void setPosition() {
+    PVector newPosition = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
+    while (calcDist(xPos, newPosition.x, yPos, newPosition.y) < 100) {
+      newPosition.x = random(season.lowLocation.x, season.highLocation.x);
+      newPosition.y = random(season.lowLocation.y, season.highLocation.y);
+    }
+    this.currentLocation.x = newPosition.x;
+    this.currentLocation.y = newPosition.y;
+  }
+  
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > 3500) {
       dying.add(this);

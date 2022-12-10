@@ -393,7 +393,7 @@ public void createGUI(){
   breedingRates.addEventHandler(this, "breedingRateChange");
   litterSize = new GSlider(this, 404, 661, 115, 40, 10.0);
   litterSize.setShowLimits(true);
-  litterSize.setLimits(1.0, 0.0, 10.0);
+  litterSize.setLimits(1.0, 1.0, 10.0);
   litterSize.setNbrTicks(5);
   litterSize.setStickToTicks(true);
   litterSize.setShowTicks(true);

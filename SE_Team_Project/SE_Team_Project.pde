@@ -133,7 +133,7 @@ void draw() {
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();
-      a.setPosition();
+      a.updatePosition();
       if (a.hunger > 20) {
         a.eat();
       }
@@ -244,8 +244,9 @@ void updateLabel() {
   text("Average vision: " + digitRound(averageVision, 2), 210, 30);
   text("Average speed: " + digitRound(averageSpeed, 2), 340, 30);
   text("Average aggression: " + digitRound(averageAggression, 2), 484, 30);
-  fill(averageRed, averageGreen, averageBlue);
   text("Average colour", 620, 30);
+  fill(averageRed, averageGreen, averageBlue);
+  rect(600, 40, 40, 40);
   fill(0);
   text("Population size: " + int(animalCount), 350, 75);
   if (hungerTag) {

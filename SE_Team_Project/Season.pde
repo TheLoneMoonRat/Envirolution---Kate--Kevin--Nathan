@@ -12,18 +12,7 @@ class Season {
     lowLocation = new PVector(0, 0);
     highLocation = new PVector(0, 0);
   }
-  
-  void updateSeason() {
-    
-  }
   void getSeason () {
-    if (timePassed % 500 == 0 && timePassed % 2000 > 500) 
-      for (Food f: foods) 
-        lastSeason.add(f);
-    for (Food f: lastSeason) {
-      if (int(random(0, 300)) == 0)
-        decay.add(f);
-    }
     if (timePassed % 2000 < 500) {
       this.name = "Spring";
       this.bounty = 6;
@@ -53,6 +42,16 @@ class Season {
       this.highLocation.x = 475;
       this.highLocation.y = 475;
     }
+    if (timePassed % 500 == 0) {
+      for (Animal a: animals)
+        a.setPosition();
+      for (Food f: foods) 
+        lastSeason.add(f);
+    }
+    for (Food f: lastSeason) {
+      if (int(random(0, 300)) == 0)
+        decay.add(f);
+    }
     for (Food f: decay) {
       
       try {
@@ -68,7 +67,6 @@ class Season {
     
   
   void createFood() {
-    updateSeason();
     float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);
     color borange;
     switch (this.name) {
