@@ -125,6 +125,8 @@ void draw() {
     if (!play) {
       fill(field.getColour());
       circle(350, 350, 500);
+      //fill(114, 92, 66);
+      //rect(420, 250, 50, 50);
       for (Food f: foods) {
         f.drawFood();
       }
@@ -152,8 +154,11 @@ void draw() {
   if (play && simulation) {
     fill(field.getColour());
     circle(350, 350, 500);
-  
-    //Update Animals
+    //fill(114, 92, 66);
+    //rect(420, 180, 20, 30);
+    //rect(400, 330, 5, 150);
+    //season.drawLeaves();
+     //Update Animals
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();

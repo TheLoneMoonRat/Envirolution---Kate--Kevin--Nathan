@@ -5,12 +5,17 @@ class Season {
   ArrayList<Food> decay;
   PVector lowLocation;
   PVector highLocation;
+  PVector highLeaf;
+  PVector lowLeaf;
+  
   
   Season() {
     decay = new ArrayList<Food>();
     lastSeason = new ArrayList<Food>();
     lowLocation = new PVector(0, 0);
     highLocation = new PVector(0, 0);
+    highLeaf = new PVector(0, 0);
+    lowLeaf = new PVector(0, 0);
   }
   void getSeason () {
     if (timePassed % 2000 < 500) {
@@ -67,25 +72,31 @@ class Season {
     
   
   void createFood() {
-    float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);
-    color borange;
+    float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);    
+    foods.add(new Food(nutritionValue, 10, getSeasonColour(), random(this.lowLocation.x, this.highLocation.x), random(this.lowLocation.y, this.highLocation.y)));
+  }
+
+
+  color getSeasonColour () {
     switch (this.name) {
       case "Spring":
-        borange = color(random(125, 255), 255, 125);
-        break;
+        return(color(random(125, 255), 255, 125));
       case "Summer":
-        borange = color(random(45, 133), 133, 45); 
-        break;
+        return(color(random(45, 133), 133, 45)); 
       case "Fall":
-        borange = color(189, random(57, 189), 80);
-        break;
+        return(color(189, random(57, 189), 80));
       default:
-        borange = color(133, random(45, 133), 45);
-        break;
+        return(color(133, random(45, 133), 45));
     }
-    
-    
-    foods.add(new Food(nutritionValue, 10, borange, random(this.lowLocation.x, this.highLocation.x), random(this.lowLocation.y, this.highLocation.y)));
-    //foods.add(new Food(nutritionValue, 10, color((nutritionValue / (80 + nutritionAdjuster)) * 255, 252, 3), x, y));
   }
+//  void drawLeaves() {
+//    this.highLeaf.x = 470;
+//    this.lowLeaf.x = 390;
+//    this.highLeaf.y = 330;
+//    this.lowLeaf.y = 180;
+//    for (int i = 0; i < bounty * 20; i++) {
+//      fill(season.getSeasonColour());
+//      circle(random(season.lowSeason.x, season.highSeason.x), random(season.lowSeason.y, season.highSeason.y), random(1,4));
+//    }
+//  }
 }
