@@ -19,6 +19,7 @@ class Animal {
   String foodSource;
   Animal partner;
   float finalSize;
+  int lifespan;
 
   //constructor
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y) {
@@ -40,6 +41,7 @@ class Animal {
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = this.size;
+    this.lifespan = 3500;
 
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
@@ -62,7 +64,8 @@ class Animal {
     this.target = new Food(700, 700);
     this.partner = null;
     this.finalSize = fs;
-   this.currentLocation = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
+    this.lifespan = 3500 - (int(aggression) * 20);
+    this.currentLocation = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
@@ -100,7 +103,7 @@ class Animal {
       tempGender = true;    
       tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(0.6, 1.0);
-      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.6, 0.8);
+      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(0.4, 0.8);
       tempRed = ( 0.8 * red(this.animalColour) + red(this.partner.animalColour) * 1.2) / 2;
       tempGreen = (0.8 *green(this.animalColour) + green(this.partner.animalColour) * 1.2) / 2;
       tempBlue = (0.8 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.2) / 2;
@@ -124,6 +127,13 @@ class Animal {
         if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && a.gender && a.age > 1500) {
           //for (int x = 0; x < this.babyAmt; x++) 
           this.partner = a;
+          for (Animal b: animals)
+            if (!b.gender && calcDist(b.xPos, a.xPos, b.yPos, a.yPos) < b.vision && b.size > this.size) {
+              this.partner = null;
+              b.partner = a;
+              b.timePassedSinceBred = 0;
+              break;
+            }
           this.timePassedSinceBred = 0;
           this.partner.timePassedSinceBred = 0;
           break;
@@ -217,14 +227,14 @@ class Animal {
     if (this.target.xPos == 700 && this.partner == null) {
       float dist = calcDist(this.xPos, this.currentLocation.x, this.yPos, this.currentLocation.y);
       if (dist > 30) {
-          if (this.xPos < this.currentLocation.x) {
+          if (this.xPos < this.currentLocation.x - 15) {
             this.currentSpeed.x = this.speed / 1.5;
-          } else if (this.xPos > this.currentLocation.x) {
+          } else if (this.xPos > this.currentLocation.x + 15) {
             this.currentSpeed.x = -this.speed / 1.5;
           }
-          if (this.yPos < this.currentLocation.y) 
+          if (this.yPos < this.currentLocation.y - 15) 
             this.currentSpeed.y = this.speed / 1.5;
-          else if (this.yPos > this.currentLocation.y)
+          else if (this.yPos > this.currentLocation.y + 15)
             this.currentSpeed.y = -this.speed / 1.5;
             
         moveAnimal();
@@ -249,7 +259,7 @@ class Animal {
   }
   
   void calculateDeaths() {
-    if (this.hunger > 100 || this.age > 3500) {
+    if (this.hunger > 100 || this.age > this.lifespan) {
       dying.add(this);
     }
   }

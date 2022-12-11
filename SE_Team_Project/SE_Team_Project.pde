@@ -144,9 +144,16 @@ void draw() {
   
     //Birth and Death
     for (Animal a: inLabour) {
-      for (int i = 0; i < size; i++) {
-        a.createChild(a.partner);  
+      if (foods.size() > animals.size() + size) {
+        for (int i = 0; i < size; i++) {
+          a.createChild(a.partner);  
+        }
       }
+      //} else if (foods.size() > 0) {
+      //  for(int i = 0; i < foods.size(); i++) {
+      //    a.createChild(a.partner);
+      //  }
+      //}
       a.partner = null; 
     }
     for (Animal a: dying) {
