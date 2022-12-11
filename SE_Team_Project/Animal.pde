@@ -88,18 +88,30 @@ class Animal {
 
   void createChild(Animal partner) {
     boolean tempGender;
+    float tempSpeed;
+    float tempSize;
+    float tempAggression;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
-    float tempSpeed = ((this.speed + partner.speed) / 2)  * random(0.8, 1.2);
-    float tempAggression = ((this.aggression + partner.aggression) / 2) * random(0.8, 1.2);
-    float tempSize = ((this.size + partner.size) / 2) * random(0.8, 1.2);
     float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
-    float tempRed = (red(this.animalColour) + red(partner.animalColour)) / 2;
-    float tempGreen = (green(this.animalColour) + green(partner.animalColour)) / 2;
-    float tempBlue = (blue(this.animalColour) + blue(partner.animalColour)) / 2;
+    float tempRed;
+    float tempGreen;
+    float tempBlue;
     if (int(random(0, 2)) == 0 ) {
-      tempGender = true;
+      tempGender = true;    
+      tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
+      tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(0.6, 1.0);
+      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(0.4, 0.8);
+      tempRed = ( 0.45 * red(this.animalColour) + red(this.partner.animalColour) * 0.55) / 2;
+      tempGreen = (0.45 *green(this.animalColour) + green(this.partner.animalColour) * 0.55) / 2;
+      tempBlue = (0.45 * blue(this.animalColour) + blue(this.partner.animalColour) * 0.55) / 2;
     } else {
       tempGender = false;
+      tempSize = ((this.size + this.partner.size) / 2) * random(0.95, 1.55);
+      tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(1.0, 1.4);
+      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.2, 1.6);
+      tempRed = ( 0.55 * red(this.animalColour) + red(this.partner.animalColour) * 0.45) / 2;
+      tempGreen = (0.55 *green(this.animalColour) + green(this.partner.animalColour) * 0.45) / 2;
+      tempBlue = (0.55 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.45) / 2;
     }
     animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
@@ -128,8 +140,8 @@ class Animal {
         this.currentSpeed.x = random(-2, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
       } else if (this.vision > dist) {
-        this.currentSpeed.x = (this.xPos - this.partner.xPos) / (this.speed * -15);
-        this.currentSpeed.y = (this.yPos - this.partner.yPos) / (this.speed * -15);
+        this.currentSpeed.x = (this.xPos - this.partner.xPos) / (this.speed * -7);
+        this.currentSpeed.y = (this.yPos - this.partner.yPos) / (this.speed * -7);
         moveAnimal();
       }
     }
@@ -160,8 +172,8 @@ class Animal {
           this.currentSpeed.x = random(-2, 2);
           this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
         } else if (this.vision > target.getDist(this)) {
-          this.currentSpeed.x = (this.xPos - target.xPos) / (this.speed * -10);
-          this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed * -10);
+          this.currentSpeed.x = (this.xPos - target.xPos) / (this.speed * -7);
+          this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed * -7);
           moveAnimal();
         }
       }
@@ -201,9 +213,7 @@ class Animal {
   void updatePosition() {
     if (this.target.xPos == 700 && this.partner == null) {
       float dist = calcDist(this.xPos, this.currentLocation.x, this.yPos, this.currentLocation.y);
-      println(dist);
       if (dist > 30) {
-        if (timePassed % int(random(20, 25)) == 0) {
           if (this.xPos < this.currentLocation.x) {
             this.currentSpeed.x = this.speed / 1.5;
           } else if (this.xPos > this.currentLocation.x) {
@@ -213,7 +223,6 @@ class Animal {
             this.currentSpeed.y = this.speed / 1.5;
           else if (this.yPos > this.currentLocation.y)
             this.currentSpeed.y = -this.speed / 1.5;
-        }
         moveAnimal();
       } else { 
         this.setPosition();
@@ -227,7 +236,7 @@ class Animal {
   
   void setPosition() {
     PVector newPosition = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
-    while (calcDist(xPos, newPosition.x, yPos, newPosition.y) < 100) {
+    while (calcDist(xPos, newPosition.x, yPos, newPosition.y) < 70) {
       newPosition.x = random(season.lowLocation.x, season.highLocation.x);
       newPosition.y = random(season.lowLocation.y, season.highLocation.y);
     }

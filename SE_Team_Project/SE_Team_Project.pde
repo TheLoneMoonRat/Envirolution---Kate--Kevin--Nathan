@@ -62,6 +62,7 @@ void setup() {
 
 
 void draw() {
+  
   //Genral Setup
   frameRate(simSpeed);
   noStroke();
@@ -211,7 +212,8 @@ void guiUpdate() {
 
 //Update Labels Above Animals
 void updateLabel() {
-  float averageSize = 0;
+  float averageSizeMale = 0;
+  float averageSizeFemale = 0;
   float averageVision = 0;
   float averageSpeed = 0;
   float averageAggression = 0;
@@ -219,8 +221,12 @@ void updateLabel() {
   float averageGreen = 0;
   float averageBlue = 0;
   float animalCount = 0;
+  float femaleCount = 0;
   for (Animal a: animals) {
-    averageSize += a.finalSize;
+    if (!a.gender)
+      averageSizeMale += a.finalSize;
+    else 
+      averageSizeFemale += a.finalSize;
     averageVision += a.vision;
     averageSpeed += a.speed;
     averageAggression += a.aggression;
@@ -228,8 +234,11 @@ void updateLabel() {
     averageGreen += green(a.animalColour);
     averageBlue += blue(a.animalColour);
     animalCount ++;
+    if (a.gender)
+      femaleCount ++;
   }
-  averageSize /= animalCount;
+  averageSizeFemale /= femaleCount;
+  averageSizeMale /= (animalCount - femaleCount);
   averageVision /= animalCount;
   averageSpeed /= animalCount;
   averageAggression /= animalCount;
@@ -240,13 +249,14 @@ void updateLabel() {
   fill(0);
   textSize(15);
   textAlign(CENTER);
-  text("Average Size: " + digitRound(averageSize, 2), 80, 30);
-  text("Average vision: " + digitRound(averageVision, 2), 210, 30);
-  text("Average speed: " + digitRound(averageSpeed, 2), 340, 30);
-  text("Average aggression: " + digitRound(averageAggression, 2), 484, 30);
-  text("Average colour", 620, 30);
+  text("Average Size (male): " + digitRound(averageSizeMale, 2), 80, 30);
+  text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
+  text("Average vision: " + digitRound(averageVision, 2), 230, 30);
+  text("Average speed: " + digitRound(averageSpeed, 2), 360, 30);
+  text("Average aggression: " + digitRound(averageAggression, 2), 504, 30);
+  text("Average colour", 640, 30);
   fill(averageRed, averageGreen, averageBlue);
-  rect(600, 40, 40, 40);
+  rect(620, 40, 40, 40);
   fill(0);
   text("Population size: " + int(animalCount), 350, 75);
   if (hungerTag) {

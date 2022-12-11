@@ -394,10 +394,10 @@ public void createGUI(){
   litterSize = new GSlider(this, 404, 661, 115, 40, 10.0);
   litterSize.setShowLimits(true);
   litterSize.setLimits(1.0, 1.0, 10.0);
-  litterSize.setNbrTicks(5);
+  litterSize.setNbrTicks(10);
   litterSize.setStickToTicks(true);
   litterSize.setShowTicks(true);
-  litterSize.setNumberFormat(G4P.DECIMAL, 2);
+  litterSize.setNumberFormat(G4P.DECIMAL, 1);
   litterSize.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSize.setOpaque(false);
   litterSize.addEventHandler(this, "litterSizeChange");
@@ -475,7 +475,10 @@ public void createGUI(){
   temp2Text.setOpaque(false);
   animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
   animationSpeed.setShowLimits(true);
-  animationSpeed.setLimits(60.0, 30.0, 240.0);
+  animationSpeed.setLimits(60.0, 5.0, 240.0);
+  animationSpeed.setNbrTicks(5);
+  animationSpeed.setStickToTicks(true);
+  animationSpeed.setShowTicks(true);
   animationSpeed.setNumberFormat(G4P.DECIMAL, 2);
   animationSpeed.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeed.setOpaque(false);
