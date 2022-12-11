@@ -51,8 +51,8 @@ void setup() {
   size = 1;
   
   //Create Animals
-  animals.add(new Animal(1000 + breedingRate, 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(1000 + breedingRate, 2, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
  
   //Create Habitat
@@ -167,16 +167,11 @@ void draw() {
   
     //Birth and Death
     for (Animal a: inLabour) {
-      if (foods.size() > animals.size() + size) {
+      if (foods.size() > animals.size()) {
         for (int i = 0; i < size; i++) {
           a.createChild(a.partner);  
         }
       }
-      //} else if (foods.size() > 0) {
-      //  for(int i = 0; i < foods.size(); i++) {
-      //    a.createChild(a.partner);
-      //  }
-      //}
       a.partner = null; 
     }
     for (Animal a: dying) {
@@ -225,27 +220,18 @@ void mouseClicked() {
   }
 }
 
-void keyPressed() {
-  println(selected.get(0).size);
-}
-
 void guiUpdate() {
-  for (Animal a: selected) {
+  if (selected.size() > 0) {
     if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
-      a.aggression = animal1Traits.getValueF();
+      selected.get(0).aggression = animalTraits.getValueF();
     } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
-      a.size = animal1Traits.getValueF();
+      selected.get(0).size = animalTraits.getValueF();
     } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
-      a.speed = 85 - animal1Traits.getValueF();
+      selected.get(0).speed = 85 - animalTraits.getValueF();
     } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
-      a.vision = animal1Traits.getValueF();
+      selected.get(0).vision = animalTraits.getValueF();
     }
   }
-  
 }
 
 
@@ -287,7 +273,7 @@ void updateLabel() {
   averageBlue /= animalCount;
   
   fill(0);
-  textSize(15);
+  textSize(14);
   textAlign(CENTER);
   if (selected.size() == 0) { 
     text("Average Size (male): " + digitRound(averageSizeMale, 2), 80, 30);

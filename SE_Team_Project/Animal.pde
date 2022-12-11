@@ -48,7 +48,7 @@ class Animal {
   }
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y, float fs) {
     this.age = 0;
-    this.breedingRate = br;
+    this.breedingRate = br * breedingRate;
     this.babyAmt = 0;
     this.speed = sp;
     this.hunger = 0;

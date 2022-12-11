@@ -40,7 +40,7 @@ public void returnButtonClick(GButton source, GEvent event) { //_CODE_:returnBut
 } //_CODE_:returnButton:636213:
 
 public void growthRateChange(GSlider source, GEvent event) { //_CODE_:growthRate:851713:
-  foodRate = growthRate.getValueF();
+  foodRate = 101 - growthRate.getValueF();
 } //_CODE_:growthRate:851713:
 
 public void nutrition_Change(GSlider source, GEvent event) { //_CODE_:nutrition_:906414:
@@ -68,7 +68,6 @@ public void articClick(GButton source, GEvent event) { //_CODE_:artic:557486:
 } //_CODE_:artic:557486:
 
 public void breedingRate1Change(GSlider source, GEvent event) { //_CODE_:breedingRate1:600015:
-  println("breedingRate - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:breedingRate1:600015:
 
 public void litterSize1Change(GSlider source, GEvent event) { //_CODE_:litterSize1:941264:
@@ -76,7 +75,18 @@ public void litterSize1Change(GSlider source, GEvent event) { //_CODE_:litterSiz
 } //_CODE_:litterSize1:941264:
 
 public void animal1TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animal1Traits:793901:
-  println("animal1Traits - GCustomSlider >> GEvent." + event + " @ " + millis());
+  setting = animal1Trait.getSelectedText();  
+  for (Animal a : animals) {
+    if (setting.equals("Aggression")) {
+      animal1Traits.setLimits(a.aggression, 1, 10);
+    } else if (setting.equals("Size")) {
+      animal1Traits.setLimits(a.size, 3, 12);
+    } else if (setting.equals("Speed")) {
+      animal1Traits.setLimits(a.speed, 5, 80);
+    } else if (setting.equals("Vision")) {
+      animal1Traits.setLimits(a.vision, 20, 600);
+    }
+  }
 } //_CODE_:animal1Traits:793901:
 
 public void aniaml1TraitChange(GDropList source, GEvent event) { //_CODE_:animal1Trait:702361:
@@ -95,7 +105,6 @@ public void aniaml1TraitChange(GDropList source, GEvent event) { //_CODE_:animal
 } //_CODE_:animal1Trait:702361:
 
 public void breedingRate2Change(GSlider source, GEvent event) { //_CODE_:breedingRate2:762987:
-  println("slider1 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:breedingRate2:762987:
 
 public void litterSize2Change(GSlider source, GEvent event) { //_CODE_:litterSize2:317562:
@@ -103,7 +112,18 @@ public void litterSize2Change(GSlider source, GEvent event) { //_CODE_:litterSiz
 } //_CODE_:litterSize2:317562:
 
 public void animal2TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animal2Traits:534204:
-  println("custom_slider1 - GCustomSlider >> GEvent." + event + " @ " + millis());
+  setting = animal1Trait.getSelectedText();  
+  for (Animal a : animals) {
+    if (setting.equals("Aggression")) {
+      animal1Traits.setLimits(a.aggression, 1, 10);
+    } else if (setting.equals("Size")) {
+      animal1Traits.setLimits(a.size, 3, 12);
+    } else if (setting.equals("Speed")) {
+      animal1Traits.setLimits(a.speed, 5, 80);
+    } else if (setting.equals("Vision")) {
+      animal1Traits.setLimits(a.vision, 20, 600);
+    }
+  }
 } //_CODE_:animal2Traits:534204:
 
 public void animal2TraitChange(GDropList source, GEvent event) { //_CODE_:animal2Trait:223443:
@@ -213,7 +233,7 @@ public void showVariablesButtonClick(GButton source, GEvent event) { //_CODE_:sh
 } //_CODE_:shouldVariables:999019:
 
 public void breedingRateChange(GSlider source, GEvent event) { //_CODE_:breedingRates:281233:
-  breedingRate = -breedingRates.getValueF();
+  breedingRate = breedingRates.getValueF();
 } //_CODE_:breedingRates:281233:
 
 public void litterSizeChange(GSlider source, GEvent event) { //_CODE_:litterSize:321692:
@@ -221,22 +241,19 @@ public void litterSizeChange(GSlider source, GEvent event) { //_CODE_:litterSize
 } //_CODE_:litterSize:321692:
 
 public void animalTraitChange(GDropList source, GEvent event) { //_CODE_:animalTrait:969114:
-  setting = animal1Trait.getSelectedText();  
-  for (Animal a : animals) {
-    if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
-    } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
-    } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
-    } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
-    }
+  setting = animalTrait.getSelectedText();
+  if (setting.equals("Aggression")) {
+    animalTraits.setLimits(selected.get(0).aggression, 1, 100);
+  } else if (setting.equals("Size")) {
+    animalTraits.setLimits(selected.get(0).size, 2, 25);
+  } else if (setting.equals("Speed")) {
+    animalTraits.setLimits(selected.get(0).speed, 5, 80);
+  } else if (setting.equals("Vision")) {
+    animalTraits.setLimits(selected.get(0).vision, 20, 600);
   }
 } //_CODE_:animalTrait:969114:
 
 public void animalTraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animalTraits:417672:
-  println("animalTraits - GCustomSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:animalTraits:417672:
 
 public void sheepButtonClick(GButton source, GEvent event) { //_CODE_:sheepButton:766178:
@@ -323,7 +340,7 @@ public void createGUI(){
   artic.addEventHandler(this, "articClick");
   breedingRate1 = new GSlider(this, 112, 210, 255, 35, 10.0);
   breedingRate1.setShowLimits(true);
-  breedingRate1.setLimits(0.5, 0.0, 1.0);
+  breedingRate1.setLimits(1.0, 0.0, 2.0);
   breedingRate1.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate1.setOpaque(false);
   breedingRate1.addEventHandler(this, "breedingRate1Change");
@@ -343,7 +360,7 @@ public void createGUI(){
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
   breedingRate2 = new GSlider(this, 111, 337, 256, 40, 10.0);
   breedingRate2.setShowLimits(true);
-  breedingRate2.setLimits(0.5, 0.0, 1.0);
+  breedingRate2.setLimits(1.0, 0.0, 2.0);
   breedingRate2.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate2.setOpaque(false);
   breedingRate2.addEventHandler(this, "breedingRate2Change");
@@ -386,7 +403,7 @@ public void createGUI(){
   shouldVariables.addEventHandler(this, "showVariablesButtonClick");
   breedingRates = new GSlider(this, 404, 623, 116, 40, 10.0);
   breedingRates.setShowLimits(true);
-  breedingRates.setLimits(0.5, 0.0, 1.0);
+  breedingRates.setLimits(1.0, 0.0, 2.0);
   breedingRates.setNumberFormat(G4P.DECIMAL, 2);
   breedingRates.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRates.setOpaque(false);
