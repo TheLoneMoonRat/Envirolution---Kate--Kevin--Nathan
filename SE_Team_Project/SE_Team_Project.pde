@@ -118,11 +118,34 @@ void draw() {
   
   //While Simulation is Running
   if (simulation) {
-   simulationSetup();
-    
+    simulationSetup();
     background(150, 150, 255);
     fill(0, 0, 250);
     rect(50, 94, 600, 512);
+    if (!play) {
+      fill(field.getColour());
+      circle(350, 350, 500);
+      for (Food f: foods) {
+        f.drawFood();
+      }
+      for (Animal a : animals) {
+        a.drawAnimal();
+      }
+      for (Animal a: animals) {
+        if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
+          if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
+            noFill();
+            strokeWeight(2.5);
+            stroke(255, 215, 0);
+            circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+            stroke(0);
+            strokeWeight(1);
+         }
+       }
+     }
+     guiUpdate();
+     updateLabel();
+    }
   }
   
   //Animation
@@ -191,7 +214,8 @@ void draw() {
 }
 
 void mouseClicked() {
-  selected.clear();
+  if (mouseY < 600)
+    selected.clear();
   for (Animal a: animals) {
     if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
       if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
@@ -202,22 +226,22 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  for (Animal a: selected) 
-    if (a.target.xPos == 700) 
-      println("hi");
-    else 
-      println("bye");
+  println(selected.get(0).size);
 }
 
 void guiUpdate() {
   for (Animal a: selected) {
     if (setting.equals("Aggression")) {
+      animal1Traits.setLimits(a.aggression, 1, 10);
       a.aggression = animal1Traits.getValueF();
     } else if (setting.equals("Size")) {
+      animal1Traits.setLimits(a.size, 3, 12);
       a.size = animal1Traits.getValueF();
     } else if (setting.equals("Speed")) {
+      animal1Traits.setLimits(a.speed, 5, 80);
       a.speed = 85 - animal1Traits.getValueF();
     } else if (setting.equals("Vision")) {
+      animal1Traits.setLimits(a.vision, 20, 600);
       a.vision = animal1Traits.getValueF();
     }
   }
@@ -227,6 +251,7 @@ void guiUpdate() {
 
 //Update Labels Above Animals
 void updateLabel() {
+  noStroke();
   float averageSizeMale = 0;
   float averageSizeFemale = 0;
   float averageVision = 0;
@@ -264,16 +289,36 @@ void updateLabel() {
   fill(0);
   textSize(15);
   textAlign(CENTER);
-  text("Average Size (male): " + digitRound(averageSizeMale, 2), 80, 30);
-  text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
-  text("Average vision: " + digitRound(averageVision, 2), 230, 30);
-  text("Average speed: " + digitRound(averageSpeed, 2), 360, 30);
-  text("Average aggression: " + digitRound(averageAggression, 2), 504, 30);
+  if (selected.size() == 0) { 
+    text("Average Size (male): " + digitRound(averageSizeMale, 2), 80, 30);
+    text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
+    text("Average vision: " + digitRound(averageVision, 2), 230, 30);
+    text("Average speed: " + digitRound(averageSpeed, 2), 360, 30);
+    text("Average aggression: " + digitRound(averageAggression, 2), 504, 30);
+  } else {
+    try {
+      Animal q = selected.get(0);
+      
+      text("Selected size: " + digitRound(q.size, 2), 80, 30);
+      if (q.gender)
+        text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
+      else 
+        text("Average size (male): " + digitRound(averageSizeMale, 2), 80, 60);  
+      text("Selected vision: " + digitRound(q.vision, 2), 230, 30);
+      text("Average vision: " + digitRound(averageVision, 2), 230, 60);
+      text("Selected speed: " + digitRound(q.speed, 2), 360, 30);
+      text("Average speed: " + digitRound(averageSpeed, 2), 360, 60);
+      text("Selected aggression: " + digitRound(q.aggression, 2), 504, 30);
+      text("Average aggression: " + digitRound(averageAggression, 2), 504, 60);
+    } catch (Exception e) {
+    }
+  }  
+  
   text("Average colour", 640, 30);
   fill(averageRed, averageGreen, averageBlue);
   rect(620, 40, 40, 40);
   fill(0);
-  text("Population size: " + int(animalCount), 350, 75);
+  text("Population size: " + int(animalCount), 350, 90);
   if (hungerTag) {
     for (Animal a: animals) {
       fill(a.animalColour);

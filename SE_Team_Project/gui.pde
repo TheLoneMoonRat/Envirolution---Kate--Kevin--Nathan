@@ -152,13 +152,13 @@ public void backButtonClick(GButton source, GEvent event) { //_CODE_:backButton:
 public void pauseButton1Click(GButton source, GEvent event) { //_CODE_:pauseButton1:318768:
   if (play == true) {
     play = false;
-    noLoop();
+    //noLoop();
     pauseButton1.setLocalColorScheme(1);
     pauseButton1.setText("Play");
   }
   else {
     play = true;
-    loop();
+    //loop();
     pauseButton1.setLocalColorScheme(0);
     pauseButton1.setText("Pause");
   }
