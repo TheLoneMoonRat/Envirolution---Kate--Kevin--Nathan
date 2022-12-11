@@ -194,6 +194,14 @@ void mouseClicked() {
   }
 }
 
+void keyPressed() {
+  for (Animal a: selected) 
+    if (a.partner == null && a.target.xPos == 700) 
+      println("hi");
+    else 
+      println("bye");
+}
+
 void guiUpdate() {
   for (Animal a: selected) {
     if (setting.equals("Aggression")) {

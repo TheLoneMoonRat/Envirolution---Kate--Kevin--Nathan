@@ -100,18 +100,18 @@ class Animal {
       tempGender = true;    
       tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(0.6, 1.0);
-      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(0.4, 0.8);
-      tempRed = ( 0.45 * red(this.animalColour) + red(this.partner.animalColour) * 0.55) / 2;
-      tempGreen = (0.45 *green(this.animalColour) + green(this.partner.animalColour) * 0.55) / 2;
-      tempBlue = (0.45 * blue(this.animalColour) + blue(this.partner.animalColour) * 0.55) / 2;
+      tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.6, 0.8);
+      tempRed = ( 0.8 * red(this.animalColour) + red(this.partner.animalColour) * 1.2) / 2;
+      tempGreen = (0.8 *green(this.animalColour) + green(this.partner.animalColour) * 1.2) / 2;
+      tempBlue = (0.8 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.2) / 2;
     } else {
       tempGender = false;
       tempSize = ((this.size + this.partner.size) / 2) * random(0.95, 1.55);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(1.0, 1.4);
       tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.2, 1.6);
-      tempRed = ( 0.55 * red(this.animalColour) + red(this.partner.animalColour) * 0.45) / 2;
-      tempGreen = (0.55 *green(this.animalColour) + green(this.partner.animalColour) * 0.45) / 2;
-      tempBlue = (0.55 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.45) / 2;
+      tempRed = ( 1.2 * red(this.animalColour) + red(this.partner.animalColour) * 0.8) / 2;
+      tempGreen = (1.2 *green(this.animalColour) + green(this.partner.animalColour) * 0.8) / 2;
+      tempBlue = (1.2 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.8) / 2;
     }
     animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
@@ -223,6 +223,7 @@ class Animal {
             this.currentSpeed.y = this.speed / 1.5;
           else if (this.yPos > this.currentLocation.y)
             this.currentSpeed.y = -this.speed / 1.5;
+            
         moveAnimal();
       } else { 
         this.setPosition();
