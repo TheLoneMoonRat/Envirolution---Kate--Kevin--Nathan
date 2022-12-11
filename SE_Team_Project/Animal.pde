@@ -99,22 +99,22 @@ class Animal {
     float tempRed;
     float tempGreen;
     float tempBlue;
-    if (int(random(0, 2)) == 0 ) {
+    if (int(random(0, 100)) < 55 ) {
       tempGender = true;    
       tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(0.6, 1.0);
       tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(0.4, 0.8);
-      tempRed = ( 0.8 * red(this.animalColour) + red(this.partner.animalColour) * 1.2) / 2;
-      tempGreen = (0.8 *green(this.animalColour) + green(this.partner.animalColour) * 1.2) / 2;
-      tempBlue = (0.8 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.2) / 2;
+      tempRed = ( 0.2 * red(this.animalColour) + red(this.partner.animalColour) * 1.8) / 2;
+      tempGreen = (0.2 *green(this.animalColour) + green(this.partner.animalColour) * 1.8) / 2;
+      tempBlue = (0.2 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.8) / 2;
     } else {
       tempGender = false;
-      tempSize = ((this.size + this.partner.size) / 2) * random(0.95, 1.55);
+      tempSize = ((this.size + this.partner.size) / 2) * random(1, 1.6);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(1.0, 1.4);
       tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.2, 1.6);
-      tempRed = ( 1.2 * red(this.animalColour) + red(this.partner.animalColour) * 0.8) / 2;
-      tempGreen = (1.2 *green(this.animalColour) + green(this.partner.animalColour) * 0.8) / 2;
-      tempBlue = (1.2 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.8) / 2;
+      tempRed = ( 1.8 * red(this.animalColour) + red(this.partner.animalColour) * 0.2) / 2;
+      tempGreen = (1.8 *green(this.animalColour) + green(this.partner.animalColour) * 0.2) / 2;
+      tempBlue = (1.8 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.2) / 2;
     }
     animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
@@ -132,10 +132,12 @@ class Animal {
               this.partner = null;
               b.partner = a;
               b.timePassedSinceBred = 0;
+              b.partner.timePassedSinceBred = 0;
               break;
             }
           this.timePassedSinceBred = 0;
-          this.partner.timePassedSinceBred = 0;
+          if (this.partner != null)
+            this.partner.timePassedSinceBred = 0;
           break;
         }
       }
@@ -213,8 +215,8 @@ class Animal {
       if (this.age % 150 == 0)
         if (this.age < 50 || this.hunger < 20) 
           this.size += this.finalSize / 10;
-        else if (this.hunger > 20 && this.age > 50)
-          this.finalSize *= 0.9;
+        //else if (this.hunger > 20 && this.age > 50)
+        //  this.finalSize *= 0.9;
     } else {
       this.hunger += 0.01 * this.size;
     }
@@ -228,14 +230,14 @@ class Animal {
       float dist = calcDist(this.xPos, this.currentLocation.x, this.yPos, this.currentLocation.y);
       if (dist > 30) {
           if (this.xPos < this.currentLocation.x - 15) {
-            this.currentSpeed.x = this.speed / 1.5;
+            this.currentSpeed.x = this.speed / 3;
           } else if (this.xPos > this.currentLocation.x + 15) {
-            this.currentSpeed.x = -this.speed / 1.5;
+            this.currentSpeed.x = -this.speed / 3;
           }
           if (this.yPos < this.currentLocation.y - 15) 
-            this.currentSpeed.y = this.speed / 1.5;
+            this.currentSpeed.y = this.speed / 3;
           else if (this.yPos > this.currentLocation.y + 15)
-            this.currentSpeed.y = -this.speed / 1.5;
+            this.currentSpeed.y = -this.speed / 3;
             
         moveAnimal();
       } else { 
