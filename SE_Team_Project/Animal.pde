@@ -176,6 +176,9 @@ class Animal {
           this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed * -7);
           moveAnimal();
         }
+      } else {
+        target = new Food (700, 700);
+        updatePosition();
       }
     }
   }
