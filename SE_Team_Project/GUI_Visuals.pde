@@ -52,6 +52,7 @@ void animalsSetup() {
 //Create Simulation GUI Screen
 void simulationSetup() {
    pauseButton1.setVisible(true);
+   litterSize.setVisible(true);
    resetButton1.setVisible(true);
    animationSpeed.setVisible(true);
    showVariables1.setVisible(true);
