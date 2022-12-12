@@ -14,15 +14,11 @@ class Habitat {
   }
   
   color getColour() {
-    color c = (0);
-    if (this.temp > 35)
-      c = color(255, 255, 0);
-    else if (this.temp > 20) 
-      c = color(100, 255, 0);
-    else if (this.temp > 0)
-      c = color(0, 255, 0);
-    else if (this.temp < 0)
-      c = color(255);
+    colorMode(HSB);
+    float hue = 120 - 2 * this.temp;
+    float saturation = this.temp * 10;
+    color c = color(hue, saturation, 150);
+    colorMode(RGB);
     return c;
   }
   

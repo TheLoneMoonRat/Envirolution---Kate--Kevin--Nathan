@@ -1,7 +1,8 @@
 class Animal {
-  //fields
+  //Fields
   int age;
   int timePassedSinceBred;
+  int lifespan;
   float vision;
   float breedingRate;
   float babyAmt;
@@ -11,18 +12,18 @@ class Animal {
   float yPos;
   float size;
   float aggression;
+  float finalSize;
+  float innerTemp;
   color animalColour;
   PVector currentSpeed;
   PVector currentLocation; 
-  Food target;
   boolean gender;
   String foodSource;
+  Food target;
   Animal partner;
-  float finalSize;
-  int lifespan;
-
-  //constructor
-  Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y) {
+ 
+  //Constructor
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float it, color co, float x, float y) {
     this.age = 0;
     this.breedingRate = br;
     this.babyAmt = 0;
@@ -33,6 +34,7 @@ class Animal {
     this.aggression = ag;
     this.timePassedSinceBred = 0;
     this.vision = vs;
+    this.innerTemp = it;
     this.animalColour = co;
     this.xPos = x;
     this.yPos = y;
@@ -46,7 +48,8 @@ class Animal {
     this.currentSpeed.x = random(-2, 2);
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
-  Animal(float br, float sp, float si, boolean ge, float ag, float vs, color co, float x, float y, float fs) {
+  
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float it, color co, float x, float y, float fs) {
     this.age = 0;
     this.breedingRate = br * breedingRate;
     this.babyAmt = 0;
@@ -57,6 +60,7 @@ class Animal {
     this.aggression = ag;
     this.timePassedSinceBred = 0;
     this.vision = vs;
+    this.innerTemp = it;
     this.animalColour = co;
     this.xPos = x;
     this.yPos = y;
@@ -70,7 +74,7 @@ class Animal {
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
 
-  //methods
+  //Methods
   void guiUpdate() {
     if (setting.equals("Aggression")) {
       this.aggression = animal1Traits.getValueF();
@@ -81,6 +85,7 @@ class Animal {
     }
   }
 
+  //Draw Animal
   void drawAnimal() {
     fill(animalColour);
     //draw head
@@ -95,10 +100,12 @@ class Animal {
     float tempSize;
     float tempAggression;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
+    float tempInnerTemp = ((this.innerTemp + partner.innerTemp) / 2) * random(0.8, 1.2);
     float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
     float tempRed;
     float tempGreen;
     float tempBlue;
+    
     if (int(random(0, 100)) < 55 ) {
       tempGender = true;    
       tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
@@ -107,7 +114,8 @@ class Animal {
       tempRed = ( 0.2 * red(this.animalColour) + red(this.partner.animalColour) * 1.8) / 2;
       tempGreen = (0.2 *green(this.animalColour) + green(this.partner.animalColour) * 1.8) / 2;
       tempBlue = (0.2 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.8) / 2;
-    } else {
+    } 
+    else {
       tempGender = false;
       tempSize = ((this.size + this.partner.size) / 2) * random(1, 1.6);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(1.0, 1.4);
@@ -116,7 +124,7 @@ class Animal {
       tempGreen = (1.8 *green(this.animalColour) + green(this.partner.animalColour) * 0.2) / 2;
       tempBlue = (1.8 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.2) / 2;
     }
-    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
+    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, tempInnerTemp, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
 
   void choosePartner() {
@@ -264,5 +272,22 @@ class Animal {
     if (this.hunger > 100 || this.age > this.lifespan) {
       dying.add(this);
     }
+    else {
+      calculateDeathFromTemp();
+    }
+  }
+  
+  void calculateDeathFromTemp() {
+    float chance = 0;
+    if (field.temp - this.innerTemp > 10 || field.temp - this.innerTemp < -10)
+      chance = 0.3;
+    else if (field.temp - this.innerTemp > 20 || field.temp - this.innerTemp < -20)
+      chance = 0.5;
+    else if (field.temp - this.innerTemp > 30 || field.temp - this.innerTemp < -30)
+      chance = 0.8;
+      
+    float rand = random(0, 1);
+    if (rand < chance) 
+      dying.add(this);
   }
 }          

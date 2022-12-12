@@ -4,7 +4,6 @@ import g4p_controls.*;
 int simSpeed = 60;
 int timePassed;
 int size;
-Season season;
 float breedingRate;
 float nutritionAdjuster;
 float foodRate;
@@ -16,6 +15,7 @@ ArrayList<Animal> selected;
 String setting;
 boolean gender;
 Habitat field;
+Season season;
 
 PImage background1; 
 PImage background2;
@@ -46,17 +46,19 @@ void setup() {
   inLabour = new ArrayList<Animal>();
   dying = new ArrayList<Animal>();
   season = new Season();
+  
+  //Set Temporary Variables
   breedingRate = 0;
   setting = "Aggression";
   size = 1;
   
   //Create Animals
-  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, 20, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, 20, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
   //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
  
   //Create Habitat
-  field = new Habitat(5, -5, 5);
+  field = new Habitat(0.5, 20, 10);
   foodRate = growthRate.getValueF();
 }
 
@@ -113,7 +115,16 @@ void draw() {
     PFont myFont2 = createFont("Impact", 30);
     textFont(myFont2);
     text("1)", 80, 222);
-    text("2)", 80, 352);
+    text("2)", 80, 410);
+    
+    fill(255);
+    rect(100, 370, 490, 2);
+    
+    fill(red1.getValueF(), green1.getValueF(), blue1.getValueF());
+    circle(465, 335, 50);
+    
+    fill(red2.getValueF(), green2.getValueF(), blue2.getValueF());
+    circle(465, 520, 50);
   }
   
   //While Simulation is Running
@@ -122,6 +133,14 @@ void draw() {
     background(150, 150, 255);
     fill(0, 0, 250);
     rect(50, 94, 600, 512);
+    fill(10, 75, 200);
+    rect(355, 616, 2, 84);
+    fill(150, 150, 255);
+    triangle(50, 94, 100, 94, 50, 144);
+    triangle(650, 94, 600, 94, 650, 144);
+    triangle(50, 606, 100, 606, 50, 556);
+    triangle(650, 606, 600, 606, 650, 556);
+    
     if (!play) {
       fill(field.getColour());
       circle(350, 350, 500);
@@ -210,9 +229,21 @@ void draw() {
         }
       }
     }
+    
+   //Show Selected Animal
+   if (selected.size() > 0) {
+     Animal a = selected.get(0);
+     noFill();
+     strokeWeight(2.5);
+     stroke(255, 215, 0);
+     circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+     stroke(0);
+     strokeWeight(1);
+    }
   }
 }
 
+//Select Animal
 void mouseClicked() {
   if (mouseY < 600)
     selected.clear();
@@ -225,6 +256,7 @@ void mouseClicked() {
   }
 }
 
+//Update GUI Based on Selected
 void guiUpdate() {
   if (selected.size() > 0) {
     if (setting.equals("Aggression")) {
@@ -243,6 +275,8 @@ void guiUpdate() {
 //Update Labels Above Animals
 void updateLabel() {
   noStroke();
+  
+  //Setup Average Values
   float averageSizeMale = 0;
   float averageSizeFemale = 0;
   float averageVision = 0;
@@ -253,6 +287,8 @@ void updateLabel() {
   float averageBlue = 0;
   float animalCount = 0;
   float femaleCount = 0;
+  
+  //Add up All Values
   for (Animal a: animals) {
     if (!a.gender)
       averageSizeMale += a.finalSize;
@@ -268,6 +304,8 @@ void updateLabel() {
     if (a.gender)
       femaleCount ++;
   }
+  
+  //Get Average Values
   averageSizeFemale /= femaleCount;
   averageSizeMale /= (animalCount - femaleCount);
   averageVision /= animalCount;
@@ -277,39 +315,42 @@ void updateLabel() {
   averageGreen /= animalCount;
   averageBlue /= animalCount;
   
-  fill(0);
-  textSize(14);
+  //Display Average Values
+  fill(10, 75, 200);
+  textSize(16);
   textAlign(CENTER);
-  if (selected.size() == 0) { 
-    text("Average Size (male): " + digitRound(averageSizeMale, 2), 80, 30);
-    text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
-    text("Average vision: " + digitRound(averageVision, 2), 230, 30);
-    text("Average speed: " + digitRound(averageSpeed, 2), 360, 30);
-    text("Average aggression: " + digitRound(averageAggression, 2), 504, 30);
-  } else {
+  
+  text("Average Size (male): " + digitRound(averageSizeMale, 2), 140, 40);
+  text("Average Size (female): " + digitRound(averageSizeFemale, 2), 140, 65);
+  text("Average vision: " + digitRound(averageVision, 2), 315, 40);
+  text("Average speed: " + digitRound(averageSpeed, 2), 315, 65);
+  text("Average aggression: " + digitRound(averageAggression, 2), 480, 40);
+  text("Population size: " + int(animalCount), 480, 65);
+ 
+  if (selected.size() != 0) {
     try {
       Animal q = selected.get(0);
       
-      text("Selected size: " + digitRound(q.size, 2), 80, 30);
-      if (q.gender)
-        text("Average Size (female): " + digitRound(averageSizeFemale, 2), 80, 60);
-      else 
-        text("Average size (male): " + digitRound(averageSizeMale, 2), 80, 60);  
-      text("Selected vision: " + digitRound(q.vision, 2), 230, 30);
-      text("Average vision: " + digitRound(averageVision, 2), 230, 60);
-      text("Selected speed: " + digitRound(q.speed, 2), 360, 30);
-      text("Average speed: " + digitRound(averageSpeed, 2), 360, 60);
-      text("Selected aggression: " + digitRound(q.aggression, 2), 504, 30);
-      text("Average aggression: " + digitRound(averageAggression, 2), 504, 60);
-    } catch (Exception e) {
+      fill(255, 255, 0);
+      textSize(14);
+      text("Selected size: " + digitRound(q.size, 2), 100, 85);
+      text("Selected vision: " + digitRound(q.vision, 2), 225, 85);
+      text("Selected speed: " + digitRound(q.speed, 2), 360, 85);
+      text("Selected aggression: " + digitRound(q.aggression, 2), 500, 85);
+    } 
+    catch (Exception e) {
     }
   }  
   
+  fill(10, 75, 200);
   text("Average colour", 640, 30);
+  fill(150, 150, 255);
+  textSize(24);
+  text(season.name, 128, 125);
   fill(averageRed, averageGreen, averageBlue);
   rect(620, 40, 40, 40);
-  fill(0);
-  text("Population size: " + int(animalCount), 350, 90);
+
+  //Animal Info Tags
   if (hungerTag) {
     for (Animal a: animals) {
       fill(a.animalColour);
@@ -338,6 +379,7 @@ void updateLabel() {
   }
 }
 
+//Round Function
 float digitRound(float number, int digits) {
   return(int(number * pow(10, digits)) / pow(10.0, digits));
 }
@@ -347,6 +389,6 @@ void reset() {
   timePassed = 0;
   animals.clear();
   foods.clear();
-  animals.add(new Animal(1000 + breedingRate, 5, 8, false, 10, 300, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (1000 + breedingRate, 3, 5, true, 4, 300, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(1000 + breedingRate, 5, 8, false, 10, 300, 20, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal (1000 + breedingRate, 3, 5, true, 4, 300, 20, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
 }

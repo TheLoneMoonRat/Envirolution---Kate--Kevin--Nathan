@@ -15,7 +15,6 @@
  */
 
 public void startButtonClick(GButton source, GEvent event) { //_CODE_:startButton:798525:
-  timePassed = 0;
   instructionsButton.setVisible(false);
   startButton.setVisible(false);
   setupScreenEnvironment = true;
@@ -52,19 +51,31 @@ public void averageTempChange(GSlider source, GEvent event) { //_CODE_:averageTe
 } //_CODE_:averageTemp:400803:
 
 public void tempRangeChange(GSlider source, GEvent event) { //_CODE_:tempRange:337308:
-  println("tempRange - GSlider >> GEvent." + event + " @ " + millis());
+  field.tempRange = tempRange.getValueF();
 } //_CODE_:tempRange:337308:
 
 public void humidity_Change(GSlider source, GEvent event) { //_CODE_:humidity_:856470:
-  println("humidity_ - GSlider >> GEvent." + event + " @ " + millis());
+  field.humidity = humidity_.getValueF();
 } //_CODE_:humidity_:856470:
 
 public void medowClick(GButton source, GEvent event) { //_CODE_:medow:484108:
   medow.setLocalColorScheme(7);
+  artic.setLocalColorScheme(1);
+  
+  growthRate.setValue(80);
+  nutrition_.setValue(17);
+  averageTemp.setValue(20);
+  tempRange.setValue(15);
 } //_CODE_:medow:484108:
 
 public void articClick(GButton source, GEvent event) { //_CODE_:artic:557486:
   artic.setLocalColorScheme(7);
+  medow.setLocalColorScheme(1);
+  
+  growthRate.setValue(30);
+  nutrition_.setValue(10);
+  averageTemp.setValue(-5);
+  tempRange.setValue(5);
 } //_CODE_:artic:557486:
 
 public void breedingRate1Change(GSlider source, GEvent event) { //_CODE_:breedingRate1:600015:
@@ -151,6 +162,7 @@ public void beginButtonClick(GButton source, GEvent event) { //_CODE_:beginButto
     else {
       clearAnimalsSetupScreen();
       simulation = true;
+      timePassed = 0;
       setupScreenAnimals = false;
     }
 } //_CODE_:beginButton:890431:
@@ -256,9 +268,9 @@ public void animalTraitChange(GDropList source, GEvent event) { //_CODE_:animalT
 public void animalTraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animalTraits:417672:
 } //_CODE_:animalTraits:417672:
 
-public void sheepButtonClick(GButton source, GEvent event) { //_CODE_:sheepButton:766178:
+public void bearButtonClick(GButton source, GEvent event) { //_CODE_:bearButton:766178:
   println("sheepButton - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:sheepButton:766178:
+} //_CODE_:bearButton:766178:
 
 public void frogButtonClick(GButton source, GEvent event) { //_CODE_:frogButton:466873:
   println("frogButton - GButton >> GEvent." + event + " @ " + millis());
@@ -280,6 +292,29 @@ public void animationSpeedChange(GSlider source, GEvent event) { //_CODE_:animat
   simSpeed = animationSpeed.getValueI(); 
 } //_CODE_:animationSpeed:981070:
 
+public void red1Change(GSlider source, GEvent event) { //_CODE_:red1:343643:
+} //_CODE_:red1:343643:
+
+public void green1Change(GSlider source, GEvent event) { //_CODE_:green1:856703:
+  println("green1 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:green1:856703:
+
+public void blue1Change(GSlider source, GEvent event) { //_CODE_:blue1:383988:
+  println("blue1 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:blue1:383988:
+
+public void red2Change(GSlider source, GEvent event) { //_CODE_:red2:748210:
+  println("red2 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:red2:748210:
+
+public void green2Change(GSlider source, GEvent event) { //_CODE_:green2:692488:
+  println("green2 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:green2:692488:
+
+public void blue2Change(GSlider source, GEvent event) { //_CODE_:blue2:622304:
+  println("blue2 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:blue2:622304:
+
 
 
 // Create all the GUI controls. 
@@ -289,15 +324,15 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.GREEN_SCHEME);
   G4P.setMouseOverEnabled(false);
   G4P.setDisplayFont("Impact", G4P.PLAIN, 16);
-  G4P.setInputFont("Impact", G4P.PLAIN, 30);
+  G4P.setInputFont("Impact", G4P.PLAIN, 14);
   surface.setTitle("Sketch Window");
   startButton = new GButton(this, 217, 449, 250, 75);
   startButton.setText("START");
   startButton.addEventHandler(this, "startButtonClick");
-  instructionsButton = new GButton(this, 285, 535, 116, 44);
+  instructionsButton = new GButton(this, 286, 536, 116, 44);
   instructionsButton.setText("instructions");
   instructionsButton.addEventHandler(this, "instructionsButtonClick");
-  instructions = new GImageButton(this, 113, 52, 475, 525, new String[] { "IMG_0199.PNG", "IMG_0199.PNG", "IMG_0199.PNG" } );
+  instructions = new GImageButton(this, 113, 50, 475, 525, new String[] { "IMG_0199.PNG", "IMG_0199.PNG", "IMG_0199.PNG" } );
   instructions.addEventHandler(this, "imgButton1_click1");
   returnButton = new GButton(this, 275, 612, 150, 50);
   returnButton.setText("Return");
@@ -308,7 +343,7 @@ public void createGUI(){
   growthRate.setNumberFormat(G4P.DECIMAL, 2);
   growthRate.setOpaque(false);
   growthRate.addEventHandler(this, "growthRateChange");
-  nutrition_ = new GSlider(this, 393, 196, 194, 40, 10.0);
+  nutrition_ = new GSlider(this, 383, 197, 194, 40, 10.0);
   nutrition_.setShowLimits(true);
   nutrition_.setLimits(15.0, 5.0, 20.0);
   nutrition_.setNumberFormat(G4P.DECIMAL, 2);
@@ -350,38 +385,39 @@ public void createGUI(){
   litterSize1.setNumberFormat(G4P.DECIMAL, 2);
   litterSize1.setOpaque(false);
   litterSize1.addEventHandler(this, "litterSize1Change");
-  animal1Traits = new GCustomSlider(this, 393, 265, 148, 40, "grey_blue");
+  animal1Traits = new GCustomSlider(this, 382, 264, 206, 40, "grey_blue");
   animal1Traits.setLimits(0.5, 0.0, 1.0);
   animal1Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal1Traits.setOpaque(false);
   animal1Traits.addEventHandler(this, "animal1TraitsChange");
-  animal1Trait = new GDropList(this, 393, 244, 85, 80, 3, 10);
+  animal1Trait = new GDropList(this, 380, 254, 85, 80, 3, 10);
   animal1Trait.setItems(loadStrings("list_702361"), 0);
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
-  breedingRate2 = new GSlider(this, 111, 337, 256, 40, 10.0);
+  breedingRate2 = new GSlider(this, 117, 398, 256, 40, 10.0);
   breedingRate2.setShowLimits(true);
   breedingRate2.setLimits(1.0, 0.0, 2.0);
   breedingRate2.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate2.setOpaque(false);
   breedingRate2.addEventHandler(this, "breedingRate2Change");
-  litterSize2 = new GSlider(this, 390, 337, 192, 40, 10.0);
+  litterSize2 = new GSlider(this, 382, 400, 192, 40, 10.0);
   litterSize2.setShowLimits(true);
   litterSize2.setLimits(5.0, 0.0, 30.0);
   litterSize2.setNumberFormat(G4P.DECIMAL, 2);
   litterSize2.setOpaque(false);
   litterSize2.addEventHandler(this, "litterSize2Change");
-  animal2Traits = new GCustomSlider(this, 388, 395, 156, 40, "grey_blue");
+  animal2Traits = new GCustomSlider(this, 382, 451, 195, 40, "grey_blue");
+  animal2Traits.setShowLimits(true);
   animal2Traits.setLimits(0.5, 0.0, 1.0);
   animal2Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal2Traits.setOpaque(false);
   animal2Traits.addEventHandler(this, "animal2TraitsChange");
-  animal2Trait = new GDropList(this, 389, 376, 89, 84, 3, 10);
+  animal2Trait = new GDropList(this, 382, 439, 89, 84, 3, 10);
   animal2Trait.setItems(loadStrings("list_223443"), 0);
   animal2Trait.addEventHandler(this, "animal2TraitChange");
-  beginButton = new GButton(this, 230, 510, 141, 59);
+  beginButton = new GButton(this, 375, 112, 141, 59);
   beginButton.setText("NEXT");
   beginButton.addEventHandler(this, "beginButtonClick");
-  backButton = new GButton(this, 380, 524, 80, 30);
+  backButton = new GButton(this, 521, 127, 80, 30);
   backButton.setText("RETURN");
   backButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   backButton.addEventHandler(this, "backButtonClick");
@@ -454,40 +490,40 @@ public void createGUI(){
   breedingRate1Text = new GLabel(this, 112, 190, 118, 20);
   breedingRate1Text.setText("Breeding Rate");
   breedingRate1Text.setOpaque(false);
-  litterSize1Text = new GLabel(this, 394, 192, 80, 20);
+  litterSize1Text = new GLabel(this, 385, 192, 80, 20);
   litterSize1Text.setText("Litter Size");
   litterSize1Text.setOpaque(false);
-  breedingRate2Text = new GLabel(this, 111, 324, 112, 20);
+  breedingRate2Text = new GLabel(this, 117, 386, 112, 20);
   breedingRate2Text.setText("Breeding Rate");
   breedingRate2Text.setOpaque(false);
-  litterSize2Text = new GLabel(this, 389, 330, 80, 20);
+  litterSize2Text = new GLabel(this, 381, 384, 80, 20);
   litterSize2Text.setText("Litter Size");
   litterSize2Text.setOpaque(false);
-  sheepButton = new GButton(this, 113, 451, 80, 30);
-  sheepButton.setText("Sheep");
-  sheepButton.addEventHandler(this, "sheepButtonClick");
-  frogButton = new GButton(this, 200, 450, 80, 30);
+  bearButton = new GButton(this, 118, 561, 80, 30);
+  bearButton.setText("Bear");
+  bearButton.addEventHandler(this, "bearButtonClick");
+  frogButton = new GButton(this, 209, 561, 80, 30);
   frogButton.setText("Frog");
   frogButton.addEventHandler(this, "frogButtonClick");
-  polarBearButton = new GButton(this, 290, 449, 80, 30);
+  polarBearButton = new GButton(this, 298, 561, 80, 30);
   polarBearButton.setText("Polar Bear");
   polarBearButton.addEventHandler(this, "polarBearButtonClick");
   temp1Text = new GLabel(this, 113, 251, 202, 20);
   temp1Text.setText("Average Inner Temperature");
   temp1Text.setOpaque(false);
-  avgInnerTemp1 = new GSlider(this, 114, 267, 254, 40, 10.0);
+  avgInnerTemp1 = new GSlider(this, 114, 267, 251, 40, 10.0);
   avgInnerTemp1.setShowLimits(true);
   avgInnerTemp1.setLimits(0.5, 0.0, 1.0);
   avgInnerTemp1.setNumberFormat(G4P.DECIMAL, 2);
   avgInnerTemp1.setOpaque(false);
   avgInnerTemp1.addEventHandler(this, "avgInnerTemp1Change");
-  avgInnerTemp2 = new GSlider(this, 112, 396, 255, 40, 10.0);
+  avgInnerTemp2 = new GSlider(this, 117, 453, 256, 40, 10.0);
   avgInnerTemp2.setShowLimits(true);
   avgInnerTemp2.setLimits(0.5, 0.0, 1.0);
   avgInnerTemp2.setNumberFormat(G4P.DECIMAL, 2);
   avgInnerTemp2.setOpaque(false);
   avgInnerTemp2.addEventHandler(this, "avgInnerTemp2Change");
-  temp2Text = new GLabel(this, 112, 381, 191, 20);
+  temp2Text = new GLabel(this, 118, 440, 191, 20);
   temp2Text.setText("Average Inner Temperature");
   temp2Text.setOpaque(false);
   animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
@@ -504,6 +540,60 @@ public void createGUI(){
   animationSpeedText.setText("Animation Speed");
   animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeedText.setOpaque(false);
+  red1 = new GSlider(this, 115, 318, 100, 40, 10.0);
+  red1.setShowLimits(true);
+  red1.setLimits(0.5, 0.0, 255.0);
+  red1.setNumberFormat(G4P.DECIMAL, 2);
+  red1.setOpaque(false);
+  red1.addEventHandler(this, "red1Change");
+  green1 = new GSlider(this, 220, 318, 100, 40, 10.0);
+  green1.setShowLimits(true);
+  green1.setLimits(0.5, 0.0, 255.0);
+  green1.setNumberFormat(G4P.DECIMAL, 2);
+  green1.setOpaque(false);
+  green1.addEventHandler(this, "green1Change");
+  blue1 = new GSlider(this, 325, 318, 100, 40, 10.0);
+  blue1.setShowLimits(true);
+  blue1.setLimits(0.5, 0.0, 255.0);
+  blue1.setNumberFormat(G4P.DECIMAL, 2);
+  blue1.setOpaque(false);
+  blue1.addEventHandler(this, "blue1Change");
+  red2 = new GSlider(this, 117, 507, 100, 40, 10.0);
+  red2.setShowLimits(true);
+  red2.setLimits(0.5, 0.0, 255.0);
+  red2.setNumberFormat(G4P.DECIMAL, 2);
+  red2.setOpaque(false);
+  red2.addEventHandler(this, "red2Change");
+  green2 = new GSlider(this, 222, 507, 100, 40, 10.0);
+  green2.setShowLimits(true);
+  green2.setLimits(0.5, 0.0, 255.0);
+  green2.setNumberFormat(G4P.DECIMAL, 2);
+  green2.setOpaque(false);
+  green2.addEventHandler(this, "green2Change");
+  blue2 = new GSlider(this, 327, 507, 100, 40, 10.0);
+  blue2.setShowLimits(true);
+  blue2.setLimits(255.0, 0.0, 255.0);
+  blue2.setNumberFormat(G4P.DECIMAL, 2);
+  blue2.setOpaque(false);
+  blue2.addEventHandler(this, "blue2Change");
+  red1Text = new GLabel(this, 114, 311, 80, 20);
+  red1Text.setText("Red");
+  red1Text.setOpaque(false);
+  green1Text = new GLabel(this, 220, 310, 80, 20);
+  green1Text.setText("Green");
+  green1Text.setOpaque(false);
+  blue1Text = new GLabel(this, 324, 310, 80, 20);
+  blue1Text.setText("Blue");
+  blue1Text.setOpaque(false);
+  red2Text = new GLabel(this, 117, 494, 80, 20);
+  red2Text.setText("Red");
+  red2Text.setOpaque(false);
+  green2Text = new GLabel(this, 223, 499, 80, 20);
+  green2Text.setText("Green");
+  green2Text.setOpaque(false);
+  blue2Text = new GLabel(this, 326, 499, 80, 20);
+  blue2Text.setText("Blue");
+  blue2Text.setOpaque(false);
 }
 
 // Variable declarations 
@@ -548,7 +638,7 @@ GLabel breedingRate1Text;
 GLabel litterSize1Text; 
 GLabel breedingRate2Text; 
 GLabel litterSize2Text; 
-GButton sheepButton; 
+GButton bearButton; 
 GButton frogButton; 
 GButton polarBearButton; 
 GLabel temp1Text; 
@@ -557,3 +647,15 @@ GSlider avgInnerTemp2;
 GLabel temp2Text; 
 GSlider animationSpeed; 
 GLabel animationSpeedText; 
+GSlider red1; 
+GSlider green1; 
+GSlider blue1; 
+GSlider red2; 
+GSlider green2; 
+GSlider blue2; 
+GLabel red1Text; 
+GLabel green1Text; 
+GLabel blue1Text; 
+GLabel red2Text; 
+GLabel green2Text; 
+GLabel blue2Text; 

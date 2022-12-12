@@ -18,6 +18,7 @@ class Season {
     lowLeaf = new PVector(0, 0);
   }
   void getSeason () {
+    //Set Season
     if (timePassed % 2000 < 500) {
       this.name = "Spring";
       this.bounty = 6;
@@ -25,6 +26,8 @@ class Season {
       this.lowLocation.y = 225;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
+      field.temp = field.avgTemp;
+      
     } else if (timePassed % 2000 < 1000) {
       this.name = "Summer";
       this.bounty = 3;
@@ -32,6 +35,8 @@ class Season {
       this.lowLocation.y = 225;
       this.highLocation.x = 475;
       this.highLocation.y = 350;
+      field.temp = field.avgTemp + field.tempRange;
+      
     } else if (timePassed % 2000 < 1500) {
       this.name = "Fall";
       this.bounty = 4;
@@ -39,6 +44,8 @@ class Season {
       this.lowLocation.y = 350;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
+      field.temp = field.avgTemp - field.tempRange / 2;
+      
     } else {
       this.name = "Winter";
       this.bounty = 1;
@@ -46,7 +53,10 @@ class Season {
       this.lowLocation.y = 350;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
+      field.temp = field.avgTemp = field.tempRange;
     }
+    
+    //Change Values From Last Season
     if (timePassed % 500 == 0) {
       for (Animal a: animals)
         a.setPosition();
@@ -69,14 +79,13 @@ class Season {
     decay.clear();
   }
   
-    
-  
+  //Create New Food
   void createFood() {
     float nutritionValue = random(40 + nutritionAdjuster, 80 + nutritionAdjuster);    
     foods.add(new Food(nutritionValue, 10, getSeasonColour(), random(this.lowLocation.x, this.highLocation.x), random(this.lowLocation.y, this.highLocation.y)));
   }
 
-
+  //Get Colour For Food Based on Season
   color getSeasonColour () {
     switch (this.name) {
       case "Spring":
