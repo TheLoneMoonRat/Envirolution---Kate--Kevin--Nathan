@@ -53,6 +53,7 @@ void animalsSetup() {
 void simulationSetup() {
    pauseButton1.setVisible(true);
    resetButton1.setVisible(true);
+   animationSpeed.setVisible(true);
    showVariables1.setVisible(true);
    shouldVariables.setVisible(true);
    

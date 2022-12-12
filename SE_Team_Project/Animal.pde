@@ -260,7 +260,7 @@ class Animal {
     return(sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2)));
   }
   
-  //Migrate Animals Based of Season
+  //Migrate Animals Based off Season
   void setPosition() {
     PVector newPosition = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
     while (calcDist(xPos, newPosition.x, yPos, newPosition.y) < 70) {

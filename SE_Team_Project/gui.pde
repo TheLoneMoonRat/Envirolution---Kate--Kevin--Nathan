@@ -374,7 +374,7 @@ public void createGUI(){
   artic.addEventHandler(this, "articClick");
   breedingRate1 = new GSlider(this, 112, 210, 255, 35, 10.0);
   breedingRate1.setShowLimits(true);
-  breedingRate1.setLimits(50.0, 1.0, 100.0);
+  breedingRate1.setLimits(800.0, 50.0, 2000.0);
   breedingRate1.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate1.setOpaque(false);
   breedingRate1.addEventHandler(this, "breedingRate1Change");
@@ -395,7 +395,7 @@ public void createGUI(){
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
   breedingRate2 = new GSlider(this, 117, 398, 256, 40, 10.0);
   breedingRate2.setShowLimits(true);
-  breedingRate2.setLimits(50.0, 1.0, 100.0);
+  breedingRate2.setLimits(800.0, 50.0, 2000.0);
   breedingRate2.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate2.setOpaque(false);
   breedingRate2.addEventHandler(this, "breedingRate2Change");

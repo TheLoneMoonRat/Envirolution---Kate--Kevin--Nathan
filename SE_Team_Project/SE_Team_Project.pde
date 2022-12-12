@@ -53,10 +53,9 @@ void setup() {
   size = 1;
   
   //Create Animals
-  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
   //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
-  println(red1.getValueF());
   //Create Habitat
   field = new Habitat(0.5, 20, 10);
   foodRate = growthRate.getValueF();
@@ -178,11 +177,10 @@ void draw() {
 
     //Update Animals
     for (Animal a : animals) {
-      float rand = random(0, 1);
       a.updateStats();
       a.drawAnimal();
       a.updatePosition();
-      if (a.hunger > 20 || a.aggression / 150 > rand) {
+      if (a.hunger > 20) {
         a.eat();
       }
       a.calculateBirths();
@@ -240,18 +238,19 @@ void draw() {
     }
     
    //Show Selected Animal
-   if (selected.size() > 0) {
-     Animal a = selected.get(0);
-     noFill();
-     strokeWeight(2.5);
-     stroke(255, 215, 0);
-     circle(a.xPos - 3, a.yPos + 3, a.size * 5);
-     stroke(0);
-     strokeWeight(1);
-    }
+   //if (selected.size() > 0) {
+   //  Animal a = selected.get(0);
+   //  noFill();
+   //  strokeWeight(2.5);
+   //  stroke(255, 215, 0);
+   //  circle(a.xPos - 3, a.yPos + 3, a.size * 5);
+   //  stroke(0);
+   //  strokeWeight(1);
+   // }
     
     //If All The Animals Have Died
     if (animals.size() == 0) {
+      
       end = true;
       simulation = false;
     }
@@ -417,6 +416,6 @@ void reset() {
   timePassed = 0;
   animals.clear();
   foods.clear();
-  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
 }
