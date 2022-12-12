@@ -160,7 +160,7 @@ void draw() {
             noFill();
             strokeWeight(2.5);
             stroke(255, 215, 0);
-            circle(a.xPos - 3, a.yPos + 3, a.size * 5);
+            circle(a.xPos, a.yPos, a.size * 5);
             stroke(0);
             strokeWeight(1);
          }
@@ -232,7 +232,7 @@ void draw() {
           noFill();
           strokeWeight(2.5);
           stroke(255, 215, 0);
-          circle(a.xPos - 3, a.yPos + 3, a.size * 5);
+          circle(a.xPos, a.yPos, a.size * 5);
           stroke(0);
           strokeWeight(1);
         }
@@ -290,6 +290,7 @@ void guiUpdate() {
       selected.get(0).aggression = animalTraits.getValueF();
     } else if (setting.equals("Size")) {
       selected.get(0).size = animalTraits.getValueF();
+      selected.get(0).finalSize = animalTraits.getValueF();
     } else if (setting.equals("Speed")) {
       selected.get(0).speed = 85 - animalTraits.getValueF();
     } else if (setting.equals("Vision")) {
