@@ -95,20 +95,34 @@ public void litterSize1Change(GSlider source, GEvent event) { //_CODE_:litterSiz
 
 public void animal1TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animal1Traits:793901:
   setting = animal1Trait.getSelectedText();  
-  for (Animal a : animals) {
+  Animal a = animals.get(0);
     if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
+      a.aggression = animal1Traits.getValueF();
     } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
+      a.size = animal1Traits.getValueF();
     } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
+      a.speed = animal1Traits.getValueF();
     } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
+      a.vision = animal1Traits.getValueF();
     }
-  }
 } //_CODE_:animal1Traits:793901:
 
 public void aniaml1TraitChange(GDropList source, GEvent event) { //_CODE_:animal1Trait:702361:
+  setting = animal1Trait.getSelectedText();  
+  Animal a = animals.get(0);
+    if (setting.equals("Aggression")) {
+      animal1Traits.setLimits(a.aggression, 1, 100);
+      a.aggression = animal1Traits.getValueF();
+    } else if (setting.equals("Size")) {
+      animal1Traits.setLimits(a.size, 3, 12);
+      a.size = animal1Traits.getValueF();
+    } else if (setting.equals("Speed")) {
+      animal1Traits.setLimits(a.speed, 5, 80);
+      a.speed = animal1Traits.getValueF();
+    } else if (setting.equals("Vision")) {
+      animal1Traits.setLimits(a.vision, 20, 600);
+      a.vision = animal1Traits.getValueF();
+    }
 } //_CODE_:animal1Trait:702361:
 
 public void breedingRate2Change(GSlider source, GEvent event) { //_CODE_:breedingRate2:762987:
@@ -119,21 +133,35 @@ public void litterSize2Change(GSlider source, GEvent event) { //_CODE_:litterSiz
 } //_CODE_:litterSize2:317562:
 
 public void animal2TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animal2Traits:534204:
-  setting = animal1Trait.getSelectedText();  
-  for (Animal a : animals) {
+  setting = animal2Trait.getSelectedText();  
+  Animal a = animals.get(1);
     if (setting.equals("Aggression")) {
-      animal2Traits.setLimits(a.aggression, 1, 10);
+      a.aggression = animal2Traits.getValueF();
     } else if (setting.equals("Size")) {
-      animal2Traits.setLimits(a.size, 3, 12);
+      a.size = animal2Traits.getValueF();
     } else if (setting.equals("Speed")) {
-      animal2Traits.setLimits(a.speed, 5, 80);
+      a.speed = animal2Traits.getValueF();
     } else if (setting.equals("Vision")) {
-      animal2Traits.setLimits(a.vision, 20, 600);
+      a.vision = animal2Traits.getValueF();
     }
-  }
 } //_CODE_:animal2Traits:534204:
 
 public void animal2TraitChange(GDropList source, GEvent event) { //_CODE_:animal2Trait:223443:
+  setting = animal2Trait.getSelectedText();  
+  Animal a = animals.get(1);
+    if (setting.equals("Aggression")) {
+      animal2Traits.setLimits(a.aggression, 1, 100);
+      a.aggression = animal2Traits.getValueF();
+    } else if (setting.equals("Size")) {
+      animal2Traits.setLimits(a.size, 3, 12);
+      a.size = animal2Traits.getValueF();
+    } else if (setting.equals("Speed")) {
+      animal2Traits.setLimits(a.speed, 5, 80);
+      a.speed = animal2Traits.getValueF();
+    } else if (setting.equals("Vision")) {
+      animal2Traits.setLimits(a.vision, 20, 600);
+      a.vision = animal2Traits.getValueF();
+    }
 } //_CODE_:animal2Trait:223443:
 
 public void beginButtonClick(GButton source, GEvent event) { //_CODE_:beginButton:890431:
@@ -257,21 +285,33 @@ public void animationSpeedChange(GSlider source, GEvent event) { //_CODE_:animat
 } //_CODE_:animationSpeed:981070:
 
 public void red1Change(GSlider source, GEvent event) { //_CODE_:red1:343643:
+  Animal a = animals.get(0);
+  a.red = red1.getValueF();
 } //_CODE_:red1:343643:
 
 public void green1Change(GSlider source, GEvent event) { //_CODE_:green1:856703:
+  Animal a = animals.get(0);
+  a.green = green1.getValueF();
 } //_CODE_:green1:856703:
 
 public void blue1Change(GSlider source, GEvent event) { //_CODE_:blue1:383988:
+  Animal a = animals.get(0);
+  a.blue = blue1.getValueF();
 } //_CODE_:blue1:383988:
 
 public void red2Change(GSlider source, GEvent event) { //_CODE_:red2:748210:
+  Animal a = animals.get(1);
+  a.red = red2.getValueF();
 } //_CODE_:red2:748210:
 
 public void green2Change(GSlider source, GEvent event) { //_CODE_:green2:692488:
+  Animal a = animals.get(1);
+  a.green = green2.getValueF();
 } //_CODE_:green2:692488:
 
 public void blue2Change(GSlider source, GEvent event) { //_CODE_:blue2:622304:
+  Animal a = animals.get(1);
+  a.blue = blue2.getValueF();
 } //_CODE_:blue2:622304:
 
 
@@ -344,12 +384,13 @@ public void createGUI(){
   litterSize1.setNumberFormat(G4P.DECIMAL, 2);
   litterSize1.setOpaque(false);
   litterSize1.addEventHandler(this, "litterSize1Change");
-  animal1Traits = new GCustomSlider(this, 112, 259, 168, 40, "grey_blue");
-  animal1Traits.setLimits(0.5, 0.0, 1.0);
+  animal1Traits = new GCustomSlider(this, 112, 267, 168, 40, "grey_blue");
+  animal1Traits.setShowLimits(true);
+  animal1Traits.setLimits(25.0, 0.0, 100.0);
   animal1Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal1Traits.setOpaque(false);
   animal1Traits.addEventHandler(this, "animal1TraitsChange");
-  animal1Trait = new GDropList(this, 111, 249, 86, 84, 3, 10);
+  animal1Trait = new GDropList(this, 113, 254, 86, 84, 3, 10);
   animal1Trait.setItems(loadStrings("list_702361"), 0);
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
   breedingRate2 = new GSlider(this, 117, 398, 256, 40, 10.0);
@@ -364,13 +405,13 @@ public void createGUI(){
   litterSize2.setNumberFormat(G4P.DECIMAL, 2);
   litterSize2.setOpaque(false);
   litterSize2.addEventHandler(this, "litterSize2Change");
-  animal2Traits = new GCustomSlider(this, 120, 451, 159, 40, "grey_blue");
+  animal2Traits = new GCustomSlider(this, 119, 460, 159, 40, "grey_blue");
   animal2Traits.setShowLimits(true);
-  animal2Traits.setLimits(0.5, 0.0, 1.0);
+  animal2Traits.setLimits(25.0, 0.0, 100.0);
   animal2Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal2Traits.setOpaque(false);
   animal2Traits.addEventHandler(this, "animal2TraitsChange");
-  animal2Trait = new GDropList(this, 120, 440, 89, 84, 3, 10);
+  animal2Trait = new GDropList(this, 120, 446, 89, 84, 3, 10);
   animal2Trait.setItems(loadStrings("list_223443"), 0);
   animal2Trait.addEventHandler(this, "animal2TraitChange");
   beginButton = new GButton(this, 375, 112, 141, 59);
@@ -472,58 +513,58 @@ public void createGUI(){
   animationSpeedText.setText("Animation Speed");
   animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeedText.setOpaque(false);
-  red1 = new GSlider(this, 289, 258, 100, 40, 10.0);
+  red1 = new GSlider(this, 290, 267, 100, 40, 10.0);
   red1.setShowLimits(true);
   red1.setLimits(0.5, 0.0, 255.0);
   red1.setNumberFormat(G4P.DECIMAL, 2);
   red1.setOpaque(false);
   red1.addEventHandler(this, "red1Change");
-  green1 = new GSlider(this, 393, 259, 100, 40, 10.0);
+  green1 = new GSlider(this, 392, 268, 100, 40, 10.0);
   green1.setShowLimits(true);
   green1.setLimits(0.5, 0.0, 255.0);
   green1.setNumberFormat(G4P.DECIMAL, 2);
   green1.setOpaque(false);
   green1.addEventHandler(this, "green1Change");
-  blue1 = new GSlider(this, 499, 260, 100, 40, 10.0);
+  blue1 = new GSlider(this, 497, 268, 100, 40, 10.0);
   blue1.setShowLimits(true);
   blue1.setLimits(0.5, 0.0, 255.0);
   blue1.setNumberFormat(G4P.DECIMAL, 2);
   blue1.setOpaque(false);
   blue1.addEventHandler(this, "blue1Change");
-  red2 = new GSlider(this, 287, 452, 100, 40, 10.0);
+  red2 = new GSlider(this, 286, 461, 100, 40, 10.0);
   red2.setShowLimits(true);
   red2.setLimits(0.5, 0.0, 255.0);
   red2.setNumberFormat(G4P.DECIMAL, 2);
   red2.setOpaque(false);
   red2.addEventHandler(this, "red2Change");
-  green2 = new GSlider(this, 391, 453, 100, 40, 10.0);
+  green2 = new GSlider(this, 391, 461, 100, 40, 10.0);
   green2.setShowLimits(true);
   green2.setLimits(0.5, 0.0, 255.0);
   green2.setNumberFormat(G4P.DECIMAL, 2);
   green2.setOpaque(false);
   green2.addEventHandler(this, "green2Change");
-  blue2 = new GSlider(this, 496, 453, 100, 40, 10.0);
+  blue2 = new GSlider(this, 495, 461, 100, 40, 10.0);
   blue2.setShowLimits(true);
   blue2.setLimits(255.0, 0.0, 255.0);
   blue2.setNumberFormat(G4P.DECIMAL, 2);
   blue2.setOpaque(false);
   blue2.addEventHandler(this, "blue2Change");
-  red1Text = new GLabel(this, 287, 247, 80, 20);
+  red1Text = new GLabel(this, 288, 255, 80, 20);
   red1Text.setText("Red");
   red1Text.setOpaque(false);
-  green1Text = new GLabel(this, 394, 249, 80, 20);
+  green1Text = new GLabel(this, 394, 254, 80, 20);
   green1Text.setText("Green");
   green1Text.setOpaque(false);
-  blue1Text = new GLabel(this, 499, 252, 80, 20);
+  blue1Text = new GLabel(this, 497, 255, 80, 20);
   blue1Text.setText("Blue");
   blue1Text.setOpaque(false);
-  red2Text = new GLabel(this, 288, 444, 80, 20);
+  red2Text = new GLabel(this, 288, 450, 80, 20);
   red2Text.setText("Red");
   red2Text.setOpaque(false);
-  green2Text = new GLabel(this, 392, 442, 80, 20);
+  green2Text = new GLabel(this, 392, 451, 80, 20);
   green2Text.setText("Green");
   green2Text.setOpaque(false);
-  blue2Text = new GLabel(this, 497, 445, 80, 20);
+  blue2Text = new GLabel(this, 497, 451, 80, 20);
   blue2Text.setText("Blue");
   blue2Text.setOpaque(false);
 }

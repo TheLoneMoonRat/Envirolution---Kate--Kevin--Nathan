@@ -56,7 +56,7 @@ void setup() {
   animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
   //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
- 
+  println(red1.getValueF());
   //Create Habitat
   field = new Habitat(0.5, 20, 10);
   foodRate = growthRate.getValueF();
@@ -64,7 +64,6 @@ void setup() {
 
 
 void draw() {
-  
   //Genral Setup
   frameRate(simSpeed);
   noStroke();
@@ -74,6 +73,7 @@ void draw() {
   if (titleScreen || instructionScreen || end) 
     image(background1, 0, 0);
     
+  //Background for Setup Screens
   if (setupScreenEnvironment || setupScreenAnimals) 
     image(background2, 0, 0);
   
@@ -155,8 +155,8 @@ void draw() {
         a.drawAnimal();
       }
       for (Animal a: animals) {
-        if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
-          if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
+        if (a.xPos - a.size * 1.5 < mouseX && mouseX < a.xPos + a.size * 1.5) {
+          if (a.yPos - a.size * 1.5 < mouseY && mouseY < a.yPos + a.size * 1.5) {
             noFill();
             strokeWeight(2.5);
             stroke(255, 215, 0);
@@ -178,10 +178,11 @@ void draw() {
 
     //Update Animals
     for (Animal a : animals) {
+      float rand = random(0, 1);
       a.updateStats();
       a.drawAnimal();
       a.updatePosition();
-      if (a.hunger > 20) {
+      if (a.hunger > 20 || a.aggression / 150 > rand) {
         a.eat();
       }
       a.calculateBirths();
@@ -226,8 +227,8 @@ void draw() {
   
     //Mouse Hovering Over Animal
     for (Animal a: animals) {
-      if (a.xPos  < mouseX && mouseX < a.xPos + a.size * 3) {
-        if (a.yPos  < mouseY && mouseY < a.yPos + a.size * 3) {
+      if (a.xPos - a.size * 1.5 < mouseX && mouseX < a.xPos + a.size * 1.5) {
+        if (a.yPos - a.size * 1.5 < mouseY && mouseY < a.yPos + a.size * 1.5) {
           noFill();
           strokeWeight(2.5);
           stroke(255, 215, 0);
@@ -264,7 +265,7 @@ void draw() {
     textSize(30);
     fill(255);
     text("Looks like your species couldn't survive . . . ", 350, 200);
-    text("Try again?", 350, 225);
+    text("Try again?", 360, 225);
   }
 }
 
@@ -273,13 +274,14 @@ void mouseClicked() {
   if (mouseY < 600)
     selected.clear();
   for (Animal a: animals) {
-    if (a.xPos < mouseX && mouseX < a.xPos + a.size * 3) {
-      if (a.yPos < mouseY && mouseY < a.yPos + a.size * 3) {
+    if (a.xPos - a.size * 1.5 < mouseX && mouseX < a.xPos + a.size * 1.5) {
+      if (a.yPos - a.size * 1.5 < mouseY && mouseY < a.yPos + a.size * 1.5) {
         selected.add(a);
       }
     }
   }
 }
+
 
 //Update GUI Based on Selected
 void guiUpdate() {

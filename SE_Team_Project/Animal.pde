@@ -78,17 +78,6 @@ class Animal {
   }
 
   //Methods
-  
-  //Update GUI
-  void guiUpdate() {
-    if (setting.equals("Aggression")) {
-      this.aggression = animal1Traits.getValueF();
-    } else if (setting.equals("Size")) {
-      this.size = animal1Traits.getValueF();
-    } else if (setting.equals("Speed")) {
-      this.speed = animal1Traits.getValueF();
-    }
-  }
 
   //Draw Animal
   void drawAnimal() {
