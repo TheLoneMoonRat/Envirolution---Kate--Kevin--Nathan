@@ -13,15 +13,17 @@ class Habitat {
     this.temp = avgTemp;
   }
   
+  //Get Colour Based on Temperature
   color getColour() {
     colorMode(HSB);
-    float hue = 120 - 2 * this.temp;
-    float saturation = this.temp * 10;
+    float hue = 100 - 1.5 * this.temp;
+    float saturation = this.temp * 10 + 5;
     color c = color(hue, saturation, 150);
     colorMode(RGB);
     return c;
   }
   
+  //Chnage Food Growth and Breeding Based on Temp
   void changeRatesByTemp() {
     if (this.temp > 20) {
       for( Food f : foods) 
@@ -38,6 +40,7 @@ class Habitat {
     }
   }
   
+  //Chnage Food Growth and Breeding Based on Humidity
   void changeRatesByHumidity() {
     if (this.humidity >= 7) {
       for( Food f : foods) 

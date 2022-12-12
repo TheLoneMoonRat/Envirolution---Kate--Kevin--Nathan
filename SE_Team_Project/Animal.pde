@@ -13,8 +13,9 @@ class Animal {
   float size;
   float aggression;
   float finalSize;
-  float innerTemp;
-  color animalColour;
+  float red;
+  float green;
+  float blue;
   PVector currentSpeed;
   PVector currentLocation; 
   boolean gender;
@@ -22,8 +23,8 @@ class Animal {
   Food target;
   Animal partner;
  
-  //Constructor
-  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float it, color co, float x, float y) {
+  //Constructors
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float r, float g, float b, float x, float y) {
     this.age = 0;
     this.breedingRate = br;
     this.babyAmt = 0;
@@ -34,8 +35,9 @@ class Animal {
     this.aggression = ag;
     this.timePassedSinceBred = 0;
     this.vision = vs;
-    this.innerTemp = it;
-    this.animalColour = co;
+    this.red = r;
+    this.green = g;
+    this.blue = b;
     this.xPos = x;
     this.yPos = y;
     this.currentSpeed = new PVector(0, 0);
@@ -49,7 +51,7 @@ class Animal {
     this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
   }
   
-  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float it, color co, float x, float y, float fs) {
+  Animal(float br, float sp, float si, boolean ge, float ag, float vs, float r, float g, float b, float x, float y, float fs) {
     this.age = 0;
     this.breedingRate = br * breedingRate;
     this.babyAmt = 0;
@@ -60,8 +62,9 @@ class Animal {
     this.aggression = ag;
     this.timePassedSinceBred = 0;
     this.vision = vs;
-    this.innerTemp = it;
-    this.animalColour = co;
+    this.red = r;
+    this.green = g;
+    this.blue = b;
     this.xPos = x;
     this.yPos = y;
     this.currentSpeed = new PVector(0, 0);
@@ -75,6 +78,8 @@ class Animal {
   }
 
   //Methods
+  
+  //Update GUI
   void guiUpdate() {
     if (setting.equals("Aggression")) {
       this.aggression = animal1Traits.getValueF();
@@ -87,53 +92,55 @@ class Animal {
 
   //Draw Animal
   void drawAnimal() {
-    fill(animalColour);
-    //draw head
-    rect(this.xPos, this.yPos, this.size, this.size);
-    //draw body
-    rect(this.xPos + this.size, this.yPos - (this.size/2), this.size * 3, this.size * 2);
+    fill(this.red, this.green, this.blue);
+    circle(this.xPos, this.yPos, this.size * 3);
   }
 
+  //Create Child
   void createChild(Animal partner) {
+    //Temporrary Variables
     boolean tempGender;
     float tempSpeed;
     float tempSize;
     float tempAggression;
     float tempVision = ((this.vision + partner.vision) / 2) * random(0.8, 1.2);
-    float tempInnerTemp = ((this.innerTemp + partner.innerTemp) / 2) * random(0.8, 1.2);
     float tempBreedingRate = ((this.breedingRate + partner.breedingRate) / 2) * random(0.8, 1.2);
     float tempRed;
     float tempGreen;
     float tempBlue;
     
+    //Skew Child's Traits
     if (int(random(0, 100)) < 55 ) {
+      //Calculate Traits
       tempGender = true;    
       tempSize = ((this.size + this.partner.size) / 2) * random(0.6, 1.2);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(0.6, 1.0);
       tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(0.4, 0.8);
-      tempRed = ( 0.2 * red(this.animalColour) + red(this.partner.animalColour) * 1.8) / 2;
-      tempGreen = (0.2 *green(this.animalColour) + green(this.partner.animalColour) * 1.8) / 2;
-      tempBlue = (0.2 * blue(this.animalColour) + blue(this.partner.animalColour) * 1.8) / 2;
+      tempRed = ( 0.2 * this.red + this.partner.red * 1.8) / 2;
+      tempGreen = (0.2 * this.green + this.partner.green * 1.8) / 2;
+      tempBlue = (0.2 * this.blue + this.partner.blue * 1.8) / 2;
     } 
     else {
+      //Calculate Traits
       tempGender = false;
       tempSize = ((this.size + this.partner.size) / 2) * random(1, 1.6);
       tempSpeed = ((this.speed + this.partner.speed) / 2)  * random(1.0, 1.4);
       tempAggression = ((this.aggression + this.partner.aggression) / 2) * random(1.2, 1.6);
-      tempRed = ( 1.8 * red(this.animalColour) + red(this.partner.animalColour) * 0.2) / 2;
-      tempGreen = (1.8 *green(this.animalColour) + green(this.partner.animalColour) * 0.2) / 2;
-      tempBlue = (1.8 *blue(this.animalColour) + blue(this.partner.animalColour) * 0.2) / 2;
+      tempRed = ( 1.8 * this.red + this.partner.red * 0.2) / 2;
+      tempGreen = (1.8 * this.green + this.partner.green * 0.2) / 2;
+      tempBlue = (1.8 * this.blue + this.partner.blue  * 0.2) / 2;
     }
-    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, tempInnerTemp, color(tempRed, tempGreen, tempBlue), this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
+    //Create New Animal
+    animals.add(new Animal(tempBreedingRate, tempSpeed, tempSize / 10, tempGender, tempAggression, tempVision, tempRed, tempGreen, tempBlue, this.xPos - random(-20, 20), this.yPos - random(-20, 20), tempSize));
   }
 
+  //Choose Partner When It's Time to Breed
   void choosePartner() {
     if (!this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
-      //boolean gaveBirth = false;
+      //Calculate If There Are Nearby Mates
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
         if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && a.gender && a.age > 1500) {
-          //for (int x = 0; x < this.babyAmt; x++) 
           this.partner = a;
           for (Animal b: animals)
             if (!b.gender && calcDist(b.xPos, a.xPos, b.yPos, a.yPos) < b.vision && b.size > this.size) {
@@ -152,6 +159,7 @@ class Animal {
     }
   }
 
+  //Calculate Births For Each Frame
   void calculateBirths() {
     try {
       float dist = sqrt(pow((this.xPos - this.partner.xPos), 2) + pow((this.yPos - this.partner.yPos), 2));
@@ -171,6 +179,7 @@ class Animal {
     }
   }
 
+  //Eat
   void eat() {
     if (foods.size() > 0) {
       this.chooseFood();
@@ -203,12 +212,13 @@ class Animal {
     }
   }
   
+  //Move Animal Randomly
   void moveAnimal() {
     this.xPos += currentSpeed.x;
     this.yPos += currentSpeed.y;
   }
 
-
+  //Choose Food from Nearby
   void chooseFood () {
     for (Food f : foods) {
       if (f.getDist(this) < this.vision && f.getDist(this) < target.getDist(this)) {
@@ -217,6 +227,7 @@ class Animal {
     }
   }
 
+  //Update Stats For Each Frame
   void updateStats() {
     if (this.size < this.finalSize) {
       this.hunger += 0.05 * this.finalSize;
@@ -233,6 +244,7 @@ class Animal {
   }
 
 
+  //Update Position
   void updatePosition() {
     if (this.target.xPos == 700 && this.partner == null) {
       float dist = calcDist(this.xPos, this.currentLocation.x, this.yPos, this.currentLocation.y);
@@ -254,10 +266,12 @@ class Animal {
     }
   }
   
+  //Calculate Distances Function
   float calcDist(float x1, float x2, float y1, float y2) {
     return(sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2)));
   }
   
+  //Migrate Animals Based of Season
   void setPosition() {
     PVector newPosition = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
     while (calcDist(xPos, newPosition.x, yPos, newPosition.y) < 70) {
@@ -268,26 +282,10 @@ class Animal {
     this.currentLocation.y = newPosition.y;
   }
   
+  //Calculate Deaths
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > this.lifespan) {
       dying.add(this);
     }
-    else {
-      calculateDeathFromTemp();
-    }
-  }
-  
-  void calculateDeathFromTemp() {
-    float chance = 0;
-    if (field.temp - this.innerTemp > 10 || field.temp - this.innerTemp < -10)
-      chance = 0.3;
-    else if (field.temp - this.innerTemp > 20 || field.temp - this.innerTemp < -20)
-      chance = 0.5;
-    else if (field.temp - this.innerTemp > 30 || field.temp - this.innerTemp < -30)
-      chance = 0.8;
-      
-    float rand = random(0, 1);
-    if (rand < chance) 
-      dying.add(this);
   }
 }          

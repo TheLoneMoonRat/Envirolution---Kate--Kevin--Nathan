@@ -28,11 +28,6 @@ void animalsSetup() {
     animal1Trait.setVisible(true);
     animal2Traits.setVisible(true);
     animal2Trait.setVisible(true);
-    bearButton.setVisible(true);
-    frogButton.setVisible(true);
-    polarBearButton.setVisible(true);
-    avgInnerTemp1.setVisible(true);
-    avgInnerTemp2.setVisible(true);
     red1.setVisible(true);
     red2.setVisible(true);
     green1.setVisible(true);
@@ -46,8 +41,6 @@ void animalsSetup() {
     breedingRate2Text.setVisible(true);
     litterSize1Text.setVisible(true);
     litterSize2Text.setVisible(true);
-    temp1Text.setVisible(true);
-    temp2Text.setVisible(true);
     red1Text.setVisible(true);
     red2Text.setVisible(true);
     green1Text.setVisible(true);
@@ -75,8 +68,6 @@ void simulationSetup() {
    }
 }
 
-
-
 //Clear GUI Screen
 void clearEnvironmentSetupScreen () {
   growthRate.setVisible(false);
@@ -103,11 +94,6 @@ void clearAnimalsSetupScreen () {
   animal1Trait.setVisible(false);
   animal2Traits.setVisible(false);
   animal2Trait.setVisible(false);
-  bearButton.setVisible(false);
-  frogButton.setVisible(false);
-  polarBearButton.setVisible(false);
-  avgInnerTemp1.setVisible(false);
-  avgInnerTemp2.setVisible(false);
   red1.setVisible(false);
   red2.setVisible(false);
   green1.setVisible(false);
@@ -120,14 +106,31 @@ void clearAnimalsSetupScreen () {
   breedingRate2Text.setVisible(false);
   litterSize1Text.setVisible(false);
   litterSize2Text.setVisible(false);
-  temp1Text.setVisible(false);
-  temp2Text.setVisible(false);
   red1Text.setVisible(false);
   red2Text.setVisible(false);
   green1Text.setVisible(false);
   green2Text.setVisible(false);
   blue1Text.setVisible(false);
   blue2Text.setVisible(false);
+}
+
+//Clear GUI Screen
+void clearSimulation() {
+  pauseButton1.setVisible(false);
+   resetButton1.setVisible(false);
+   showVariables1.setVisible(false);
+   shouldVariables.setVisible(false);
+   
+   if (selected.size() != 0) {
+     breedingRates.setVisible(false);
+     litterSize.setVisible(false);
+     animalTrait.setVisible(false);
+     animalTraits.setVisible(false);
+     animationSpeed.setVisible(false);
+     breedingRateText.setVisible(false);
+     litterSizeText.setVisible(false);
+     animationSpeedText.setVisible(false);
+   }
 }
 
 //Clear GUI Screen
@@ -157,11 +160,6 @@ void clearForStart() {
   litterSize.setVisible(false);
   animalTrait.setVisible(false);
   animalTraits.setVisible(false);
-  bearButton.setVisible(false);
-  frogButton.setVisible(false);
-  polarBearButton.setVisible(false);
-  avgInnerTemp1.setVisible(false);
-  avgInnerTemp2.setVisible(false);
   red1.setVisible(false);
   red2.setVisible(false);
   green1.setVisible(false);
@@ -184,8 +182,6 @@ void clearForStart() {
   breedingRate2Text.setVisible(false);
   litterSize1Text.setVisible(false);
   litterSize2Text.setVisible(false);
-  temp1Text.setVisible(false);
-  temp2Text.setVisible(false);
   red1Text.setVisible(false);
   red2Text.setVisible(false);
   green1Text.setVisible(false);

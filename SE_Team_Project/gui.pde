@@ -15,10 +15,18 @@
  */
 
 public void startButtonClick(GButton source, GEvent event) { //_CODE_:startButton:798525:
-  instructionsButton.setVisible(false);
-  startButton.setVisible(false);
-  setupScreenEnvironment = true;
-  titleScreen = false;
+  if (end) {
+    instructionsButton.setVisible(true);
+    titleScreen = true;
+    end = false;
+  }
+    
+  else {
+    instructionsButton.setVisible(false);
+    startButton.setVisible(false);
+    setupScreenEnvironment = true;
+    titleScreen = false;
+  }
 } //_CODE_:startButton:798525:
 
 public void instructionsButtonClick(GButton source, GEvent event) { //_CODE_:instructionsButton:453695:
@@ -47,7 +55,7 @@ public void nutrition_Change(GSlider source, GEvent event) { //_CODE_:nutrition_
 } //_CODE_:nutrition_:906414:
 
 public void averageTempChange(GSlider source, GEvent event) { //_CODE_:averageTemp:400803:
-  field.temp = averageTemp.getValueF();
+  field.avgTemp = averageTemp.getValueF();
 } //_CODE_:averageTemp:400803:
 
 public void tempRangeChange(GSlider source, GEvent event) { //_CODE_:tempRange:337308:
@@ -74,7 +82,7 @@ public void articClick(GButton source, GEvent event) { //_CODE_:artic:557486:
   
   growthRate.setValue(30);
   nutrition_.setValue(10);
-  averageTemp.setValue(-5);
+  averageTemp.setValue(-10);
   tempRange.setValue(5);
 } //_CODE_:artic:557486:
 
@@ -101,18 +109,6 @@ public void animal1TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:a
 } //_CODE_:animal1Traits:793901:
 
 public void aniaml1TraitChange(GDropList source, GEvent event) { //_CODE_:animal1Trait:702361:
-  setting = animal1Trait.getSelectedText();  
-  for (Animal a : animals) {
-    if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
-    } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
-    } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
-    } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
-    }
-  }
 } //_CODE_:animal1Trait:702361:
 
 public void breedingRate2Change(GSlider source, GEvent event) { //_CODE_:breedingRate2:762987:
@@ -126,30 +122,18 @@ public void animal2TraitsChange(GCustomSlider source, GEvent event) { //_CODE_:a
   setting = animal1Trait.getSelectedText();  
   for (Animal a : animals) {
     if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
+      animal2Traits.setLimits(a.aggression, 1, 10);
     } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
+      animal2Traits.setLimits(a.size, 3, 12);
     } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
+      animal2Traits.setLimits(a.speed, 5, 80);
     } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
+      animal2Traits.setLimits(a.vision, 20, 600);
     }
   }
 } //_CODE_:animal2Traits:534204:
 
 public void animal2TraitChange(GDropList source, GEvent event) { //_CODE_:animal2Trait:223443:
-  setting = animal2Trait.getSelectedText();  
-  for (Animal a : animals) {
-    if (setting.equals("Aggression")) {
-      animal1Traits.setLimits(a.aggression, 1, 10);
-    } else if (setting.equals("Size")) {
-      animal1Traits.setLimits(a.size, 3, 12);
-    } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
-    } else if (setting.equals("Vision")) {
-      animal1Traits.setLimits(a.vision, 20, 600);
-    }
-  }
 } //_CODE_:animal2Trait:223443:
 
 public void beginButtonClick(GButton source, GEvent event) { //_CODE_:beginButton:890431:
@@ -268,26 +252,6 @@ public void animalTraitChange(GDropList source, GEvent event) { //_CODE_:animalT
 public void animalTraitsChange(GCustomSlider source, GEvent event) { //_CODE_:animalTraits:417672:
 } //_CODE_:animalTraits:417672:
 
-public void bearButtonClick(GButton source, GEvent event) { //_CODE_:bearButton:766178:
-  println("sheepButton - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:bearButton:766178:
-
-public void frogButtonClick(GButton source, GEvent event) { //_CODE_:frogButton:466873:
-  println("frogButton - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:frogButton:466873:
-
-public void polarBearButtonClick(GButton source, GEvent event) { //_CODE_:polarBearButton:624729:
-  println("polarBearButton - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:polarBearButton:624729:
-
-public void avgInnerTemp1Change(GSlider source, GEvent event) { //_CODE_:avgInnerTemp1:545051:
-  println("avgInnerTemp1 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:avgInnerTemp1:545051:
-
-public void avgInnerTemp2Change(GSlider source, GEvent event) { //_CODE_:avgInnerTemp2:922919:
-  println("avgInnerTemp2 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:avgInnerTemp2:922919:
-
 public void animationSpeedChange(GSlider source, GEvent event) { //_CODE_:animationSpeed:981070:
   simSpeed = animationSpeed.getValueI(); 
 } //_CODE_:animationSpeed:981070:
@@ -296,23 +260,18 @@ public void red1Change(GSlider source, GEvent event) { //_CODE_:red1:343643:
 } //_CODE_:red1:343643:
 
 public void green1Change(GSlider source, GEvent event) { //_CODE_:green1:856703:
-  println("green1 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:green1:856703:
 
 public void blue1Change(GSlider source, GEvent event) { //_CODE_:blue1:383988:
-  println("blue1 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:blue1:383988:
 
 public void red2Change(GSlider source, GEvent event) { //_CODE_:red2:748210:
-  println("red2 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:red2:748210:
 
 public void green2Change(GSlider source, GEvent event) { //_CODE_:green2:692488:
-  println("green2 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:green2:692488:
 
 public void blue2Change(GSlider source, GEvent event) { //_CODE_:blue2:622304:
-  println("blue2 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:blue2:622304:
 
 
@@ -339,13 +298,13 @@ public void createGUI(){
   returnButton.addEventHandler(this, "returnButtonClick");
   growthRate = new GSlider(this, 96, 197, 271, 40, 10.0);
   growthRate.setShowLimits(true);
-  growthRate.setLimits(50.0, 1.0, 100.0);
+  growthRate.setLimits(50.0, 0.0, 100.0);
   growthRate.setNumberFormat(G4P.DECIMAL, 2);
   growthRate.setOpaque(false);
   growthRate.addEventHandler(this, "growthRateChange");
   nutrition_ = new GSlider(this, 383, 197, 194, 40, 10.0);
   nutrition_.setShowLimits(true);
-  nutrition_.setLimits(15.0, 5.0, 20.0);
+  nutrition_.setLimits(75.0, 65.0, 80.0);
   nutrition_.setNumberFormat(G4P.DECIMAL, 2);
   nutrition_.setOpaque(false);
   nutrition_.addEventHandler(this, "nutrition_Change");
@@ -355,7 +314,7 @@ public void createGUI(){
   averageTemp.setNumberFormat(G4P.DECIMAL, 2);
   averageTemp.setOpaque(false);
   averageTemp.addEventHandler(this, "averageTempChange");
-  tempRange = new GSlider(this, 392, 261, 195, 40, 10.0);
+  tempRange = new GSlider(this, 381, 260, 195, 40, 10.0);
   tempRange.setShowLimits(true);
   tempRange.setLimits(10.0, 0.0, 30.0);
   tempRange.setNumberFormat(G4P.DECIMAL, 2);
@@ -375,43 +334,43 @@ public void createGUI(){
   artic.addEventHandler(this, "articClick");
   breedingRate1 = new GSlider(this, 112, 210, 255, 35, 10.0);
   breedingRate1.setShowLimits(true);
-  breedingRate1.setLimits(1.0, 0.0, 2.0);
+  breedingRate1.setLimits(50.0, 1.0, 100.0);
   breedingRate1.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate1.setOpaque(false);
   breedingRate1.addEventHandler(this, "breedingRate1Change");
-  litterSize1 = new GSlider(this, 392, 206, 195, 40, 10.0);
+  litterSize1 = new GSlider(this, 392, 206, 207, 40, 10.0);
   litterSize1.setShowLimits(true);
-  litterSize1.setLimits(0.5, 0.0, 30.0);
+  litterSize1.setLimits(5.0, 0.0, 30.0);
   litterSize1.setNumberFormat(G4P.DECIMAL, 2);
   litterSize1.setOpaque(false);
   litterSize1.addEventHandler(this, "litterSize1Change");
-  animal1Traits = new GCustomSlider(this, 382, 264, 206, 40, "grey_blue");
+  animal1Traits = new GCustomSlider(this, 112, 259, 168, 40, "grey_blue");
   animal1Traits.setLimits(0.5, 0.0, 1.0);
   animal1Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal1Traits.setOpaque(false);
   animal1Traits.addEventHandler(this, "animal1TraitsChange");
-  animal1Trait = new GDropList(this, 380, 254, 85, 80, 3, 10);
+  animal1Trait = new GDropList(this, 111, 249, 86, 84, 3, 10);
   animal1Trait.setItems(loadStrings("list_702361"), 0);
   animal1Trait.addEventHandler(this, "aniaml1TraitChange");
   breedingRate2 = new GSlider(this, 117, 398, 256, 40, 10.0);
   breedingRate2.setShowLimits(true);
-  breedingRate2.setLimits(1.0, 0.0, 2.0);
+  breedingRate2.setLimits(50.0, 1.0, 100.0);
   breedingRate2.setNumberFormat(G4P.DECIMAL, 2);
   breedingRate2.setOpaque(false);
   breedingRate2.addEventHandler(this, "breedingRate2Change");
-  litterSize2 = new GSlider(this, 382, 400, 192, 40, 10.0);
+  litterSize2 = new GSlider(this, 382, 400, 213, 40, 10.0);
   litterSize2.setShowLimits(true);
   litterSize2.setLimits(5.0, 0.0, 30.0);
   litterSize2.setNumberFormat(G4P.DECIMAL, 2);
   litterSize2.setOpaque(false);
   litterSize2.addEventHandler(this, "litterSize2Change");
-  animal2Traits = new GCustomSlider(this, 382, 451, 195, 40, "grey_blue");
+  animal2Traits = new GCustomSlider(this, 120, 451, 159, 40, "grey_blue");
   animal2Traits.setShowLimits(true);
   animal2Traits.setLimits(0.5, 0.0, 1.0);
   animal2Traits.setNumberFormat(G4P.DECIMAL, 2);
   animal2Traits.setOpaque(false);
   animal2Traits.addEventHandler(this, "animal2TraitsChange");
-  animal2Trait = new GDropList(this, 382, 439, 89, 84, 3, 10);
+  animal2Trait = new GDropList(this, 120, 440, 89, 84, 3, 10);
   animal2Trait.setItems(loadStrings("list_223443"), 0);
   animal2Trait.addEventHandler(this, "animal2TraitChange");
   beginButton = new GButton(this, 375, 112, 141, 59);
@@ -499,33 +458,6 @@ public void createGUI(){
   litterSize2Text = new GLabel(this, 381, 384, 80, 20);
   litterSize2Text.setText("Litter Size");
   litterSize2Text.setOpaque(false);
-  bearButton = new GButton(this, 118, 561, 80, 30);
-  bearButton.setText("Bear");
-  bearButton.addEventHandler(this, "bearButtonClick");
-  frogButton = new GButton(this, 209, 561, 80, 30);
-  frogButton.setText("Frog");
-  frogButton.addEventHandler(this, "frogButtonClick");
-  polarBearButton = new GButton(this, 298, 561, 80, 30);
-  polarBearButton.setText("Polar Bear");
-  polarBearButton.addEventHandler(this, "polarBearButtonClick");
-  temp1Text = new GLabel(this, 113, 251, 202, 20);
-  temp1Text.setText("Average Inner Temperature");
-  temp1Text.setOpaque(false);
-  avgInnerTemp1 = new GSlider(this, 114, 267, 251, 40, 10.0);
-  avgInnerTemp1.setShowLimits(true);
-  avgInnerTemp1.setLimits(0.5, 0.0, 1.0);
-  avgInnerTemp1.setNumberFormat(G4P.DECIMAL, 2);
-  avgInnerTemp1.setOpaque(false);
-  avgInnerTemp1.addEventHandler(this, "avgInnerTemp1Change");
-  avgInnerTemp2 = new GSlider(this, 117, 453, 256, 40, 10.0);
-  avgInnerTemp2.setShowLimits(true);
-  avgInnerTemp2.setLimits(0.5, 0.0, 1.0);
-  avgInnerTemp2.setNumberFormat(G4P.DECIMAL, 2);
-  avgInnerTemp2.setOpaque(false);
-  avgInnerTemp2.addEventHandler(this, "avgInnerTemp2Change");
-  temp2Text = new GLabel(this, 118, 440, 191, 20);
-  temp2Text.setText("Average Inner Temperature");
-  temp2Text.setOpaque(false);
   animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
   animationSpeed.setShowLimits(true);
   animationSpeed.setLimits(60.0, 5.0, 240.0);
@@ -540,58 +472,58 @@ public void createGUI(){
   animationSpeedText.setText("Animation Speed");
   animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeedText.setOpaque(false);
-  red1 = new GSlider(this, 115, 318, 100, 40, 10.0);
+  red1 = new GSlider(this, 289, 258, 100, 40, 10.0);
   red1.setShowLimits(true);
   red1.setLimits(0.5, 0.0, 255.0);
   red1.setNumberFormat(G4P.DECIMAL, 2);
   red1.setOpaque(false);
   red1.addEventHandler(this, "red1Change");
-  green1 = new GSlider(this, 220, 318, 100, 40, 10.0);
+  green1 = new GSlider(this, 393, 259, 100, 40, 10.0);
   green1.setShowLimits(true);
   green1.setLimits(0.5, 0.0, 255.0);
   green1.setNumberFormat(G4P.DECIMAL, 2);
   green1.setOpaque(false);
   green1.addEventHandler(this, "green1Change");
-  blue1 = new GSlider(this, 325, 318, 100, 40, 10.0);
+  blue1 = new GSlider(this, 499, 260, 100, 40, 10.0);
   blue1.setShowLimits(true);
   blue1.setLimits(0.5, 0.0, 255.0);
   blue1.setNumberFormat(G4P.DECIMAL, 2);
   blue1.setOpaque(false);
   blue1.addEventHandler(this, "blue1Change");
-  red2 = new GSlider(this, 117, 507, 100, 40, 10.0);
+  red2 = new GSlider(this, 287, 452, 100, 40, 10.0);
   red2.setShowLimits(true);
   red2.setLimits(0.5, 0.0, 255.0);
   red2.setNumberFormat(G4P.DECIMAL, 2);
   red2.setOpaque(false);
   red2.addEventHandler(this, "red2Change");
-  green2 = new GSlider(this, 222, 507, 100, 40, 10.0);
+  green2 = new GSlider(this, 391, 453, 100, 40, 10.0);
   green2.setShowLimits(true);
   green2.setLimits(0.5, 0.0, 255.0);
   green2.setNumberFormat(G4P.DECIMAL, 2);
   green2.setOpaque(false);
   green2.addEventHandler(this, "green2Change");
-  blue2 = new GSlider(this, 327, 507, 100, 40, 10.0);
+  blue2 = new GSlider(this, 496, 453, 100, 40, 10.0);
   blue2.setShowLimits(true);
   blue2.setLimits(255.0, 0.0, 255.0);
   blue2.setNumberFormat(G4P.DECIMAL, 2);
   blue2.setOpaque(false);
   blue2.addEventHandler(this, "blue2Change");
-  red1Text = new GLabel(this, 114, 311, 80, 20);
+  red1Text = new GLabel(this, 287, 247, 80, 20);
   red1Text.setText("Red");
   red1Text.setOpaque(false);
-  green1Text = new GLabel(this, 220, 310, 80, 20);
+  green1Text = new GLabel(this, 394, 249, 80, 20);
   green1Text.setText("Green");
   green1Text.setOpaque(false);
-  blue1Text = new GLabel(this, 324, 310, 80, 20);
+  blue1Text = new GLabel(this, 499, 252, 80, 20);
   blue1Text.setText("Blue");
   blue1Text.setOpaque(false);
-  red2Text = new GLabel(this, 117, 494, 80, 20);
+  red2Text = new GLabel(this, 288, 444, 80, 20);
   red2Text.setText("Red");
   red2Text.setOpaque(false);
-  green2Text = new GLabel(this, 223, 499, 80, 20);
+  green2Text = new GLabel(this, 392, 442, 80, 20);
   green2Text.setText("Green");
   green2Text.setOpaque(false);
-  blue2Text = new GLabel(this, 326, 499, 80, 20);
+  blue2Text = new GLabel(this, 497, 445, 80, 20);
   blue2Text.setText("Blue");
   blue2Text.setOpaque(false);
 }
@@ -638,13 +570,6 @@ GLabel breedingRate1Text;
 GLabel litterSize1Text; 
 GLabel breedingRate2Text; 
 GLabel litterSize2Text; 
-GButton bearButton; 
-GButton frogButton; 
-GButton polarBearButton; 
-GLabel temp1Text; 
-GSlider avgInnerTemp1; 
-GSlider avgInnerTemp2; 
-GLabel temp2Text; 
 GSlider animationSpeed; 
 GLabel animationSpeedText; 
 GSlider red1; 

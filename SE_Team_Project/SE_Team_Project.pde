@@ -1,7 +1,7 @@
 import g4p_controls.*;
 
 //Global Variables (Don't Change These!)
-int simSpeed = 60;
+int simSpeed = 200;
 int timePassed;
 int size;
 float breedingRate;
@@ -28,7 +28,7 @@ boolean hungerTag = true;
 boolean ageTag = false;
 boolean genderTag = false;
 boolean play = true;
-
+boolean end = false;
 
 void setup() {
   //Visual Setup
@@ -53,9 +53,9 @@ void setup() {
   size = 1;
   
   //Create Animals
-  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, 20, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, 20, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
-  //breeding rate, speed, size, gender (false == male), aggression, vision, colour, x coordinate, y coordinate
+  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
+  //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
  
   //Create Habitat
   field = new Habitat(0.5, 20, 10);
@@ -70,8 +70,8 @@ void draw() {
   noStroke();
   guiUpdate();
   
-  //Background for Title and Instruction Screens
-  if (titleScreen || instructionScreen) 
+  //Background for Title, Instruction, and End Screens
+  if (titleScreen || instructionScreen || end) 
     image(background1, 0, 0);
     
   if (setupScreenEnvironment || setupScreenAnimals) 
@@ -81,6 +81,7 @@ void draw() {
   if (titleScreen) {
     PFont myFont = createFont("Impact", 80);
     textFont(myFont);
+    textAlign(LEFT);
     text("ENVIROLUTION", 125, 150);
     
     instructionsButton.setVisible(true);
@@ -141,6 +142,7 @@ void draw() {
     triangle(50, 606, 100, 606, 50, 556);
     triangle(650, 606, 600, 606, 650, 556);
     
+    //Simulation is Running but Paused
     if (!play) {
       fill(field.getColour());
       circle(350, 350, 500);
@@ -158,7 +160,7 @@ void draw() {
             noFill();
             strokeWeight(2.5);
             stroke(255, 215, 0);
-            circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+            circle(a.xPos - 3, a.yPos + 3, a.size * 5);
             stroke(0);
             strokeWeight(1);
          }
@@ -173,11 +175,8 @@ void draw() {
   if (play && simulation) {
     fill(field.getColour());
     circle(350, 350, 500);
-    //fill(114, 92, 66);
-    //rect(420, 180, 20, 30);
-    //rect(400, 330, 5, 150);
-    //season.drawLeaves();
-     //Update Animals
+
+    //Update Animals
     for (Animal a : animals) {
       a.updateStats();
       a.drawAnimal();
@@ -189,6 +188,13 @@ void draw() {
       a.calculateDeaths();
     }
   
+    //Set Age of Starting Animals
+    if (timePassed == 0) {
+      for (Animal a : animals) {
+        a.age = 1000;
+      }
+    }
+    
     //Birth and Death
     for (Animal a: inLabour) {
       if (foods.size() > animals.size()) {
@@ -213,17 +219,19 @@ void draw() {
       for (int i = season.bounty; i > 0; i--) 
         season.createFood();
     }
+    
+    //Update Time and Lables
     timePassed++;
     updateLabel();
   
     //Mouse Hovering Over Animal
     for (Animal a: animals) {
-      if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
-        if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
+      if (a.xPos  < mouseX && mouseX < a.xPos + a.size * 3) {
+        if (a.yPos  < mouseY && mouseY < a.yPos + a.size * 3) {
           noFill();
           strokeWeight(2.5);
           stroke(255, 215, 0);
-          circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+          circle(a.xPos - 3, a.yPos + 3, a.size * 5);
           stroke(0);
           strokeWeight(1);
         }
@@ -236,10 +244,27 @@ void draw() {
      noFill();
      strokeWeight(2.5);
      stroke(255, 215, 0);
-     circle(a.xPos + a.size * 2, a.yPos + (a.size/2), a.size * 5);
+     circle(a.xPos - 3, a.yPos + 3, a.size * 5);
      stroke(0);
      strokeWeight(1);
     }
+    
+    //If All The Animals Have Died
+    if (animals.size() == 0) {
+      end = true;
+      simulation = false;
+    }
+  }
+  
+  //If The Simulation is Finished
+  if (end) {
+    clearSimulation();
+    startButton.setText("Restart");
+    startButton.setVisible(true);
+    textSize(30);
+    fill(255);
+    text("Looks like your species couldn't survive . . . ", 350, 200);
+    text("Try again?", 350, 225);
   }
 }
 
@@ -248,8 +273,8 @@ void mouseClicked() {
   if (mouseY < 600)
     selected.clear();
   for (Animal a: animals) {
-    if (a.xPos + a.size < mouseX && mouseX < (a.xPos + a.size) * 3) {
-      if (a.yPos - (a.size/2) < mouseY && mouseY < a.yPos - (a.size/2) + a.size *2) {
+    if (a.xPos < mouseX && mouseX < a.xPos + a.size * 3) {
+      if (a.yPos < mouseY && mouseY < a.yPos + a.size * 3) {
         selected.add(a);
       }
     }
@@ -297,9 +322,9 @@ void updateLabel() {
     averageVision += a.vision;
     averageSpeed += a.speed;
     averageAggression += a.aggression;
-    averageRed += red(a.animalColour);
-    averageGreen += green(a.animalColour);
-    averageBlue += blue(a.animalColour);
+    averageRed += a.red;
+    averageGreen += a.green;
+    averageBlue += a.blue;
     animalCount ++;
     if (a.gender)
       femaleCount ++;
@@ -353,14 +378,14 @@ void updateLabel() {
   //Animal Info Tags
   if (hungerTag) {
     for (Animal a: animals) {
-      fill(a.animalColour);
+      fill(a.red, a.green, a.blue);
       textSize(a.size * 3);
       text(int(a.hunger), a.xPos, a.yPos - a.size * 3);
     }
   }
   if (ageTag) {
     for (Animal a: animals) {
-      fill(a.animalColour);
+      fill(a.red, a.green, a.blue);
       textSize(a.size * 3);
       text(int(a.age), a.xPos, a.yPos - a.size * 3);
     }
@@ -389,6 +414,6 @@ void reset() {
   timePassed = 0;
   animals.clear();
   foods.clear();
-  animals.add(new Animal(1000 + breedingRate, 5, 8, false, 10, 300, 20, color(92, 64, 51), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal (1000 + breedingRate, 3, 5, true, 4, 300, 20, color(210, 180, 140), random (250, 350), random(150, 500))); //female animal
+  animals.add(new Animal(breedingRate1.getValueF() * breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
+  animals.add(new Animal(breedingRate2.getValueF() * breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
 }

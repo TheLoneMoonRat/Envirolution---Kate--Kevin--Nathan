@@ -1,11 +1,12 @@
 class Food {
+  //Fields
   float nutrition;
   float growthRate;
   color foodColour;
   float xPos;
   float yPos;
   
-  //constructor
+  //Constructors
   Food (float n, float gr, color f, float x, float y) {
     this.nutrition = n;
     this.growthRate = gr;
@@ -19,7 +20,7 @@ class Food {
     this.yPos = y;
   }
   
-  //methods
+  //Methods
   void drawFood() {
     fill(this.foodColour);
     circle(xPos, yPos, this.nutrition / 10);
