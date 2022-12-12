@@ -17,6 +17,8 @@
 public void startButtonClick(GButton source, GEvent event) { //_CODE_:startButton:798525:
   if (end) {
     instructionsButton.setVisible(true);
+    
+    clearForStart();
     titleScreen = true;
     end = false;
   }
@@ -176,6 +178,7 @@ public void beginButtonClick(GButton source, GEvent event) { //_CODE_:beginButto
       simulation = true;
       timePassed = 0;
       setupScreenAnimals = false;
+      reset();
     }
 } //_CODE_:beginButton:890431:
 

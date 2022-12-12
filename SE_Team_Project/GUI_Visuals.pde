@@ -84,6 +84,7 @@ void clearEnvironmentSetupScreen () {
   humidityText.setVisible(false);
   avgTempText.setVisible(false);
   tempRangeText.setVisible(false);
+  startButton.setVisible(false);
 }
 
 //Clear GUI Screen
@@ -114,6 +115,7 @@ void clearAnimalsSetupScreen () {
   green2Text.setVisible(false);
   blue1Text.setVisible(false);
   blue2Text.setVisible(false);
+  startButton.setVisible(false);
 }
 
 //Clear GUI Screen
@@ -122,6 +124,8 @@ void clearSimulation() {
    resetButton1.setVisible(false);
    showVariables1.setVisible(false);
    shouldVariables.setVisible(false);
+   litterSize.setVisible(false);
+   animationSpeed.setVisible(false);
    
    if (selected.size() != 0) {
      breedingRates.setVisible(false);
@@ -138,6 +142,8 @@ void clearSimulation() {
 //Clear GUI Screen
 void clearForStart() {
   instructions.setVisible(false);
+  litterSize.setVisible(false);
+  animationSpeed.setVisible(false);
   returnButton.setVisible(false);
   growthRate.setVisible(false);
   nutrition_.setVisible(false);
