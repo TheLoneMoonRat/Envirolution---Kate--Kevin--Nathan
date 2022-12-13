@@ -1,7 +1,7 @@
 import g4p_controls.*;
 
 //Global Variables (Don't Change These!)
-+int simSpeed = 200;    //speed of the simulation
+int simSpeed = 200;    //speed of the simulation
 int timePassed;    //how much time has passed in the simulation
 int size;    //how many children an animal has when it gives birth
 float nutritionAdjuster;    //determine the nutrition of the food
