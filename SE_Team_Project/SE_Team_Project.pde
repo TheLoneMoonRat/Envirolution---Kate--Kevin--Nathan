@@ -1,34 +1,37 @@
 import g4p_controls.*;
 
 //Global Variables (Don't Change These!)
-int simSpeed = 200;
-int timePassed;
-int size;
-float breedingRate;
-float nutritionAdjuster;
-float foodRate;
-ArrayList<Animal> animals;
-ArrayList<Animal> inLabour;
-ArrayList<Animal> dying;
-ArrayList<Food> foods;
-ArrayList<Animal> selected;
-String setting;
-boolean gender;
-Habitat field;
-Season season;
++int simSpeed = 200;    //speed of the simulation
+int timePassed;    //how much time has passed in the simulation
+int size;    //how many children an animal has when it gives birth
+float nutritionAdjuster;    //determine the nutrition of the food
+float foodRate;    //rate of food growth
+ArrayList<Animal> animals;    //all living animals
+ArrayList<Animal> inLabour;    //all animals in labour
+ArrayList<Animal> dying;    //all animals that are dying
+ArrayList<Food> foods;    //all food 
+ArrayList<Animal> selected;    //animal that is currently selected
+String setting;    //setting of the custom GUI slider (can be "aggression", "speed", "size", or "vision")
+boolean gender;    //gender of the animal
+Habitat field;    //habitat
+Season season;    //current season
 
-PImage background1; 
+//Background Images
+PImage background1;    
 PImage background2;
+
+//Which Screen Program is On + If Program is Playing
 boolean titleScreen = true;
 boolean instructionScreen = false;
 boolean setupScreenEnvironment = false;
 boolean setupScreenAnimals = false;
 boolean simulation = false;
-boolean hungerTag = true;
-boolean ageTag = false;
-boolean genderTag = false;
+boolean hungerTag = true;   //whether the animals have hunger tag above head
+boolean ageTag = false;    //whether the animals have age tag above head
+boolean genderTag = false;     //whether the animals have gender tag above head
 boolean play = true;
 boolean end = false;
+
 
 void setup() {
   //Visual Setup
@@ -36,6 +39,8 @@ void setup() {
   frameRate(simSpeed);
   background1 = loadImage("tree.jpg");
   background2 = loadImage("leaves.jpg");
+  
+  //Setup GUI
   createGUI();
   clearForStart();
 
@@ -48,7 +53,6 @@ void setup() {
   season = new Season();
   
   //Set Temporary Variables
-  breedingRate = 0;
   setting = "Aggression";
   size = 1;
   
@@ -56,8 +60,9 @@ void setup() {
   animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
   //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
+ 
   //Create Habitat
-  field = new Habitat(0.5, 20, 10);
+  field = new Habitat(50, 20, 10);
   foodRate = growthRate.getValueF();
 }
 
@@ -81,9 +86,9 @@ void draw() {
     PFont myFont = createFont("Impact", 80);
     textFont(myFont);
     textAlign(LEFT);
-    text("ENVIROLUTION", 125, 150);
+    text("ENVIROLUTION", 125, 150);   //draw text
     
-    instructionsButton.setVisible(true);
+    instructionsButton.setVisible(true);  //set GUI buttons visible
     startButton.setVisible(true);
   }
   
@@ -95,48 +100,52 @@ void draw() {
   
   //While on Environment Setup Screen
   else if (setupScreenEnvironment) {
-    environmentSetup();
+    environmentSetup();   //setup GUI
     
     fill(255);
     PFont myFont1 = createFont("Impact", 40);
     textFont(myFont1);
-    text("Environment", 100, 165);
+    text("Environment", 100, 165);   //draw text
   }
   
   //While on Animal Setup Screen
   else if (setupScreenAnimals) {
-    animalsSetup();
+    animalsSetup();   //setup GUI
     
     fill(255);
     PFont myFont1 = createFont("Impact", 40);
     textFont(myFont1);
-    text("Animals", 115, 165);
+    text("Animals", 115, 165);   //draw text
     
     PFont myFont2 = createFont("Impact", 30);
     textFont(myFont2);
-    text("1)", 80, 222);
-    text("2)", 80, 410);
+    text("1)", 80, 222);    //draw text
+    text("2)", 80, 410); 
     
     fill(255);
-    rect(100, 340, 490, 2);
+    rect(100, 340, 490, 2);  //create mid-line
     
     fill(red1.getValueF(), green1.getValueF(), blue1.getValueF());
-    circle(475, 285, 50);
+    circle(475, 285, 50);    //draw circle with the chosen animal colour
     
     fill(red2.getValueF(), green2.getValueF(), blue2.getValueF());
-    circle(475, 475, 50);
+    circle(475, 475, 50);    //draw circle with the chosen animal colour
   }
   
   //While Simulation is Running
   if (simulation) {
-    simulationSetup();
+    //Setup Simulation Visuals
+    simulationSetup();  //simulation GUI
     background(150, 150, 255);
+    
     fill(0, 0, 250);
     rect(50, 94, 600, 512);
     fill(10, 75, 200);
     rect(355, 616, 2, 84);
+    
     fill(150, 150, 255);
     triangle(50, 94, 100, 94, 50, 144);
+    triangle(50, 94, 100, 94, 50, 144);   //enhance frame
     triangle(650, 94, 600, 94, 650, 144);
     triangle(50, 606, 100, 606, 50, 556);
     triangle(650, 606, 600, 606, 650, 556);
@@ -144,15 +153,16 @@ void draw() {
     //Simulation is Running but Paused
     if (!play) {
       fill(field.getColour());
-      circle(350, 350, 500);
-      //fill(114, 92, 66);
-      //rect(420, 250, 50, 50);
-      for (Food f: foods) {
+      circle(350, 350, 500);   //draw habitat
+
+      for (Food f: foods) {  //draw food
         f.drawFood();
       }
-      for (Animal a : animals) {
+      for (Animal a : animals) {   //draw animals
         a.drawAnimal();
       }
+      
+      //If Mouse is Hovering Over an Animal
       for (Animal a: animals) {
         if (a.xPos - a.size * 1.5 < mouseX && mouseX < a.xPos + a.size * 1.5) {
           if (a.yPos - a.size * 1.5 < mouseY && mouseY < a.yPos + a.size * 1.5) {
@@ -166,6 +176,7 @@ void draw() {
        }
      }
      
+    //If an Animal is Selected
     if (selected.size() != 0) {
       Animal a = selected.get(0);
       noFill();
@@ -183,7 +194,7 @@ void draw() {
   
   //Animation
   if (play && simulation) {
-    fill(field.getColour());
+    fill(field.getColour());  //draw habitat
     circle(350, 350, 500);
 
     //Update Animals
@@ -220,10 +231,12 @@ void draw() {
     dying.clear();
     inLabour.clear();
   
+    //Draw Food
     for (Food f: foods) {
       f.drawFood();
     }
     
+    //Create Fod Based on Season
     season.getSeason();
     if (timePassed % foodRate == 0) {
       for (int i = season.bounty; i > 0; i--) 
@@ -269,13 +282,14 @@ void draw() {
   
   //If The Simulation is Finished
   if (end) {
-    clearSimulation();
+    clearSimulation();  //clear simulation GUI
     startButton.setText("Restart");
     startButton.setVisible(true);
+    
     textSize(30);
     fill(255);
-    text("Looks like your species couldn't survive . . . ", 350, 200);
-    text("Try again?", 360, 225);
+    text("Looks like your species couldn't survive . . . ", 350, 200);   //draw text
+    text("Try again?", 360, 225);   
   }
 }
 
@@ -287,11 +301,11 @@ void mouseClicked() {
         selected.add(a);
         break;
       }
-      else if (mouseY < 600) {
+      else if (mouseY < 600) {   //mouse is not on control panel
         selected.clear();
       }
     }
-    else if (mouseY < 600) {
+    else if (mouseY < 600) {   //mouse is not on control panel
       selected.clear();
     }
   }
@@ -313,7 +327,6 @@ void guiUpdate() {
     }
   }
 }
-
 
 //Update Labels Above Animals
 void updateLabel() {
@@ -370,6 +383,7 @@ void updateLabel() {
   text("Average aggression: " + digitRound(averageAggression, 2), 480, 40);
   text("Population size: " + int(animalCount), 480, 65);
  
+  //Display Values of Selected Animal
   if (selected.size() != 0) {
     try {
       Animal q = selected.get(0);
@@ -385,6 +399,7 @@ void updateLabel() {
     }
   }  
   
+  //Display Average Colour
   fill(10, 75, 200);
   text("Average colour", 640, 30);
   fill(150, 150, 255);
