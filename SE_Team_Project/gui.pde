@@ -255,7 +255,7 @@ public void showVariablesButtonClick(GButton source, GEvent event) { //_CODE_:sh
 } //_CODE_:shouldVariables:999019:
 
 public void breedingRateChange(GSlider source, GEvent event) { //_CODE_:breedingRates:281233:
-  breedingRate = breedingRates.getValueF();
+  selected.get(0).breedingRate = breedingRates.getValueF();
 } //_CODE_:breedingRates:281233:
 
 public void litterSizeChange(GSlider source, GEvent event) { //_CODE_:litterSize:321692:
@@ -377,7 +377,7 @@ public void createGUI(){
   tempRange.addEventHandler(this, "tempRangeChange");
   humidity_ = new GSlider(this, 96, 322, 271, 40, 10.0);
   humidity_.setShowLimits(true);
-  humidity_.setLimits(0.5, 0.0, 1.0);
+  humidity_.setLimits(50.0, 0.0, 100.0);
   humidity_.setNumberFormat(G4P.DECIMAL, 2);
   humidity_.setOpaque(false);
   humidity_.addEventHandler(this, "humidity_Change");
@@ -417,18 +417,18 @@ public void createGUI(){
   animal2Trait = new GDropList(this, 383, 390, 89, 84, 3, 10);
   animal2Trait.setItems(loadStrings("list_223443"), 0);
   animal2Trait.addEventHandler(this, "animal2TraitChange");
-  beginButton = new GButton(this, 375, 112, 141, 59);
+  beginButton = new GButton(this, 374, 111, 141, 59);
   beginButton.setText("NEXT");
   beginButton.addEventHandler(this, "beginButtonClick");
-  backButton = new GButton(this, 521, 127, 80, 30);
+  backButton = new GButton(this, 527, 126, 80, 30);
   backButton.setText("RETURN");
   backButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   backButton.addEventHandler(this, "backButtonClick");
-  pauseButton1 = new GButton(this, 22, 610, 89, 36);
+  pauseButton1 = new GButton(this, 22, 616, 89, 36);
   pauseButton1.setText("Pause");
   pauseButton1.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton1.addEventHandler(this, "pauseButton1Click");
-  resetButton1 = new GButton(this, 122, 610, 87, 34);
+  resetButton1 = new GButton(this, 122, 617, 87, 34);
   resetButton1.setText("Reset");
   resetButton1.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   resetButton1.addEventHandler(this, "resetButton1Click");
@@ -440,14 +440,14 @@ public void createGUI(){
   shouldVariables.setText("Hide Variables");
   shouldVariables.setLocalColorScheme(GCScheme.RED_SCHEME);
   shouldVariables.addEventHandler(this, "showVariablesButtonClick");
-  breedingRates = new GSlider(this, 403, 610, 116, 40, 10.0);
+  breedingRates = new GSlider(this, 403, 623, 116, 40, 10.0);
   breedingRates.setShowLimits(true);
   breedingRates.setLimits(50.0, 50.0, 200.0);
   breedingRates.setNumberFormat(G4P.DECIMAL, 2);
   breedingRates.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRates.setOpaque(false);
   breedingRates.addEventHandler(this, "breedingRateChange");
-  litterSize = new GSlider(this, 404, 650, 115, 45, 10.0);
+  litterSize = new GSlider(this, 404, 665, 115, 40, 10.0);
   litterSize.setShowLimits(true);
   litterSize.setLimits(1.0, 1.0, 10.0);
   litterSize.setNbrTicks(10);
@@ -463,16 +463,16 @@ public void createGUI(){
   animalTrait.addEventHandler(this, "animalTraitChange");
   animalTraits = new GCustomSlider(this, 539, 640, 143, 40, "grey_blue");
   animalTraits.setShowLimits(true);
-  animalTraits.setLimits(0.5, 0.0, 1.0);
+  animalTraits.setLimits(25.0, 0.0, 100.0);
   animalTraits.setNumberFormat(G4P.DECIMAL, 2);
   animalTraits.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animalTraits.setOpaque(false);
   animalTraits.addEventHandler(this, "animalTraitsChange");
-  breedingRateText = new GLabel(this, 402, 605, 118, 20);
+  breedingRateText = new GLabel(this, 402, 611, 118, 20);
   breedingRateText.setText("Breeding Rate");
   breedingRateText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRateText.setOpaque(false);
-  litterSizeText = new GLabel(this, 404, 645, 80, 20);
+  litterSizeText = new GLabel(this, 404, 657, 80, 20);
   litterSizeText.setText("Litter Size");
   litterSizeText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSizeText.setOpaque(false);
@@ -497,7 +497,7 @@ public void createGUI(){
   breedingRate2Text = new GLabel(this, 117, 386, 112, 20);
   breedingRate2Text.setText("Breeding Rate");
   breedingRate2Text.setOpaque(false);
-  animationSpeed = new GSlider(this, 27, 655, 186, 45, 10.0);
+  animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
   animationSpeed.setShowLimits(true);
   animationSpeed.setLimits(60.0, 5.0, 240.0);
   animationSpeed.setNbrTicks(5);
@@ -507,7 +507,7 @@ public void createGUI(){
   animationSpeed.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeed.setOpaque(false);
   animationSpeed.addEventHandler(this, "animationSpeedChange");
-  animationSpeedText = new GLabel(this, 25, 650, 121, 20);
+  animationSpeedText = new GLabel(this, 25, 657, 128, 20);
   animationSpeedText.setText("Animation Speed");
   animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeedText.setOpaque(false);

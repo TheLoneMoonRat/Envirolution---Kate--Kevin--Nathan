@@ -1,13 +1,11 @@
 class Season {
   //Fields
-  String name;
-  int bounty;
-  ArrayList<Food> lastSeason;
-  ArrayList<Food> decay;
-  PVector lowLocation;
-  PVector highLocation;
-  PVector highLeaf;
-  PVector lowLeaf;
+  String name;   //name of season
+  int bounty;   //how much food should grow
+  ArrayList<Food> lastSeason;   //food from last season
+  ArrayList<Food> decay;   //food that is currently decaying
+  PVector lowLocation;   //lowest location of food growth
+  PVector highLocation;   //highest location of food growth
   
   //Constructor
   Season() {
@@ -15,8 +13,6 @@ class Season {
     lastSeason = new ArrayList<Food>();
     lowLocation = new PVector(0, 0);
     highLocation = new PVector(0, 0);
-    highLeaf = new PVector(0, 0);
-    lowLeaf = new PVector(0, 0);
   }
   
   //Get Season Values
@@ -29,7 +25,7 @@ class Season {
       this.lowLocation.y = 225;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
-      field.temp = field.avgTemp;
+      field.temp = field.avgTemp;  //change temperature
       
     } else if (timePassed % 2000 < 1000) {
       this.name = "Summer";
@@ -38,7 +34,7 @@ class Season {
       this.lowLocation.y = 225;
       this.highLocation.x = 475;
       this.highLocation.y = 350;
-      field.temp = field.avgTemp + field.tempRange;
+      field.temp = field.avgTemp + field.tempRange;  //change temperature
       
     } else if (timePassed % 2000 < 1500) {
       this.name = "Fall";
@@ -47,7 +43,7 @@ class Season {
       this.lowLocation.y = 350;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
-      field.temp = field.avgTemp - field.tempRange / 2;
+      field.temp = field.avgTemp - field.tempRange / 2;   //change temperature
       
     } else {
       this.name = "Winter";
@@ -56,22 +52,22 @@ class Season {
       this.lowLocation.y = 350;
       this.highLocation.x = 475;
       this.highLocation.y = 475;
-      field.temp = field.avgTemp - field.tempRange;
+      field.temp = field.avgTemp - field.tempRange;   //change temperature
     }
     
     //Change Values From Last Season
     if (timePassed % 500 == 0) {
       for (Animal a: animals)
-        a.setPosition();
+        a.setPosition();  
       for (Food f: foods) 
-        lastSeason.add(f);
+        lastSeason.add(f);  //convert food from current season to last season
     }
     for (Food f: lastSeason) {
       if (int(random(0, 300)) == 0)
-        decay.add(f);
+        decay.add(f);  //randomly decay food from last season
     }
-    for (Food f: decay) {
-      
+    
+    for (Food f: decay) {  //get rid of decaying food
       try {
         foods.remove(foods.indexOf(f));
       } catch (Exception e) {
@@ -101,14 +97,4 @@ class Season {
         return(color(133, random(45, 133), 45));
     }
   }
-//  void drawLeaves() {
-//    this.highLeaf.x = 470;
-//    this.lowLeaf.x = 390;
-//    this.highLeaf.y = 330;
-//    this.lowLeaf.y = 180;
-//    for (int i = 0; i < bounty * 20; i++) {
-//      fill(season.getSeasonColour());
-//      circle(random(season.lowSeason.x, season.highSeason.x), random(season.lowSeason.y, season.highSeason.y), random(1,4));
-//    }
-//  }
 }

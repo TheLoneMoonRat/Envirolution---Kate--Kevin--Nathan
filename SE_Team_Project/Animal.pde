@@ -1,33 +1,30 @@
 class Animal {
   //Fields
-  int age;
-  int timePassedSinceBred;
-  int lifespan;
-  float vision;
-  float breedingRate;
-  float babyAmt;
-  float speed;
-  float hunger;
-  float xPos;
+  int age;   
+  int timePassedSinceBred;   //how long since it has bred
+  int lifespan;   //how long it has to live
+  float vision;   //how many pixels it can see
+  float breedingRate;   //how long it takes inbetween breeding
+  float speed;   //how fast it is
+  float hunger;   //how hungry it currently is
+  float xPos;   
   float yPos;
-  float size;
-  float aggression;
-  float finalSize;
-  float red;
-  float green;
-  float blue;
-  PVector currentSpeed;
+  float size;   //how large it is
+  float aggression;   //how aggresive it is
+  float finalSize;   //how large it will be when it stops growing
+  float red;   //red colour
+  float green;   //green colour
+  float blue;   //blue colour
+  PVector currentSpeed;  
   PVector currentLocation; 
   boolean gender;
-  String foodSource;
-  Food target;
-  Animal partner;
+  Food target;   //what piece of food it is currently targeting
+  Animal partner;   //what its current partner is
  
   //Constructors
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, float r, float g, float b, float x, float y) {
     this.age = 0;
     this.breedingRate = br;
-    this.babyAmt = 0;
     this.speed = sp;
     this.hunger = 0;
     this.size = si;
@@ -46,15 +43,13 @@ class Animal {
     this.partner = null;
     this.finalSize = this.size;
     this.lifespan = 3500;
-
-    this.currentSpeed.x = random(-2, 2);
-    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    this.currentSpeed.x = random(-2, 2);   
+    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)); 
   }
   
   Animal(float br, float sp, float si, boolean ge, float ag, float vs, float r, float g, float b, float x, float y, float fs) {
     this.age = 0;
     this.breedingRate = br;
-    this.babyAmt = 0;
     this.speed = sp;
     this.hunger = 0;
     this.size = si;
@@ -74,10 +69,8 @@ class Animal {
     this.lifespan = 3500 - (int(aggression) * 20);
     this.currentLocation = new PVector(random(season.lowLocation.x, season.highLocation.x), random(season.lowLocation.y, season.highLocation.y));
     this.currentSpeed.x = random(-2, 2);
-    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
+    this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2)); 
   }
-
-  //Methods
 
   //Draw Animal
   void drawAnimal() {
@@ -125,10 +118,14 @@ class Animal {
 
   //Choose Partner When It's Time to Breed
   void choosePartner() {
+    //Make Sure Animal Can Breed
     if (!this.gender && this.age > 1500 && this.hunger < 15 && timePassedSinceBred >= this.breedingRate) {
+      
       //Calculate If There Are Nearby Mates
       for (Animal a : animals) {
         float dist = sqrt(pow((this.xPos - a.xPos), 2) + pow((this.yPos - a.yPos), 2));
+        
+        //If a Suitable Mate is Found
         if (a.timePassedSinceBred >= a.breedingRate && dist < this.vision && a.gender && a.age > 1500) {
           this.partner = a;
           for (Animal b: animals)
@@ -171,7 +168,7 @@ class Animal {
   //Eat
   void eat() {
     if (foods.size() > 0) {
-      this.chooseFood();
+      this.chooseFood();   //get target for food
       if (foods.contains(target)) {
         if (target.getDist(this) < this.aggression) {
           for (Animal a: animals) {
@@ -181,7 +178,7 @@ class Animal {
             }
           }
           if (target.xPos < 700) {
-            this.hunger -= target.nutrition;
+            this.hunger -= target.nutrition;   //eat target food
             foods.remove(target);
             if (season.lastSeason.contains(target))
               season.lastSeason.remove(target);

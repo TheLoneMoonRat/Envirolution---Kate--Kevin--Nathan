@@ -1,9 +1,9 @@
 class Habitat {
   //Fields
-  float humidity;
-  float avgTemp;
-  float tempRange;
-  float temp;
+  float humidity;   
+  float avgTemp;   //average temperature
+  float tempRange;   //how much the temperature can range from the average temp
+  float temp;  //what the cuurent temperature is
   
   //Constructors
   Habitat(float h, float at, float tr) {
@@ -15,11 +15,12 @@ class Habitat {
   
   //Get Colour Based on Temperature
   color getColour() {
-    colorMode(HSB);
+    colorMode(HSB);  //move to HSB (hue saturation brightness)
     float hue = 100 - 1.5 * this.temp;
     float saturation = this.temp * 10 + 5;
     color c = color(hue, saturation, 150);
-    colorMode(RGB);
+    
+    colorMode(RGB);  //move back to rgb
     return c;
   }
   
@@ -27,16 +28,16 @@ class Habitat {
   void changeRatesByTemp() {
     if (this.temp > 20) {
       for( Food f : foods) 
-        f.growthRate += random(1, 2);
+        f.growthRate += random(5, 10);
       for( Animal a : animals)
-        a.breedingRate += random(1, 2);
+        a.breedingRate -= random(5, 10);
     }
     
     else if (this.temp < 0) {
       for( Food f : foods) 
-        f.growthRate -= random(1, 2);
+        f.growthRate -= random(5, 10);
       for( Animal a : animals)
-        a.breedingRate -= random(1, 2);
+        a.breedingRate += random(5, 10);
     }
   }
   
@@ -44,16 +45,16 @@ class Habitat {
   void changeRatesByHumidity() {
     if (this.humidity >= 7) {
       for( Food f : foods) 
-        f.growthRate += random(1, 2);
+        f.growthRate += random(5, 10);
       for( Animal a : animals)
-        a.breedingRate += random(1, 2);
+        a.breedingRate -= random(5, 10);
     }
     
     else if (this.humidity <= 3) {
       for( Food f : foods) 
-        f.growthRate -= random(1, 2);
+        f.growthRate -= random(5, 10);
       for( Animal a : animals)
-        a.breedingRate -= random(1, 2);
+        a.breedingRate += random(5, 10);
     }
   }
 }

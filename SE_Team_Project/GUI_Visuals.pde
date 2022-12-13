@@ -1,3 +1,5 @@
+//This tab determines what parts of the GUI are visible to the user at what times
+
 //Create Environment Setup GUI Screen
 void environmentSetup() {
    growthRate.setVisible(true);

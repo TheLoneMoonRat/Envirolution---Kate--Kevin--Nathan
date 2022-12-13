@@ -1,8 +1,8 @@
 class Food {
   //Fields
-  float nutrition;
-  float growthRate;
-  color foodColour;
+  float nutrition;   //how much hunger it fufills
+  float growthRate;   //how fast food grows
+  color foodColour;   //colour of food
   float xPos;
   float yPos;
   
@@ -20,12 +20,13 @@ class Food {
     this.yPos = y;
   }
   
-  //Methods
+  //Draw Food
   void drawFood() {
     fill(this.foodColour);
     circle(xPos, yPos, this.nutrition / 10);
   }
   
+  //Get Distance From an Animal
   float getDist(Animal a) {
     return(sqrt(pow((a.xPos - this.xPos), 2) + pow((a.yPos - this.yPos), 2)));
   }
