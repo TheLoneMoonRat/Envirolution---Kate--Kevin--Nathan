@@ -440,14 +440,14 @@ public void createGUI(){
   shouldVariables.setText("Hide Variables");
   shouldVariables.setLocalColorScheme(GCScheme.RED_SCHEME);
   shouldVariables.addEventHandler(this, "showVariablesButtonClick");
-  breedingRates = new GSlider(this, 403, 623, 116, 40, 10.0);
+  breedingRates = new GSlider(this, 403, 618, 116, 40, 10.0);
   breedingRates.setShowLimits(true);
   breedingRates.setLimits(50.0, 50.0, 200.0);
   breedingRates.setNumberFormat(G4P.DECIMAL, 2);
   breedingRates.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRates.setOpaque(false);
   breedingRates.addEventHandler(this, "breedingRateChange");
-  litterSize = new GSlider(this, 404, 665, 115, 40, 10.0);
+  litterSize = new GSlider(this, 404, 650, 115, 50, 10.0);
   litterSize.setShowLimits(true);
   litterSize.setLimits(1.0, 1.0, 10.0);
   litterSize.setNbrTicks(10);
@@ -468,11 +468,11 @@ public void createGUI(){
   animalTraits.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animalTraits.setOpaque(false);
   animalTraits.addEventHandler(this, "animalTraitsChange");
-  breedingRateText = new GLabel(this, 402, 611, 118, 20);
+  breedingRateText = new GLabel(this, 402, 612, 118, 20);
   breedingRateText.setText("Breeding Rate");
   breedingRateText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRateText.setOpaque(false);
-  litterSizeText = new GLabel(this, 404, 657, 80, 20);
+  litterSizeText = new GLabel(this, 404, 645, 80, 20);
   litterSizeText.setText("Litter Size");
   litterSizeText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   litterSizeText.setOpaque(false);
@@ -497,7 +497,7 @@ public void createGUI(){
   breedingRate2Text = new GLabel(this, 117, 386, 112, 20);
   breedingRate2Text.setText("Breeding Rate");
   breedingRate2Text.setOpaque(false);
-  animationSpeed = new GSlider(this, 27, 664, 186, 40, 10.0);
+  animationSpeed = new GSlider(this, 27, 655, 186, 45, 10.0);
   animationSpeed.setShowLimits(true);
   animationSpeed.setLimits(60.0, 5.0, 240.0);
   animationSpeed.setNbrTicks(5);
@@ -507,7 +507,7 @@ public void createGUI(){
   animationSpeed.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeed.setOpaque(false);
   animationSpeed.addEventHandler(this, "animationSpeedChange");
-  animationSpeedText = new GLabel(this, 25, 657, 128, 20);
+  animationSpeedText = new GLabel(this, 25, 651, 122, 20);
   animationSpeedText.setText("Animation Speed");
   animationSpeedText.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animationSpeedText.setOpaque(false);
