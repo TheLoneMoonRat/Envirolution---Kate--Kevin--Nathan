@@ -118,13 +118,13 @@ void draw() {
     text("2)", 80, 410);
     
     fill(255);
-    rect(100, 370, 490, 2);
+    rect(100, 340, 490, 2);
     
     fill(red1.getValueF(), green1.getValueF(), blue1.getValueF());
-    circle(465, 335, 50);
+    circle(475, 285, 50);
     
     fill(red2.getValueF(), green2.getValueF(), blue2.getValueF());
-    circle(465, 520, 50);
+    circle(475, 475, 50);
   }
   
   //While Simulation is Running
@@ -165,6 +165,17 @@ void draw() {
          }
        }
      }
+     
+    if (selected.size() != 0) {
+      Animal a = selected.get(0);
+      noFill();
+      strokeWeight(2.5);
+      stroke(255, 215, 0);
+      circle(a.xPos, a.yPos, a.size * 5);
+      stroke(0);
+      strokeWeight(1);     
+    }
+    
      guiUpdate();
      updateLabel();
     }
@@ -237,16 +248,16 @@ void draw() {
       }
     }
     
-   //Show Selected Animal
-   //if (selected.size() > 0) {
-   //  Animal a = selected.get(0);
-   //  noFill();
-   //  strokeWeight(2.5);
-   //  stroke(255, 215, 0);
-   //  circle(a.xPos - 3, a.yPos + 3, a.size * 5);
-   //  stroke(0);
-   //  strokeWeight(1);
-   // }
+    //Animal is Selected
+    if (selected.size() != 0) {
+      Animal a = selected.get(0);
+      noFill();
+      strokeWeight(2.5);
+      stroke(255, 215, 0);
+      circle(a.xPos, a.yPos, a.size * 5);
+      stroke(0);
+      strokeWeight(1);     
+    }
     
     //If All The Animals Have Died
     if (animals.size() == 0) {
@@ -270,13 +281,18 @@ void draw() {
 
 //Select Animal
 void mouseClicked() {
-  if (mouseY < 600)
-    selected.clear();
   for (Animal a: animals) {
     if (a.xPos - a.size * 1.5 < mouseX && mouseX < a.xPos + a.size * 1.5) {
       if (a.yPos - a.size * 1.5 < mouseY && mouseY < a.yPos + a.size * 1.5) {
         selected.add(a);
+        break;
       }
+      else if (mouseY < 600) {
+        selected.clear();
+      }
+    }
+    else if (mouseY < 600) {
+      selected.clear();
     }
   }
 }
@@ -416,6 +432,7 @@ void reset() {
   timePassed = 0;
   animals.clear();
   foods.clear();
+  selected.clear();
   animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
   animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
 }

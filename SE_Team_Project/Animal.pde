@@ -275,6 +275,11 @@ class Animal {
   void calculateDeaths() {
     if (this.hunger > 100 || this.age > this.lifespan) {
       dying.add(this);
+      if (selected.size() != 0) {
+        if (selected.get(0) == this) {
+          selected.clear();
+        }
+      }
     }
   }
 }          
