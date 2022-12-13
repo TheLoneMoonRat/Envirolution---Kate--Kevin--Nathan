@@ -11,6 +11,8 @@ ArrayList<Animal> inLabour;    //all animals in labour
 ArrayList<Animal> dying;    //all animals that are dying
 ArrayList<Food> foods;    //all food 
 ArrayList<Animal> selected;    //animal that is currently selected
+float[] traits1 = {10, 8, 3, 300};
+float[] traits2 = {4, 5, 2, 300};
 String setting;    //setting of the custom GUI slider (can be "aggression", "speed", "size", or "vision")
 boolean gender;    //gender of the animal
 Habitat field;    //habitat
@@ -56,11 +58,7 @@ void setup() {
   setting = "Aggression";
   size = 1;
   
-  //Create Animals
-  animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
-  //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
- 
+  
   //Create Habitat
   field = new Habitat(50, 20, 10);
   foodRate = growthRate.getValueF();
@@ -134,6 +132,12 @@ void draw() {
   
   //While Simulation is Running
   if (simulation) {
+    if(timePassed ==0) {
+      //Create Animals
+      animals.add(new Animal(breedingRate1.getValueF(), traits1[2], traits1[1], false, traits1[0], traits1[3], red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
+      animals.add(new Animal(breedingRate2.getValueF(), traits2[2], traits2[1], true, traits2[0], traits2[3], red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
+      //breeding rate, speed, size, gender (false == male), aggression, vision, red colour, green colour, blue colour, x coordinate, y coordinate
+    }
     //Setup Simulation Visuals
     simulationSetup();  //simulation GUI
     background(150, 150, 255);
@@ -448,6 +452,4 @@ void reset() {
   animals.clear();
   foods.clear();
   selected.clear();
-  animals.add(new Animal(breedingRate1.getValueF(), 3, 8, false, 10, 300, red1.getValueF(), green1.getValueF(), blue1.getValueF(), random(250, 350), random(150, 500))); //male animal
-  animals.add(new Animal(breedingRate2.getValueF(), 2, 5, true, 4, 300, red2.getValueF(), green2.getValueF(), blue2.getValueF(), random (250, 350), random(150, 500))); //female animal
 }
