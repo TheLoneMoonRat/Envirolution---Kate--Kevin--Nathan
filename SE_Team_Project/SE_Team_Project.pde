@@ -1,7 +1,7 @@
 import g4p_controls.*;
 
 //Global Variables (Don't Change These!)
-int simSpeed = 200;    //speed of the simulation
+int simSpeed = 60;    //speed of the simulation
 int timePassed;    //how much time has passed in the simulation
 int size;    //how many children an animal has when it gives birth
 float nutritionAdjuster;    //determine the nutrition of the food
@@ -321,7 +321,7 @@ void guiUpdate() {
       selected.get(0).size = animalTraits.getValueF();
       selected.get(0).finalSize = animalTraits.getValueF();
     } else if (setting.equals("Speed")) {
-      selected.get(0).speed = 85 - animalTraits.getValueF();
+      selected.get(0).speed = animalTraits.getValueF();
     } else if (setting.equals("Vision")) {
       selected.get(0).vision = animalTraits.getValueF();
     }

@@ -154,8 +154,8 @@ class Animal {
         this.currentSpeed.x = random(-2, 2);
         this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
       } else if (this.vision > dist) {
-        this.currentSpeed.x = (this.xPos - this.partner.xPos) / (this.speed * -7);
-        this.currentSpeed.y = (this.yPos - this.partner.yPos) / (this.speed * -7);
+        this.currentSpeed.x = (this.xPos - this.partner.xPos) / (this.speed - 18);
+        this.currentSpeed.y = (this.yPos - this.partner.yPos) / (this.speed - 18);
         moveAnimal();
       }
     }
@@ -187,8 +187,8 @@ class Animal {
           this.currentSpeed.x = random(-2, 2);
           this.currentSpeed.y = sqrt(pow(this.speed, 2) - pow(this.currentSpeed.x, 2));
         } else if (this.vision > target.getDist(this)) {
-          this.currentSpeed.x = (this.xPos - target.xPos) / (this.speed * -7);
-          this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed * -7);
+          this.currentSpeed.x = (this.xPos - target.xPos) / (this.speed - 18);
+          this.currentSpeed.y = (this.yPos - target.yPos) / (this.speed - 18);
           moveAnimal();
         }
       } else {
