@@ -218,7 +218,7 @@ void draw() {
     }
   
     //Set Age of Starting Animals
-    if (timePassed == 0) {
+    if (timePassed == 0 && timePassed > 0) {
       for (Animal a : animals) {
         a.age = 1000;
       }
