@@ -448,6 +448,7 @@ float digitRound(float number, int digits) {
 
 //Reset the Simulation
 void reset() {
+  play = true;
   timePassed = 0;
   animals.clear();
   foods.clear();
