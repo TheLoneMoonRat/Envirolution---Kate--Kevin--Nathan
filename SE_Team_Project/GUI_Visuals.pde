@@ -58,11 +58,16 @@ void simulationSetup() {
    
    if (selected.size() != 0) {
      breedingRates.setVisible(true);
-     litterSize.setVisible(true);
      animalTrait.setVisible(true);
      animalTraits.setVisible(true);
-     animationSpeed.setVisible(true);
      breedingRateText.setVisible(true);
+   }
+   
+   else {
+     breedingRates.setVisible(false);
+     animalTrait.setVisible(false);
+     animalTraits.setVisible(false);
+     breedingRateText.setVisible(false);
    }
 }
 

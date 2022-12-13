@@ -116,7 +116,7 @@ public void aniaml1TraitChange(GDropList source, GEvent event) { //_CODE_:animal
       animal1Traits.setLimits(a.size, 3, 12);
       a.size = animal1Traits.getValueF();
     } else if (setting.equals("Speed")) {
-      animal1Traits.setLimits(a.speed, 5, 80);
+      animal1Traits.setLimits(a.speed, 1, 10);
       a.speed = animal1Traits.getValueF();
     } else if (setting.equals("Vision")) {
       animal1Traits.setLimits(a.vision, 20, 600);
@@ -264,14 +264,19 @@ public void litterSizeChange(GSlider source, GEvent event) { //_CODE_:litterSize
 
 public void animalTraitChange(GDropList source, GEvent event) { //_CODE_:animalTrait:969114:
   setting = animalTrait.getSelectedText();
+  Animal a = selected.get(0);
   if (setting.equals("Aggression")) {
-    animalTraits.setLimits(selected.get(0).aggression, 1, 100);
+    animalTraits.setLimits(a.aggression, 1, 100);
+    a.aggression = animalTraits.getValueF();
   } else if (setting.equals("Size")) {
-    animalTraits.setLimits(selected.get(0).size, 2, 12);
+    animalTraits.setLimits(a.size, 2, 12);
+    a.size = animalTraits.getValueF();
   } else if (setting.equals("Speed")) {
-    animalTraits.setLimits(selected.get(0).speed, 1, 10);
+    animalTraits.setLimits(a.speed, 1, 10);
+    a.speed = animalTraits.getValueF();
   } else if (setting.equals("Vision")) {
-    animalTraits.setLimits(selected.get(0).vision, 20, 600);
+    animalTraits.setLimits(a.vision, 20, 600);
+    a.vision = animalTraits.getValueF();
   }
 } //_CODE_:animalTrait:969114:
 
@@ -279,16 +284,12 @@ public void animalTraitsChange(GCustomSlider source, GEvent event) { //_CODE_:an
   setting = animalTrait.getSelectedText();
   Animal a = selected.get(0);
   if (setting.equals("Aggression")) {
-     animalTraits.setLimits(a.aggression, 1, 100);
      a.aggression = animalTraits.getValueF();
   } else if (setting.equals("Size")) {
-     animalTraits.setLimits(a.size, 2, 12);
      a.size = animalTraits.getValueF();
   } else if (setting.equals("Speed")) {
-     animalTraits.setLimits(a.speed, 1, 10);
      a.speed = animalTraits.getValueF();
   } else if (setting.equals("Vision")) {
-     animalTraits.setLimits(a.vision, 20, 600);
      a.vision = animalTraits.getValueF();
   }
 } //_CODE_:animalTraits:417672:
@@ -441,7 +442,7 @@ public void createGUI(){
   shouldVariables.addEventHandler(this, "showVariablesButtonClick");
   breedingRates = new GSlider(this, 403, 623, 116, 40, 10.0);
   breedingRates.setShowLimits(true);
-  breedingRates.setLimits(1.0, 0.0, 2.0);
+  breedingRates.setLimits(50.0, 50.0, 200.0);
   breedingRates.setNumberFormat(G4P.DECIMAL, 2);
   breedingRates.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   breedingRates.setOpaque(false);
@@ -461,6 +462,7 @@ public void createGUI(){
   animalTrait.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   animalTrait.addEventHandler(this, "animalTraitChange");
   animalTraits = new GCustomSlider(this, 539, 640, 143, 40, "grey_blue");
+  animalTraits.setShowLimits(true);
   animalTraits.setLimits(0.5, 0.0, 1.0);
   animalTraits.setNumberFormat(G4P.DECIMAL, 2);
   animalTraits.setLocalColorScheme(GCScheme.CYAN_SCHEME);
