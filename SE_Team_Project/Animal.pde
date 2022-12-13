@@ -169,7 +169,7 @@ class Animal {
   void eat() {
     if (foods.size() > 0) {
       this.chooseFood();   //get target for food
-      if (foods.contains(target)) {
+      if (target.foodColour != color(0)) {
         if (target.getDist(this) < this.aggression) {
           for (Animal a: animals) {
             if (a.target == this.target && a.aggression *a.size > this.aggression * this.size && target.getDist(a) < a.aggression * 1.5) {

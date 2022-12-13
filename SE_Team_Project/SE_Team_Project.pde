@@ -197,6 +197,10 @@ void draw() {
     fill(field.getColour());  //draw habitat
     circle(350, 350, 500);
 
+    //Draw Food
+    for (Food f: foods) {
+      f.drawFood();
+    }
     //Update Animals
     for (Animal a : animals) {
       a.updateStats();
@@ -231,12 +235,8 @@ void draw() {
     dying.clear();
     inLabour.clear();
   
-    //Draw Food
-    for (Food f: foods) {
-      f.drawFood();
-    }
     
-    //Create Fod Based on Season
+    //Create Food Based on Season
     season.getSeason();
     if (timePassed % foodRate == 0) {
       for (int i = season.bounty; i > 0; i--) 

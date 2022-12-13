@@ -63,13 +63,18 @@ class Season {
         lastSeason.add(f);  //convert food from current season to last season
     }
     for (Food f: lastSeason) {
-      if (int(random(0, 300)) == 0)
+      int chance = int(random(0, 150));
+      if (chance < 2 && this.name != "Summer" && this.name != "Spring") 
+        f.foodColour = color(0);
+      if (chance == 0)
         decay.add(f);  //randomly decay food from last season
+      
     }
     
     for (Food f: decay) {  //get rid of decaying food
       try {
-        foods.remove(foods.indexOf(f));
+        if (f.foodColour == color(0))
+          foods.remove(foods.indexOf(f));
       } catch (Exception e) {
       
       }
